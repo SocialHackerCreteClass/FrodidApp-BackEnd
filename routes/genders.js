@@ -1,57 +1,59 @@
 const express = require('express');
-const connection = require('../connection/connection');
+const pool = require('../connection/connection');
 
 const router = express.Router();
 
 /* GET gender listing. */
 router.get('/', (req, res) => {
-  connection.connect();
-
-  connection.query('SELECT * FROM genders;', (error, results) => {
-    if (error) throw error;
-    res.send(results);
+  pool.getConnection((err, connection) => {
+    connection.query('SELECT * FROM genders;', (error, results) => {
+      connection.release();
+      if (error) throw error;
+      res.send(results);
+    });
   });
-
-  connection.end();
 });
 
 /* POST gender listing. */
 router.post('/', (req, res) => {
-  connection.connect();
-
-  connection.query(
-    `INSERT INTO genders (id, name) VALUES (${req.body.id}, "${req.body.name}")`,
-    (error) => {
-      if (error) throw error;
-      res.send('POST method');
-    },
-  );
-
-  connection.end();
+  pool.getConnection((err, connection) => {
+    connection.query(
+      `INSERT INTO genders (id, name) VALUES (${req.body.id}, "${req.body.name}")`,
+      (error) => {
+        connection.release();
+        if (error) throw error;
+        res.send('Posted successfully');
+      },
+    );
+  });
 });
 
 /* PUT gender listing. */
-router.put('/', (req, res) => {
-  connection.connect();
-
-  connection.query('', (error) => {
-    if (error) throw error;
-    res.send('PUT method');
+router.put('/:id', (req, res) => {
+  pool.getConnection((err, connection) => {
+    connection.query(
+      `UPDATE genders SET name="${req.body.name}" WHERE id=${req.params.id}`,
+      (error) => {
+        connection.release();
+        if (error) throw error;
+        res.send('Updated successfully');
+      },
+    );
   });
-
-  connection.end();
 });
 
 /* DELETE gender listing. */
-router.delete('/', (req, res) => {
-  connection.connect();
-
-  connection.query('', (error) => {
-    if (error) throw error;
-    res.send('PUT method');
+router.delete('/:id', (req, res) => {
+  pool.getConnection((err, connection) => {
+    connection.query(
+      `DELETE FROM genders WHERE id=${req.params.id}`,
+      (error) => {
+        connection.release();
+        if (error) throw error;
+        res.send('Deleted successfully');
+      },
+    );
   });
-
-  connection.end();
 });
 
 module.exports = router;
