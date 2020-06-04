@@ -23,7 +23,7 @@ router.get('/:id', (req, res) => {
         connection.release();
         if (error) throw error;
         res.send(results);
-      },
+      }
     );
   });
 });
@@ -37,10 +37,12 @@ router.post('/', (req, res) => {
       req.body.street_no,
       req.body.region,
       req.body.zipcode,
+      req.body.country_id,
+      req.body.state_id,
     ];
 
     connection.query(
-      'INSERT INTO addresses (id, street, street_no, region, zipcode) VALUES (?)',
+      'INSERT INTO addresses (id, street, street_no, region, zipcode, country_id, state_id) VALUES (?)',
       [addressInfo],
       (error) => {
         connection.release();
@@ -60,7 +62,9 @@ router.put('/:id', (req, res) => {
     street="${req.body.street}",
     street_no="${req.body.street_no}",
     region="${req.body.region}",
-    zipcode="${req.body.zipcode}"
+    zipcode="${req.body.zipcode}",
+    country_id=${req.body.country_id},
+    state_id=${req.body.state_id}
     WHERE id=${req.params.id}
     `,
       (error) => {

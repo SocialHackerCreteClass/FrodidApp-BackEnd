@@ -40,6 +40,8 @@ router.post('/', (req, res) => {
       req.body.amka,
       req.body.afm,
       req.body.comments,
+      req.body.gender_id,
+      req.body.address_id,
     ];
 
     connection.query(
@@ -53,7 +55,9 @@ router.post('/', (req, res) => {
       mobile,
       amka,
       afm,
-      comments
+      comments,
+      gender_id,
+      address_id
     ) VALUES (?)`,
       [patientInfo],
       (error) => {
@@ -78,7 +82,9 @@ router.put('/:id', (req, res) => {
     mobile=${req.body.mobile},
     amka=${req.body.amka},
     afm=${req.body.afm},
-    comments=${req.body.comments}
+    comments=${req.body.comments},
+    gender_id=${req.body.gender_id},
+    address_id=${req.body.address_id}
     WHERE id=${req.params.id}
     `,
       (error) => {
