@@ -6,7 +6,7 @@ const router = express.Router();
 /* GET gender listing. */
 router.get('/', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query('SELECT * FROM genders;', (error, results) => {
+    connection.query('SELECT * FROM genders', (error, results) => {
       connection.release();
       if (error) throw error;
       res.send(results);

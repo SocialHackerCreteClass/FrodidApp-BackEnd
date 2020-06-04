@@ -6,7 +6,7 @@ const router = express.Router();
 /* GET method */
 router.get('/', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query('SELECT * FROM patients', (error, results) => {
+    connection.query('SELECT * FROM addresses', (error, results) => {
       connection.release();
       if (error) throw error;
       res.send(results);
@@ -17,7 +17,8 @@ router.get('/', (req, res) => {
 /* Specific GET method */
 router.get('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(`SELECT * FROM patients WHERE id=${req.params.id}`,
+    connection.query(
+      `SELECT * FROM addresses WHERE id=${req.params.id}`,
       (error, results) => {
         connection.release();
         if (error) throw error;
@@ -30,36 +31,21 @@ router.get('/:id', (req, res) => {
 /* POST method */
 router.post('/', (req, res) => {
   pool.getConnection((err, connection) => {
-    const patientInfo = [
+    const addressInfo = [
       req.body.id,
-      req.body.first_name,
-      req.body.last_name,
-      new Date(req.body.birth_date),
-      req.body.telephone,
-      req.body.mobile,
-      req.body.amka,
-      req.body.afm,
-      req.body.comments,
+      req.body.street,
+      req.body.street_no,
+      req.body.region,
+      req.body.zipcode,
     ];
 
     connection.query(
-      `
-    INSERT INTO patients(
-      id,
-      first_name,
-      last_name,
-      birth_date,
-      telephone,
-      mobile,
-      amka,
-      afm,
-      comments
-    ) VALUES (?)`,
-      [patientInfo],
+      'INSERT INTO addresses (id, street, street_no, region, zipcode) VALUES (?)',
+      [addressInfo],
       (error) => {
         connection.release();
         if (error) throw error;
-        res.send('Entry added.');
+        res.send('Posted successfully.');
       },
     );
   });
@@ -70,21 +56,16 @@ router.put('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     connection.query(
       `
-    UPDATE patients SET 
-    first_name="${req.body.first_name}",
-    last_name="${req.body.last_name}",
-    birth_date=${new Date(req.body.birth_date)},
-    telephone=${req.body.telephone},
-    mobile=${req.body.mobile},
-    amka=${req.body.amka},
-    afm=${req.body.afm},
-    comments=${req.body.comments}
+    UPDATE addresses SET
+    street="${req.body.street}",
+    street_no="${req.body.street_no}",
+    region="${req.body.region}",
+    zipcode="${req.body.zipcode}"
     WHERE id=${req.params.id}
     `,
       (error) => {
-        connection.release();
         if (error) throw error;
-        res.send('Entry updated.');
+        res.send('Updated entry.');
       },
     );
   });
@@ -94,11 +75,11 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     connection.query(
-      `DELETE FROM patients WHERE id=${req.params.id}`,
+      `DELETE FROM addresses WHERE id=${req.params.id}`,
       (error) => {
         connection.release();
         if (error) throw error;
-        res.send('Entry deleted.');
+        res.send('Deleted entry.');
       },
     );
   });
