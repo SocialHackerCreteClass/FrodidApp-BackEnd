@@ -11,7 +11,7 @@ router.get('/:id', (req, res) => {
       if (error) throw error;
       res.send(results);
     });
-    if (err) console.error(`Error with connection: ${err}`);
+    if (err) console.error(`Error with connection: ${err.message}`);
   });
 });
 
@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
       if (error) throw error;
       res.send(results);
     });
-    if (err) console.error(`Problem with connection: ${err}`);
+    if (err) console.error(`Problem with connection: ${err.message}`);
   });
 });
 
@@ -35,7 +35,7 @@ router.put('/', (req, res) => {
       if (error) throw error;
       res.send(results);
     });
-    if (err) console.error(`Problem with connection: ${err}`);
+    if (err) console.error(`Problem with connection: ${err.message}`);
   }); 
 });
 
@@ -48,7 +48,7 @@ router.delete('/', (req, res) => {
       if (error) throw error;
       res.send(results);
     });
-    if (err) console.error(`Problem with connection: ${err}`);
+    if (err) console.error(`Problem with connection: ${err.message}`);
   });
 });
 
