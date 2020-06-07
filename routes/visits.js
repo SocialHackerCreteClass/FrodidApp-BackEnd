@@ -4,6 +4,18 @@ const pool = require('../connection/connection');
 const router = express.Router();
 
 // Get Method
+router.get('/', (req, res) => {
+  pool.getConnection((err, connection) => {
+      connection.query('', (error, results) => {
+          connection.release();
+          if (error) throw error;
+          res.send(results);
+      });
+      if (err) console.error(`Error with connection: ${err.message}`);
+  });
+});
+
+// Get with id Method
 router.get('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     connection.query('', (error, results) => {
@@ -28,7 +40,7 @@ router.post('/', (req, res) => {
 });
 
 // Put Method
-router.put('/', (req, res) => {
+router.put('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     connection.query('', (error, results) => {
       connection.release();
@@ -41,7 +53,7 @@ router.put('/', (req, res) => {
 
 
 // Delete Method
-router.delete('/', (req, res) => {
+router.delete('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     connection.query('', (error, results) => {
       connection.release();
