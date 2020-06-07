@@ -11,6 +11,11 @@ const visitsRouter = require('./routes/visits');
 const users_patientsRouter = require('./routes/users_patients');
 const rolesRouter = require('./routes/roles');
 const professionsRouter = require('./routes/professions');
+const patientsRouter = require('./routes/patients');
+const gendersRouter = require('./routes/genders');
+const addressesRouter = require('./routes/addresses');
+const countriesRouter = require('./routes/countries');
+const statesRouter = require('./routes/states');
 
 const app = express();
 
@@ -30,14 +35,19 @@ app.use('/visits', visitsRouter);
 app.use('/users_patients', users_patientsRouter);
 app.use('/roles', rolesRouter);
 app.use('/professions', professionsRouter);
+app.use('/patients', patientsRouter);
+app.use('/genders', gendersRouter);
+app.use('/addresses', addressesRouter);
+app.use('/countries', countriesRouter);
+app.use('/states', statesRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

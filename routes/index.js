@@ -1,7 +1,6 @@
 const express = require('express');
 const pool = require('../connection/connection');
 
-
 const router = express.Router();
 
 /* GET home page. */
@@ -12,7 +11,6 @@ router.get('/', (req, res) => {
       if (err) throw err;
       res.send(results);
     });
-    
   });
 });
 
