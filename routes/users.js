@@ -6,7 +6,7 @@ const router = express.Router();
 // Get Method
 router.get('/', (req, res) => {
   pool.getConnection((err, connection) => {
-      connection.query('', (error, results) => {
+      connection.query('SELECT * FROM users', (error, results) => {
           connection.release();
           if (error) throw error;
           res.send(results);
@@ -16,9 +16,9 @@ router.get('/', (req, res) => {
 });
 
 // Get with id Method
-router.get('/', (req, res) => {
+router.get('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query('', (error, results) => {
+    connection.query(`SELECT * FROM users WHERE id=${req.params.id}`, (error, results) => {
       connection.release();
       if (error) throw error;
       res.send(results);
