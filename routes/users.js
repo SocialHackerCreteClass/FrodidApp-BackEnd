@@ -1,10 +1,66 @@
 const express = require('express');
+const pool = require('../connection/connection');
 
 const router = express.Router();
 
-/* GET users listing. */
+// Get Method
 router.get('/', (req, res) => {
-  res.send('respond with a resource');
+  pool.getConnection((err, connection) => {
+      connection.query('', (error, results) => {
+          connection.release();
+          if (error) throw error;
+          res.send(results);
+      });
+      if (err) console.error(`Error with connection: ${err.message}`);
+  });
+});
+
+// Get with id Method
+router.get('/', (req, res) => {
+  pool.getConnection((err, connection) => {
+    connection.query('', (error, results) => {
+      connection.release();
+      if (error) throw error;
+      res.send(results);
+    });
+    if (err) console.error(`Problem with connection: ${err.message}`);
+  });
+});
+
+// Post Method 
+router.post('/', (req, res) => {
+  pool.getConnection((err, connection) => {
+    connection.query('', (error, results) => {
+      connection.release();
+      if (error) throw error;
+      res.send(results);
+    });
+    if (err) console.error(`Problem with connection: ${err.message}`);
+  });
+});
+
+// Put Method
+router.put('/:id', (req, res) => {
+  pool.getConnection((err, connection) => {
+    connection.query('', (error, results) => {
+      connection.release();
+      if (error) throw error;
+      res.send(results);
+    });
+    if (err) console.error(`Problem with connection: ${err.message}`);
+  });
+});
+
+// Delete Method
+router.delete('/:id', (req, res) => {
+  pool.getConnection((err, connection) => {
+    connection.query('', (error, results) => {
+      connection.release();
+      if (error) throw error;
+      res.send(results);
+    });
+    if (err) console.error(`Problem with connection: ${err.message}`);
+  });
 });
 
 module.exports = router;

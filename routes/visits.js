@@ -1,25 +1,67 @@
 const express = require('express');
+const pool = require('../connection/connection');
 
 const router = express.Router();
 
-/* GET users listing. */
+// Get Method
 router.get('/', (req, res) => {
-  res.send('visits');
+  pool.getConnection((err, connection) => {
+      connection.query('', (error, results) => {
+          connection.release();
+          if (error) throw error;
+          res.send(results);
+      });
+      if (err) console.error(`Error with connection: ${err.message}`);
+  });
 });
 
-/* UP(UT)DATE users listing. */
-router.put('/', (req, res) => {
-  res.send('visits');
+// Get with id Method
+router.get('/:id', (req, res) => {
+  pool.getConnection((err, connection) => {
+    connection.query('', (error, results) => {
+      connection.release();
+      if (error) throw error;
+      res.send(results);
+    });
+    if (err) console.error(`Error with connection: ${err.message}`);
+  });
 });
 
-/* CREATE users listing. */
+//  Post Method
 router.post('/', (req, res) => {
-  res.send('visits');
+  pool.getConnection((err, connection) => {
+    connection.query('', (err, results) => {
+      connection.release();
+      if (error) throw error;
+      res.send(results);
+    });
+    if (err) console.error(`Problem with connection: ${err.message}`);
+  });
 });
 
-/* DELETE users listing. */
-router.delete('/', (req, res) => {
-  res.send('visits');
+// Put Method
+router.put('/:id', (req, res) => {
+  pool.getConnection((err, connection) => {
+    connection.query('', (error, results) => {
+      connection.release();
+      if (error) throw error;
+      res.send(results);
+    });
+    if (err) console.error(`Problem with connection: ${err.message}`);
+  }); 
+});
+
+
+// Delete Method
+router.delete('/:id', (req, res) => {
+  pool.getConnection((err, connection) => {
+    connection.query('', (error, results) => {
+      connection.release();
+      if (error) throw error;
+      res.send(results);
+    });
+    if (err) console.error(`Problem with connection: ${err.message}`);
+  });
 });
 
 module.exports = router;
