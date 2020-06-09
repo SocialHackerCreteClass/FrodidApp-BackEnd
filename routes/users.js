@@ -6,12 +6,12 @@ const router = express.Router();
 // Get Method
 router.get('/', (req, res) => {
   pool.getConnection((err, connection) => {
-      connection.query('SELECT * FROM users', (error, results) => {
-          connection.release();
-          if (error) throw error;
-          res.send(results);
-      });
-      if (err) console.error(`Error with connection: ${err.message}`);
+    connection.query('SELECT * FROM users', (error, results) => {
+      connection.release();
+      if (error) throw error;
+      res.send(results);
+    });
+    if (err) console.error(`Error with connection: ${err.message}`);
   });
 });
 
@@ -27,7 +27,7 @@ router.get('/:id', (req, res) => {
   });
 });
 
-// Post Method 
+// Post Method
 router.post('/', (req, res) => {
   pool.getConnection((err, connection) => {
     connection.query('', (error, results) => {

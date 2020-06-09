@@ -6,23 +6,26 @@ const router = express.Router();
 // Get Method
 router.get('/', (req, res) => {
   pool.getConnection((err, connection) => {
-      connection.query('SELECT * FROM visits', (error, results) => {
-          connection.release();
-          if (error) throw error;
-          res.send(results);
-      });
-      if (err) console.error(`Error with connection: ${err.message}`);
+    connection.query('SELECT * FROM visits', (error, results) => {
+      connection.release();
+      if (error) throw error;
+      res.send(results);
+    });
+    if (err) console.error(`Error with connection: ${err.message}`);
   });
 });
 
 // Get with id Method
 router.get('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(`SELECT * FROM visits WHERE id=${req.params.id}`, (error, results) => {
-      connection.release();
-      if (error) throw error;
-      res.send(results);
-    });
+    connection.query(
+      `SELECT * FROM visits WHERE id=${req.params.id}`,
+      (error, results) => {
+        connection.release();
+        if (error) throw error;
+        res.send(results);
+      },
+    );
     if (err) console.error(`Error with connection: ${err.message}`);
   });
 });
@@ -48,9 +51,8 @@ router.put('/:id', (req, res) => {
       res.send(results);
     });
     if (err) console.error(`Problem with connection: ${err.message}`);
-  }); 
+  });
 });
-
 
 // Delete Method
 router.delete('/:id', (req, res) => {
