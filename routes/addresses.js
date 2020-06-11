@@ -23,7 +23,7 @@ router.get('/:id', (req, res) => {
         connection.release();
         if (error) throw error;
         res.send(results);
-      }
+      },
     );
   });
 });

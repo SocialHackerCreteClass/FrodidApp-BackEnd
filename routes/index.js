@@ -39,7 +39,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/whatever', (req, res) => {
-  res.send('Whatever')
+  res.send('Whatever');
 });
 
 router.delete('/', (req, res) => {

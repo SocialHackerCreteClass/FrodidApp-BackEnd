@@ -6,7 +6,7 @@ const router = express.Router();
 // Get Method
 router.get('/', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query('SELECT * FROM users', (error, results) => {
+    connection.query('SELECT * FROM users_patients', (error, results) => {
       connection.release();
       if (error) throw error;
       res.send(results);
@@ -18,12 +18,15 @@ router.get('/', (req, res) => {
 // Get with id Method
 router.get('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(`SELECT * FROM users WHERE id=${req.params.id}`, (error, results) => {
-      connection.release();
-      if (error) throw error;
-      res.send(results);
-    });
-    if (err) console.error(`Problem with connection: ${err.message}`);
+    connection.query(
+      `SELECT * FROM users_patients WHERE id=${req.params.id}`,
+      (error, results) => {
+        connection.release();
+        if (error) throw error;
+        res.send(results);
+      },
+    );
+    if (err) console.error(`Error with connection: ${err.message}`);
   });
 });
 
@@ -35,7 +38,7 @@ router.post('/', (req, res) => {
       if (error) throw error;
       res.send(results);
     });
-    if (err) console.error(`Problem with connection: ${err.message}`);
+    if (err) console.error(`Error with connection: ${err.message}`);
   });
 });
 
@@ -47,7 +50,7 @@ router.put('/:id', (req, res) => {
       if (error) throw error;
       res.send(results);
     });
-    if (err) console.error(`Problem with connection: ${err.message}`);
+    if (err) console.error(`Error with connection: ${err.message}`);
   });
 });
 
@@ -59,7 +62,7 @@ router.delete('/:id', (req, res) => {
       if (error) throw error;
       res.send(results);
     });
-    if (err) console.error(`Problem with connection: ${err.message}`);
+    if (err) console.error(`Error with connection: ${err.message}`);
   });
 });
 
