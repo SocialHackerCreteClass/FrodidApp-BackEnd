@@ -51,9 +51,8 @@ router.post('/', (req, res) => {
       connection.query(
         'INSERT INTO addresses (id, street, street_no, region, zipcode, country_id, state_id) VALUES (?)',
         [addressInfo],
-        (error) => {
+        () => {
           connection.release();
-          if (error) throw error;
           res.send('Posted successfully.');
         },
       );
@@ -78,8 +77,7 @@ router.put('/:id', (req, res) => {
     state_id=${req.body.state_id}
     WHERE id=${req.params.id}
     `,
-        (error) => {
-          if (error) throw error;
+        () => {
           res.send('Updated entry.');
         },
       );
@@ -95,9 +93,8 @@ router.delete('/:id', (req, res) => {
     try {
       connection.query(
         `DELETE FROM addresses WHERE id=${req.params.id}`,
-        (error) => {
+        () => {
           connection.release();
-          if (error) throw error;
           res.send('Deleted entry.');
         },
       );

@@ -9,7 +9,6 @@ router.get('/', (req, res) => {
     try {
       connection.query('SELECT * FROM countries', (error, results) => {
         connection.release();
-        if (error) throw error;
         res.send(results);
       });
     } catch (error) {
@@ -26,7 +25,6 @@ router.get('/:id', (req, res) => {
         `SELECT * FROM countries WHERE id=${req.params.id}`,
         (error, results) => {
           connection.release();
-          if (error) throw error;
           res.send(results);
         },
       );
@@ -42,9 +40,8 @@ router.post('/', (req, res) => {
     try {
       connection.query(
         `INSERT INTO countries (id, name) VALUES (${req.body.id}, "${req.body.name}")`,
-        (error) => {
+        () => {
           connection.release();
-          if (error) throw error;
           res.send('Posted successfully.');
         },
       );
@@ -60,9 +57,8 @@ router.put('/:id', (req, res) => {
     try {
       connection.query(
         `UPDATE countries SET name="${req.body.name}" WHERE id=${req.params.id}`,
-        (error) => {
+        () => {
           connection.release();
-          if (error) throw error;
           res.send('Updated successfullt.');
         },
       );
@@ -78,9 +74,8 @@ router.delete('/:id', (req, res) => {
     try {
       connection.query(
         `DELETE FROM countries WHERE id=${req.params.id}`,
-        (error) => {
+        () => {
           connection.release();
-          if (error) throw error;
           res.send('Deleted successfully.');
         },
       );
