@@ -1,6 +1,5 @@
 require('dotenv').config();       // Allows pool to recognize enviroment variables. Gotta be before pool variable definition!!!
 const pool = require('../../connection/connection');
-const mysql = require('mysql');
 const faker = require('faker');
 
 pool.getConnection((err, connection) => {
@@ -14,7 +13,6 @@ pool.getConnection((err, connection) => {
             });
           });
     } catch (err) {
-        //console.log('Connection error!');
         if (err) throw err;
     }
 });
