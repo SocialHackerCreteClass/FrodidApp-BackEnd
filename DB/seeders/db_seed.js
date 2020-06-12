@@ -126,3 +126,41 @@ pool.getConnection((err, connection) => {
     console.error(`Error: ${error}`);
   }
 });
+
+pool.getConnection((err, connection) => {
+  try {
+    [...Array(100)].forEach(() => {
+      connection.query(
+        `
+        INSERT INTO users(
+          first_name,
+          last_name,
+          email,
+          password,
+          birth_date,
+          created_at,
+          amka,
+          afm,
+          role_id,
+          profession_id
+        ) VALUES (
+          "${faker.name.firstName()}",
+          "${faker.name.lastName()}",
+          "${faker.internet.email()}",
+          "${faker.internet.password()}",
+          ${new Date(faker.date.past())},
+          ${new Date(faker.date.past())},
+          "${faker.random.number()}",
+          "${faker.random.number()}",
+          ${faker.random.number({ min: 0, max: 1 })},
+          ${faker.random.number(99)}
+        )`,
+        (error, results) => {
+          console.log(results);
+        },
+      );
+    });
+  } catch (error) {
+    console.error(`Error: ${error}`);
+  }
+});
