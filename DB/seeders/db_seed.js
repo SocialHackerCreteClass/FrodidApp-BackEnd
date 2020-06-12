@@ -164,3 +164,31 @@ pool.getConnection((err, connection) => {
     console.error(`Error: ${error}`);
   }
 });
+
+pool.getConnection((err, connection) => {
+  try {
+    [...Array(100)].forEach(() => {
+      connection.query(
+        `
+        INSERT INTO visits(
+          date,
+          comment,
+          start_time,
+          end_time,
+          user_id
+        ) VALUES (
+          ${new Date(faker.date.recent())},
+          "${faker.lorem.sentence()}"
+          ${new Date(faker.date.past())},
+          ${new Date(faker.date.recent())},
+          ${faker.random.number(99)}
+        )`,
+        (error, results) => {
+          console.log(results);
+        },
+      );
+    });
+  } catch (error) {
+    console.error(`Error: ${error}`);
+  }
+});
