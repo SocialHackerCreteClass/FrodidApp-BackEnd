@@ -111,3 +111,18 @@ pool.getConnection((err, connection) => {
     console.error(`Error: ${error}`);
   }
 });
+
+pool.getConnection((err, connection) => {
+  try {
+    [...Array(100)].forEach(() => {
+      connection.query(
+        `INSERT INTO professions (name) VALUES ("${faker.name.jobTitle()}")`,
+        (error, results) => {
+          console.log(results);
+        },
+      );
+    });
+  } catch (error) {
+    console.error(`Error: ${error}`);
+  }
+});
