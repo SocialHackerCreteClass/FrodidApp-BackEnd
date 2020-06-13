@@ -33,11 +33,14 @@ router.get('/:id', (req, res) => {
 // Post Method
 router.post('/', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query('', (error, results) => {
-      connection.release();
-      if (error) throw error;
-      res.send(results);
-    });
+    connection.query(
+      `INSERT INTO professions (name) VALUES ("${req.body.name}")`,
+      (error) => {
+        connection.release();
+        if (error) throw error;
+        res.send('Entry added');
+      },
+    );
     if (err) console.error(`Error with connection: ${err.message}`);
   });
 });
@@ -45,11 +48,14 @@ router.post('/', (req, res) => {
 // Put Method
 router.put('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query('', (error, results) => {
-      connection.release();
-      if (error) throw error;
-      res.send(results);
-    });
+    connection.query(
+      `UPDATE professions SET name="${req.body.name}" WHERE id=${req.params.id}`,
+      (error) => {
+        connection.release();
+        if (error) throw error;
+        res.send('Entry updated.');
+      },
+    );
     if (err) console.error(`Error with connection: ${err.message}`);
   });
 });
@@ -57,11 +63,14 @@ router.put('/:id', (req, res) => {
 // Delete Method
 router.delete('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query('', (error, results) => {
-      connection.release();
-      if (error) throw error;
-      res.send(results);
-    });
+    connection.query(
+      `DELETE FROM professions WHERE id=${req.params.id}`,
+      (error) => {
+        connection.release();
+        if (error) throw error;
+        res.send('Entry deleted.');
+      },
+    );
     if (err) console.error(`Error with connection: ${err.message}`);
   });
 });

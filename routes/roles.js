@@ -33,11 +33,14 @@ router.get('/:id', (req, res) => {
 // Post Method
 router.post('/', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query('', (error, results) => {
-      connection.release();
-      if (error) throw error;
-      res.send(results);
-    });
+    connection.query(
+      `INSERT INTO roles (name) VALUES ("${req.body.name}")`,
+      (error) => {
+        connection.release();
+        if (error) throw error;
+        res.send('Entry added.');
+      },
+    );
     if (err) console.error(`Error with connection: ${err.message}`);
   });
 });
@@ -45,22 +48,25 @@ router.post('/', (req, res) => {
 // Put Method
 router.put('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query('', (error, results) => {
-      connection.release();
-      if (error) throw error;
-      res.send(results);
-    });
+    connection.query(
+      `UPDATE roles SET name="${req.body.name}" WHERE id=${req.params.id}`,
+      (error) => {
+        connection.release();
+        if (error) throw error;
+        res.send('Entry updated.');
+      },
+    );
     if (err) console.error(`Error with connection: ${err.message}`);
   });
 });
 
 // Delete Method
 router.delete('/:id', (req, res) => {
-  pool.getConnection((error, connection) => {
-    connection.query('', (error, results) => {
+  pool.getConnection((err, connection) => {
+    connection.query(`DELETE FROM roles WHERE id=${req.params.id}`, (error) => {
       connection.release();
       if (error) throw error;
-      res.send(results);
+      res.send('Entry delteted.');
     });
     if (err) console.error(`Error with connection: ${err.message}`);
   });

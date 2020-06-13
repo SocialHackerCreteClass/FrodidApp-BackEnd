@@ -18,11 +18,11 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   pool.getConnection((err, connection) => {
     connection.query(
-      `INSERT INTO genders (id, name) VALUES (${req.body.id}, "${req.body.name}")`,
+      `INSERT INTO genders (name) VALUES ("${req.body.name}")`,
       (error) => {
         connection.release();
         if (error) throw error;
-        res.send('Posted successfully');
+        res.send('Entry added.');
       },
     );
   });
@@ -36,7 +36,7 @@ router.put('/:id', (req, res) => {
       (error) => {
         connection.release();
         if (error) throw error;
-        res.send('Updated successfully');
+        res.send('Entry updated.');
       },
     );
   });
@@ -50,7 +50,7 @@ router.delete('/:id', (req, res) => {
       (error) => {
         connection.release();
         if (error) throw error;
-        res.send('Deleted successfully');
+        res.send('Entry deleted.');
       },
     );
   });

@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
       (error) => {
         connection.release();
         if (error) throw error;
-        res.send('Posted successfully.');
+        res.send('Entry added.');
       },
     );
   });
@@ -50,7 +50,7 @@ router.put('/:id', (req, res) => {
       (error) => {
         connection.release();
         if (error) throw error;
-        res.send('Updated successfullt.');
+        res.send('Entry updated.');
       },
     );
   });
@@ -64,7 +64,7 @@ router.delete('/:id', (req, res) => {
       (error) => {
         connection.release();
         if (error) throw error;
-        res.send('Deleted successfully.');
+        res.send('Entry deleted.');
       },
     );
   });

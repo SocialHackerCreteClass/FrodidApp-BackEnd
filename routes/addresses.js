@@ -32,7 +32,6 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   pool.getConnection((err, connection) => {
     const addressInfo = [
-      req.body.id,
       req.body.street,
       req.body.street_no,
       req.body.region,
@@ -42,12 +41,12 @@ router.post('/', (req, res) => {
     ];
 
     connection.query(
-      'INSERT INTO addresses (id, street, street_no, region, zipcode, country_id, state_id) VALUES (?)',
+      'INSERT INTO addresses (street, street_no, region, zipcode, country_id, state_id) VALUES (?)',
       [addressInfo],
       (error) => {
         connection.release();
         if (error) throw error;
-        res.send('Posted successfully.');
+        res.send('Entry added.');
       },
     );
   });
@@ -69,7 +68,7 @@ router.put('/:id', (req, res) => {
     `,
       (error) => {
         if (error) throw error;
-        res.send('Updated entry.');
+        res.send('Entry updated.');
       },
     );
   });
@@ -83,7 +82,7 @@ router.delete('/:id', (req, res) => {
       (error) => {
         connection.release();
         if (error) throw error;
-        res.send('Deleted entry.');
+        res.send('Entry deleted.');
       },
     );
   });

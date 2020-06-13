@@ -30,7 +30,6 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   pool.getConnection((err, connection) => {
     const patientInfo = [
-      req.body.id,
       req.body.first_name,
       req.body.last_name,
       new Date(req.body.birth_date),
@@ -46,7 +45,6 @@ router.post('/', (req, res) => {
     connection.query(
       `
     INSERT INTO patients(
-      id,
       first_name,
       last_name,
       birth_date,

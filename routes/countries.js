@@ -32,11 +32,11 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   pool.getConnection((err, connection) => {
     connection.query(
-      `INSERT INTO countries (id, name) VALUES (${req.body.id}, "${req.body.name}")`,
+      `INSERT INTO countries (name) VALUES ("${req.body.name}")`,
       (error) => {
         connection.release();
         if (error) throw error;
-        res.send('Posted successfully.');
+        res.send('Entry added.');
       },
     );
   });
@@ -50,7 +50,7 @@ router.put('/:id', (req, res) => {
       (error) => {
         connection.release();
         if (error) throw error;
-        res.send('Updated successfullt.');
+        res.send('Entry updated.');
       },
     );
   });
@@ -64,7 +64,7 @@ router.delete('/:id', (req, res) => {
       (error) => {
         connection.release();
         if (error) throw error;
-        res.send('Deleted successfully.');
+        res.send('Entry deleted.');
       },
     );
   });
