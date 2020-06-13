@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS `users_patients`;
+DROP TABLE IF EXISTS `patients`;
+DROP TABLE IF EXISTS `addresses`;
+DROP TABLE IF EXISTS `countries`;
+DROP TABLE IF EXISTS `genders`;
+DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `professions`;
+DROP TABLE IF EXISTS `roles`;
+DROP TABLE IF EXISTS `states`;
+DROP TABLE IF EXISTS `visits`;
