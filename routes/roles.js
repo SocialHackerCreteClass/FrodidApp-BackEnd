@@ -66,7 +66,7 @@ router.delete('/:id', (req, res) => {
     connection.query(`DELETE FROM roles WHERE id=${req.params.id}`, (error) => {
       connection.release();
       if (error) throw error;
-      res.send('Entry delteted.');
+      res.send('Entry deleted.');
     });
     if (err) console.error(`Error with connection: ${err.message}`);
   });
