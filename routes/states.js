@@ -6,67 +6,79 @@ const router = express.Router();
 /* GET method */
 router.get('/', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query('SELECT * FROM states', (error, results) => {
-      connection.release();
-      if (error) throw error;
-      res.send(results);
-    });
+    try {
+      connection.query('SELECT * FROM states', (error, results) => {
+        connection.release();
+        res.send(results);
+      });
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   });
 });
 
 /* Specific GET method */
 router.get('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(
-      `SELECT * FROM states WHERE id=${req.params.id}`,
-      (error, results) => {
-        connection.release();
-        if (error) throw error;
-        res.send(results);
-      },
-    );
+    try {
+      connection.query(
+        `SELECT * FROM states WHERE id=${req.params.id}`,
+        (error, results) => {
+          connection.release();
+          res.send(results);
+        },
+      );
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   });
 });
 
 /* POST method */
 router.post('/', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(
-      `INSERT INTO states (id, name) VALUES (${req.body.id}, "${req.body.name}")`,
-      (error) => {
-        connection.release();
-        if (error) throw error;
-        res.send('Entry added.');
-      },
-    );
+    try {
+      connection.query(
+        `INSERT INTO states (id, name) VALUES (${req.body.id}, "${req.body.name}")`,
+        () => {
+          connection.release();
+          res.send('Posted successfully.');
+        },
+      );
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   });
 });
 
 /* PUT method */
 router.put('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(
-      `UPDATE states SET name="${req.body.name}" WHERE id=${req.params.id}`,
-      (error) => {
-        connection.release();
-        if (error) throw error;
-        res.send('Entry updated.');
-      },
-    );
+    try {
+      connection.query(
+        `UPDATE states SET name="${req.body.name}" WHERE id=${req.params.id}`,
+        () => {
+          connection.release();
+          res.send('Updated successfullt.');
+        },
+      );
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   });
 });
 
 /* DELETE method */
 router.delete('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(
-      `DELETE FROM states WHERE id=${req.params.id}`,
-      (error) => {
+    try {
+      connection.query(`DELETE FROM states WHERE id=${req.params.id}`, () => {
         connection.release();
-        if (error) throw error;
-        res.send('Entry deleted.');
-      },
-    );
+        res.send('Deleted successfully.');
+      });
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   });
 });
 

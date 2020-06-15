@@ -6,27 +6,28 @@ const router = express.Router();
 // Get Method
 router.get('/', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query('SELECT * FROM users', (error, results) => {
-      connection.release();
-      if (error) throw error;
-      res.send(results);
-    });
-    if (err) console.error(`Error with connection: ${err.message}`);
+    try {
+      connection.query('SELECT * FROM users', (error, results) => {
+        connection.release();
+        res.send(results);
+      });
+    } catch (error) {
+      if (error) console.error(`Error: ${error.message}`);
+    }
   });
 });
 
 // Get with id Method
 router.get('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(
-      `SELECT * FROM users WHERE id=${req.params.id}`,
-      (error, results) => {
+    try {
+      connection.query(`SELECT * FROM users WHERE id=${req.params.id}`, (error, results) => {
         connection.release();
-        if (error) throw error;
         res.send(results);
-      },
-    );
-    if (err) console.error(`Problem with connection: ${err.message}`);
+      });
+    } catch (error) {
+      if (error) console.error(`Error: ${error.message}`);
+    }
   });
 });
 
@@ -46,9 +47,8 @@ router.post('/', (req, res) => {
       req.body.profession_id,
     ];
 
-    connection.query(
-      `
-    INSERT INTO users (
+    try {
+      connection.query(`INSERT INTO users (
       first_name,
       last_name,
       email,
@@ -59,23 +59,21 @@ router.post('/', (req, res) => {
       amka,
       role_id,
       profession_id
-    ) VALUES (?)`,
-      [userInfo],
-      (error) => {
+    ) VALUES (?)`, [userInfo], (error, results) => {
         connection.release();
-        if (error) throw error;
-        res.send('Entry added.');
-      },
-    );
-    if (err) console.error(`Problem with connection: ${err.message}`);
+        res.send(results);
+      });
+    } catch (error) {
+      if (error) console.error(`Error: ${error.message}`);
+    }
   });
 });
 
 // Put Method
 router.put('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(
-      `
+    try {
+      connection.query(`
     UPDATE patients SET 
     first_name="${req.body.first_name}",
     last_name="${req.body.last_name}",
@@ -85,29 +83,27 @@ router.put('/:id', (req, res) => {
     afm=${req.body.afm},
     role_id=${req.body.role_id},
     profession_id=${req.body.profession_id}
-    WHERE id=${req.params.id}`,
-      (error) => {
+    WHERE id=${req.params.id}`, (error, results) => {
         connection.release();
-        if (error) throw error;
-        res.send('Entry updated.');
-      },
-    );
-    if (err) console.error(`Problem with connection: ${err.message}`);
+        res.send(results);
+      });
+    } catch (error) {
+      if (error) console.error(`Error: ${error.message}`);
+    }
   });
 });
 
 // Delete Method
 router.delete('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(
-      `DELETE FROM users WHERE id=${req.params.id}`,
-      (error) => {
+    try {
+      connection.query(`DELETE FROM users WHERE id=${req.params.id}`, (error, results) => {
         connection.release();
-        if (error) throw error;
-        res.send('Entry deleted.');
-      },
-    );
-    if (err) console.error(`Problem with connection: ${err.message}`);
+        res.send(results);
+      });
+    } catch (error) {
+      if (error) console.error(`Error: ${error.message}`);
+    }
   });
 });
 
