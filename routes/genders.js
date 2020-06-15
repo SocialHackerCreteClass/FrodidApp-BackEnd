@@ -6,53 +6,62 @@ const router = express.Router();
 /* GET gender listing. */
 router.get('/', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query('SELECT * FROM genders', (error, results) => {
-      connection.release();
-      if (error) throw error;
-      res.send(results);
-    });
+    try {
+      connection.query('SELECT * FROM genders', (error, results) => {
+        connection.release();
+        res.send(results);
+      });
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   });
 });
 
 /* POST gender listing. */
 router.post('/', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(
-      `INSERT INTO genders (id, name) VALUES (${req.body.id}, "${req.body.name}")`,
-      (error) => {
-        connection.release();
-        if (error) throw error;
-        res.send('Posted successfully');
-      },
-    );
+    try {
+      connection.query(
+        `INSERT INTO genders (id, name) VALUES (${req.body.id}, "${req.body.name}")`,
+        () => {
+          connection.release();
+          res.send('Posted successfully');
+        },
+      );
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   });
 });
 
 /* PUT gender listing. */
 router.put('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(
-      `UPDATE genders SET name="${req.body.name}" WHERE id=${req.params.id}`,
-      (error) => {
-        connection.release();
-        if (error) throw error;
-        res.send('Updated successfully');
-      },
-    );
+    try {
+      connection.query(
+        `UPDATE genders SET name="${req.body.name}" WHERE id=${req.params.id}`,
+        () => {
+          connection.release();
+          res.send('Updated successfully');
+        },
+      );
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   });
 });
 
 /* DELETE gender listing. */
 router.delete('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(
-      `DELETE FROM genders WHERE id=${req.params.id}`,
-      (error) => {
+    try {
+      connection.query(`DELETE FROM genders WHERE id=${req.params.id}`, () => {
         connection.release();
-        if (error) throw error;
         res.send('Deleted successfully');
-      },
-    );
+      });
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   });
 });
 

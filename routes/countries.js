@@ -6,67 +6,82 @@ const router = express.Router();
 /* GET method */
 router.get('/', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query('SELECT * FROM countries', (error, results) => {
-      connection.release();
-      if (error) throw error;
-      res.send(results);
-    });
+    try {
+      connection.query('SELECT * FROM countries', (error, results) => {
+        connection.release();
+        res.send(results);
+      });
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   });
 });
 
 /* Specific GET method */
 router.get('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(
-      `SELECT * FROM countries WHERE id=${req.params.id}`,
-      (error, results) => {
-        connection.release();
-        if (error) throw error;
-        res.send(results);
-      },
-    );
+    try {
+      connection.query(
+        `SELECT * FROM countries WHERE id=${req.params.id}`,
+        (error, results) => {
+          connection.release();
+          res.send(results);
+        },
+      );
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   });
 });
 
 /* POST method */
 router.post('/', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(
-      `INSERT INTO countries (id, name) VALUES (${req.body.id}, "${req.body.name}")`,
-      (error) => {
-        connection.release();
-        if (error) throw error;
-        res.send('Posted successfully.');
-      },
-    );
+    try {
+      connection.query(
+        `INSERT INTO countries (id, name) VALUES (${req.body.id}, "${req.body.name}")`,
+        () => {
+          connection.release();
+          res.send('Posted successfully.');
+        },
+      );
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   });
 });
 
 /* PUT method */
 router.put('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(
-      `UPDATE countries SET name="${req.body.name}" WHERE id=${req.params.id}`,
-      (error) => {
-        connection.release();
-        if (error) throw error;
-        res.send('Updated successfullt.');
-      },
-    );
+    try {
+      connection.query(
+        `UPDATE countries SET name="${req.body.name}" WHERE id=${req.params.id}`,
+        () => {
+          connection.release();
+          res.send('Updated successfullt.');
+        },
+      );
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   });
 });
 
 /* DELETE method */
 router.delete('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
-    connection.query(
-      `DELETE FROM countries WHERE id=${req.params.id}`,
-      (error) => {
-        connection.release();
-        if (error) throw error;
-        res.send('Deleted successfully.');
-      },
-    );
+    try {
+      connection.query(
+        `DELETE FROM countries WHERE id=${req.params.id}`,
+        () => {
+          connection.release();
+          res.send('Deleted successfully.');
+        },
+      );
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   });
 });
 

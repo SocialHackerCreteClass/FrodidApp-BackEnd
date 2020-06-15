@@ -1,42 +1,47 @@
 const fs = require('fs');
 
-const execute_query_file = (pool, path, filename) => {
-    const file_address = path + filename;
-    let fileLines = fs.readFileSync(file_address).toString().split("\n");
-    let cleared_lines = [];
-    let queries = [];
+const executeQueryFile = (pool, path, filename) => {
+  console.log('working');
+  const fileAddress = path + filename;
+  const fileLines = fs.readFileSync(fileAddress).toString().split('\n');
+  const clearedLines = [];
+  const queries = [];
 
-    // Eliminates all comments in the file
-    fileLines.forEach((line, index) => {
-        line = line.replace(/[\n\r]/g, '');   // replaces carriage returns with empty strings
-        if(!line.includes("*") && !line.includes("-") && line.length > 0) {
-            cleared_lines.push(line);
-        }
+  // Eliminates all comments in the file
+  fileLines.forEach((line) => {
+    const newLine = line.replace(/[\n\r]/g, ''); // replaces carriage returns with empty strings
+    if (
+      !newLine.includes('*')
+      && !newLine.includes('-')
+      && newLine.length > 0
+    ) {
+      clearedLines.push(newLine);
+    }
+  });
+
+  let partialQuery = '';
+
+  // Extracts the queries and place them in an array
+  clearedLines.forEach((line) => {
+    partialQuery += line;
+    if (line.charAt(line.length - 1) === ';') {
+      queries.push(partialQuery);
+      partialQuery = '';
+    }
+  });
+
+  queries.map((query, index) => {
+    pool.getConnection((err, connection) => {
+      try {
+        connection.query(query, () => {
+          connection.release();
+          console.log(index);
+        });
+      } catch (error) {
+        console.error(error);
+      }
     });
+  });
+};
 
-    let partial_query = "";
-
-    // Extracts the queries and place them in an array
-    cleared_lines.forEach((line, index) => {
-        partial_query += line;
-        if(line.charAt(line.length-1) === ";") {
-            queries.push(partial_query);
-            partial_query = "";
-        }
-    });
-
-    queries.map(query => {
-            pool.getConnection((err, connection) => { 
-              try {
-                connection.query(query, (error, results) => {
-                  connection.release();
-                  //console.log(err)
-                });
-              } catch (err) {
-                if (err) throw err;
-              }
-            });  
-      })
-}
-
-module.exports = execute_query_file;
+module.exports = executeQueryFile;
