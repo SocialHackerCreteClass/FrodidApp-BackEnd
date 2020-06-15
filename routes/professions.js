@@ -37,7 +37,7 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query('', (error, results) => {
+      connection.query( `INSERT INTO professions (name) VALUES ("${req.body.name}")`, (error, results) => {
         connection.release();
         res.send(results);
       });
@@ -51,7 +51,7 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query('', (error, results) => {
+      connection.query(`UPDATE professions SET name="${req.body.name}" WHERE id=${req.params.id}`, (error, results) => {
         connection.release();
         res.send(results);
       });
@@ -65,7 +65,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query('', (error, results) => {
+      connection.query(`DELETE FROM professions WHERE id=${req.params.id}`, (error, results) => {
         connection.release();
         res.send(results);
       });

@@ -37,7 +37,7 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query('', (error, results) => {
+      connection.query(`INSERT INTO users_patients (user_id, patient_id) VALUES (${req.body.user_id}, ${req.body.patient_id})`, (error, results) => {
         connection.release();
         res.send(results);
       });
@@ -51,7 +51,7 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query('', (error, results) => {
+      connection.query(`UPDATE users_patients SET user_id=${req.body.user_id}, patient_id=${req.body.patient_id} WHERE id=${req.params.id}`, (error, results) => {
         connection.release();
         res.send(results);
       });
@@ -65,7 +65,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query('', (error, results) => {
+      connection.query(`DELETE FROM user_patients WHERE id=${req.params.id}`, (error, results) => {
         connection.release();
         res.send(results);
       });

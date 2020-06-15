@@ -55,7 +55,6 @@ router.post('/', (req, res) => {
       connection.query(
         `
     INSERT INTO patients(
-      id,
       first_name,
       last_name,
       birth_date,
