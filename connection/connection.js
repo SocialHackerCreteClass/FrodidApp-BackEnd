@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 
 const pool = mysql.createPool({
-  host: "nodedock_mysql_1",
+  host: "ec2-18-185-118-132.eu-central-1.compute.amazonaws.com",
   port: 3306,
   user: "default",
   password: "secret",
