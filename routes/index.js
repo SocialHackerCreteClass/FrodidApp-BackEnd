@@ -1,5 +1,5 @@
 const express = require('express');
-const pool = require('../connection/connection');
+//const pool = require('../connection/connection');
 /*
 const fs = require('fs');
 const mysql_import = require('mysql-import');
@@ -26,16 +26,7 @@ router.get('/migration', (req, res) => {
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  pool.getConnection((err, connection) => {
-    try {
-      connection.query('SELECT * FROM users', (error, results) => {
-        connection.release();
-        res.send(results);
-      });
-    } catch (err) {
-      if (err) throw err;
-    }
-  });
+  res.send("Hello, guys!");
 });
 
 router.get('/whatever', (req, res) => {
