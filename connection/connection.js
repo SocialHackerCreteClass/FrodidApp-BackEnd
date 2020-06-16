@@ -1,11 +1,11 @@
 const mysql = require('mysql');
 
 const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
+  host: "nodedock_mysql_1",
+  port: 3306,
+  user: "default",
+  password: "secret",
+  database: "default",
   multipleStatements: true,
 });
 
