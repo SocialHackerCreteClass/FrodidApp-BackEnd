@@ -1,4 +1,5 @@
-function formatDate(date) {
+
+const formatDate = date => {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
@@ -12,4 +13,4 @@ function formatDate(date) {
     return [year, month, day].join('-');
 }
 
-module.export = formatDate ;
+module.exports = formatDate;
