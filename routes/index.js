@@ -1,5 +1,8 @@
 const express = require('express');
 const pool = require('../connection/connection');
+
+const faker = require('faker');
+const moment = require('moment');
 /*
 const fs = require('fs');
 const mysql_import = require('mysql-import');

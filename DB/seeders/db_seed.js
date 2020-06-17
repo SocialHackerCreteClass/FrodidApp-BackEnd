@@ -1,7 +1,7 @@
 require('dotenv').config();       // Allows pool to recognize enviroment variables. Gotta be before pool variable definition!!!
 const pool = require('../../connection/connection');
 const faker = require('faker');
-const formatDate = require('./formatDate');
+const moment = require('moment');
 
 pool.getConnection((err, connection) => {
     try {
@@ -38,8 +38,8 @@ pool.getConnection((err, connection) => {
                     "${faker.name.lastName()}",
                     "${faker.internet.email()}",
                     "${faker.internet.password()}",
-                    "${formatDate(faker.date.past())}",
-                    "${formatDate(faker.date.past())}",
+                    "${moment(faker.date.past()).format("YYYY-MM-DD")}",
+                    "${moment(faker.date.past()).format("YYYY-MM-DD")}",
                     "${faker.random.number({precision: 9})}",
                     "${faker.random.number({precision: 11})}",
                     "${faker.random.number({min:1, max:100})}",
@@ -81,7 +81,7 @@ pool.getConnection((error, connection) => {
                     end_time,
                     user_id
                 ) VALUES(
-                    "${formatDate(faker.date.past())}",
+                    "${moment(faker.date.past()).format("YYYY-MM-DD")}",
                     "${faker.lorem.sentence()}",
                     "12:45:00",
                     "14:45:00",
