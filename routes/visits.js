@@ -27,7 +27,8 @@ router.get('/:id', (req, res) => {
         (error, results) => {
           connection.release();
           res.send(results);
-        });
+        },
+      );
     } catch (error) {
       if (error) console.error(`Error: ${error.message}`);
     }
@@ -38,10 +39,22 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query('', (error, results) => {
-        connection.release();
-        res.send(results);
-      });
+      const visitInfo = [
+        new Date(req.body.date),
+        req.body.comment,
+        new Date(req.body.start_time),
+        new Date(req.body.end_time),
+        req.body.user_id,
+      ];
+
+      connection.query(
+        'INSERT INTO visits (date, comment, start_time, end_time, user_id) VALUES (?)',
+        [visitInfo],
+        () => {
+          connection.release();
+          res.send('Entry added.');
+        },
+      );
     } catch (error) {
       if (error) console.error(`Error: ${error.message}`);
     }
@@ -52,10 +65,18 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query('', (error, results) => {
-        connection.release();
-        res.send(results);
-      });
+      connection.query(
+        `UPDATE visits SET 
+      date=${new Date(req.body.date)},
+      comment="${req.body.comment}",
+      start_time=${new Date(req.body.start_time)},
+      end_time=${req.body.end_time},
+      user_id=${req.body.user_id} WHERE id=${req.params.id}`,
+        () => {
+          connection.release();
+          res.send('Entry updated.');
+        },
+      );
     } catch (error) {
       if (error) console.error(`Error: ${error.message}`);
     }
@@ -66,9 +87,9 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query('', (error, results) => {
+      connection.query(`DELETE FROM visits WHERE id=${req.params.id}`, () => {
         connection.release();
-        res.send(results);
+        res.send('Entry deleted.');
       });
     } catch (error) {
       if (error) console.error(`Error: ${error.message}`);

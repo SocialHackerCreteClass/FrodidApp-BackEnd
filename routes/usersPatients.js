@@ -26,7 +26,8 @@ router.get('/:id', (req, res) => {
         (error, results) => {
           connection.release();
           res.send(results);
-        });
+        },
+      );
     } catch (error) {
       if (error) console.error(`Error: ${error.message}`);
     }
@@ -37,10 +38,13 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query('', (error, results) => {
-        connection.release();
-        res.send(results);
-      });
+      connection.query(
+        `INSERT INTO users_patients (user_id, patient_id) VALUES (${req.body.user_id}, ${req.body.patient_id})`,
+        () => {
+          connection.release();
+          res.send('Entry added.');
+        },
+      );
     } catch (error) {
       if (error) console.error(`Error: ${error.message}`);
     }
@@ -51,10 +55,13 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query('', (error, results) => {
-        connection.release();
-        res.send(results);
-      });
+      connection.query(
+        `UPDATE users_patients SET user_id=${req.body.user_id}, patient_id=${req.body.patient_id} WHERE id=${req.params.id}`,
+        () => {
+          connection.release();
+          res.send('Entry updated.');
+        },
+      );
     } catch (error) {
       if (error) console.error(`Error: ${error.message}`);
     }
@@ -65,10 +72,13 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query('', (error, results) => {
-        connection.release();
-        res.send(results);
-      });
+      connection.query(
+        `DELETE FROM user_patients WHERE id=${req.params.id}`,
+        () => {
+          connection.release();
+          res.send('Entry deleted.');
+        },
+      );
     } catch (error) {
       if (error) console.error(`Error: ${error.message}`);
     }

@@ -90,6 +90,14 @@ router.put('/:id', (req, res) => {
 /* DELETE method */
 router.delete('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
+    connection.query(
+      `DELETE FROM addresses WHERE id=${req.params.id}`,
+      (error) => {
+        connection.release();
+        if (error) throw error;
+        res.send('Entry deleted.');
+      },
+    );
     try {
       connection.query(
         `DELETE FROM addresses WHERE id=${req.params.id}`,
