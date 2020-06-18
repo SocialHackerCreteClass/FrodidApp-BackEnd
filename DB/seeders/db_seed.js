@@ -8,13 +8,11 @@ pool.getConnection((err, connection) => {
     [...Array(100)].forEach(() => {
       connection.query(
         `INSERT INTO countries (name) VALUES ("${faker.address.country()}")`,
-        (error, results) => {
-          console.log(results);
-        },
+        () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
 });
 
@@ -23,13 +21,11 @@ pool.getConnection((err, connection) => {
     [...Array(50)].forEach(() => {
       connection.query(
         `INSERT INTO states (name) VALUES ("${faker.address.state()}")`,
-        (error, results) => {
-          console.log(results);
-        },
+        () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
 });
 
@@ -52,13 +48,11 @@ pool.getConnection((err, connection) => {
             ${faker.random.number(99)},
             ${faker.random.number(49)})
             `,
-        (error, results) => {
-          console.log(results);
-        },
+        () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
 });
 
@@ -66,12 +60,10 @@ pool.getConnection((err, connection) => {
   try {
     connection.query(
       'INSERT INTO genders (name) VALUES ("male"), ("female"), ("other")',
-      (error, results) => {
-        console.log(results);
-      },
+      () => {},
     );
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
 });
 
@@ -103,13 +95,11 @@ pool.getConnection((err, connection) => {
           ${faker.random.number({ min: 0, max: 2 })},
           ${faker.random.number(99)}
         )`,
-        (error, results) => {
-          console.log(results);
-        },
+        () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
 });
 
@@ -118,13 +108,22 @@ pool.getConnection((err, connection) => {
     [...Array(100)].forEach(() => {
       connection.query(
         `INSERT INTO professions (name) VALUES ("${faker.name.jobTitle()}")`,
-        (error, results) => {
-          console.log(results);
-        },
+        () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
+  }
+});
+
+pool.getConnection((err, connection) => {
+  try {
+    connection.query(
+      'INSERT INTO roles (name) VALUES ("admin"), ("user")',
+      () => {},
+    );
+  } catch (error) {
+    if (error) console.error(`Error: ${error}`);
   }
 });
 
@@ -156,13 +155,11 @@ pool.getConnection((err, connection) => {
           ${faker.random.number({ min: 0, max: 1 })},
           ${faker.random.number(99)}
         )`,
-        (error, results) => {
-          console.log(results);
-        },
+        () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
 });
 
@@ -184,13 +181,11 @@ pool.getConnection((err, connection) => {
           ${moment(faker.date.past()).format('HH:MM:SS')},
           ${faker.random.number(99)}
         )`,
-        (error, results) => {
-          console.log(results);
-        },
+        () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
 });
 
@@ -221,73 +216,16 @@ pool.getConnection((err, connection) => {
                     "${faker.random.number({ min: 1, max: 2 })}",
                     "${faker.random.number({ min: 1, max: 100 })}"
                 )`,
-        (error, results) => {
-          console.log(results);
-        },
+        () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
 });
 
 pool.getConnection((err, connection) => {
   try {
-    [...Array(100)].forEach(() => {
-      connection.query(
-        `INSERT INTO professions (name) VALUES ("${faker.name.jobTitle()}")`,
-        (error, results) => {
-          console.log(results);
-        },
-      );
-    });
-  } catch (error) {
-    console.error(`Error: ${error}`);
-  }
-});
-
-pool.getConnection((err, connection) => {
-  try {
-    [...Array(100)].forEach(() => {
-      connection.query(
-        `INSERT INTO visits(
-                    date,
-                    comment,
-                    start_time,
-                    end_time,
-                    user_id
-                ) VALUES(
-                    "${moment(faker.date.past()).format('YYYY-MM-DD')}",
-                    "${faker.lorem.sentence()}",
-                    "${moment(faker.date.past()).format('HH:MM:SS')}",
-                    "${moment(faker.date.past()).format('HH:MM:SS')}",
-                    "${faker.random.number({ min: 1, max: 100 })}"
-                )`,
-        (error, results) => {
-          console.log(results);
-        },
-      );
-    });
-    [...Array(100)].forEach(() => {
-      connection.query(
-        `INSERT INTO visits(
-          date,
-          comment,
-          start_time,
-          end_time,
-          user_id
-        ) VALUES (
-          "${formatDate(faker.date.recent())}",
-          "${faker.lorem.sentence()}",
-          "11:00",
-          "12:00",
-          ${faker.random.number({ min: 1, max: 100 })}
-        )`,
-        (error, results) => {
-          console.log(results);
-        },
-      );
-    });
     [...Array(100)].forEach(() => {
       connection.query(
         `INSERT INTO users_patients (
@@ -297,12 +235,10 @@ pool.getConnection((err, connection) => {
                     "${faker.random.number({ min: 1, max: 100 })}", 
                     "${faker.random.number({ min: 1, max: 100 })}"
                 )`,
-        (error, results) => {
-          console.log(results);
-        },
+        () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
 });
