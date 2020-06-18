@@ -11,11 +11,10 @@ pool.getConnection((err, connection) => {
         () => {},
       );
     });
+    console.log('Inserted into countries');
   } catch (error) {
     if (error) console.error(`Error: ${error}`);
   }
-
-  console.log('Inserted into countries');
 });
 
 pool.getConnection((err, connection) => {
@@ -26,11 +25,10 @@ pool.getConnection((err, connection) => {
         () => {},
       );
     });
+    console.log('Inserted into states');
   } catch (error) {
     if (error) console.error(`Error: ${error}`);
   }
-
-  console.log('Inserted into states');
 });
 
 pool.getConnection((err, connection) => {
@@ -49,17 +47,17 @@ pool.getConnection((err, connection) => {
             "${faker.random.number({ min: 10000, max: 99999 })}",
             "region",
             "${faker.address.zipCode()}",
-            1,
-            1
+            "${faker.random.number({ min: 1, max: 100 })}",
+            "${faker.random.number({ min: 1, max: 50 })}"
+            )
             `,
         () => {},
       );
     });
+    console.log('Inserted into addresses');
   } catch (error) {
     if (error) console.error(`Error: ${error}`);
   }
-
-  console.log('Inserted into addresses');
 });
 
 pool.getConnection((err, connection) => {
@@ -68,11 +66,10 @@ pool.getConnection((err, connection) => {
       'INSERT INTO genders (name) VALUES ("male"), ("female"), ("other")',
       () => {},
     );
+    console.log('Inserted into genders');
   } catch (error) {
     if (error) console.error(`Error: ${error}`);
   }
-
-  console.log('Inserted into genders');
 });
 
 pool.getConnection((err, connection) => {
@@ -101,14 +98,14 @@ pool.getConnection((err, connection) => {
           "${faker.lorem.sentence()}",
           1,
           1
-        )`, () => {},
+        )`,
+        () => {},
       );
     });
+    console.log('Inserted into patients');
   } catch (error) {
     if (error) console.error(`Error: ${error}`);
   }
-
-  console.log('PATIENTS');
 });
 
 pool.getConnection((err, connection) => {
@@ -119,11 +116,10 @@ pool.getConnection((err, connection) => {
         () => {},
       );
     });
+    console.log('Inserted into professions');
   } catch (error) {
     if (error) console.error(`Error: ${error}`);
   }
-
-  console.log('Inserted into professions');
 });
 
 pool.getConnection((err, connection) => {
@@ -132,11 +128,10 @@ pool.getConnection((err, connection) => {
       'INSERT INTO roles (name) VALUES ("admin"), ("user")',
       () => {},
     );
+    console.log('Inserted into roles');
   } catch (error) {
     if (error) console.error(`Error: ${error}`);
   }
-
-  console.log('Inserted into roles');
 });
 
 pool.getConnection((err, connection) => {
@@ -156,25 +151,24 @@ pool.getConnection((err, connection) => {
           role_id,
           profession_id
         ) VALUES (
-          "YES",
-          "NO",
-          "YESNO@gmail.com",
-          "123password",
+          "${faker.name.firstName()}",
+          "${faker.name.lastName()}",
+          "${faker.internet.email()}",
+          "${faker.internet.password()}",
           "${moment(faker.date.past()).format('YYYY-MM-DD')}",
           "${moment(faker.date.past()).format('YYYY-MM-DD')}",
-          "123123",
-          "123123",
+          "${faker.random.number({ min: 10000, max: 99999 })}",
+          "${faker.random.number({ min: 10000, max: 99999 })}",
           1,
           1
         )`,
         () => {},
       );
     });
+    console.log('Inserted into users');
   } catch (error) {
     if (error) console.error(`Error: ${error}`);
   }
-
-  console.log('Inserted into users');
 });
 
 pool.getConnection((err, connection) => {
@@ -189,20 +183,19 @@ pool.getConnection((err, connection) => {
           end_time,
           user_id
         ) VALUES (
-          ${moment(faker.date.past()).format('YYYY-MM-DD')},
-          "${faker.lorem.sentence()}"
-          ${moment(faker.date.past()).format('HH:MM:SS')},
-          ${moment(faker.date.past()).format('HH:MM:SS')},
-          1
+          "${moment(faker.date.past()).format('YYYY-MM-DD')}",
+          "${faker.lorem.sentence()}",
+          "${moment(faker.date.recent()).format('HH:MM:SS')}",
+          "${moment(faker.date.recent()).format('HH:MM:SS')}",
+          "${faker.random.number({ min: 1, max: 100 })}"
         )`,
         () => {},
       );
     });
+    console.log('Inserted into visits');
   } catch (error) {
     if (error) console.error(`Error: ${error}`);
   }
-
-  console.log('Inserted into visits');
 });
 
 pool.getConnection((err, connection) => {
@@ -219,9 +212,8 @@ pool.getConnection((err, connection) => {
         () => {},
       );
     });
+    console.log('Inserted into users_patients');
   } catch (error) {
     if (error) console.error(`Error: ${error}`);
   }
-
-  console.log('Inserted into users_patients');
 });
