@@ -8,14 +8,14 @@ pool.getConnection((err, connection) => {
     [...Array(100)].forEach(() => {
       connection.query(
         `INSERT INTO countries (name) VALUES ("${faker.address.country()}")`,
-        (error, results) => {
-          console.log(results);
-        },
+        () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
+
+  console.log('Inserted into countries');
 });
 
 pool.getConnection((err, connection) => {
@@ -23,14 +23,14 @@ pool.getConnection((err, connection) => {
     [...Array(50)].forEach(() => {
       connection.query(
         `INSERT INTO states (name) VALUES ("${faker.address.state()}")`,
-        (error, results) => {
-          console.log(results);
-        },
+        () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
+
+  console.log('Inserted into states');
 });
 
 pool.getConnection((err, connection) => {
@@ -52,35 +52,34 @@ pool.getConnection((err, connection) => {
             ${faker.random.number(99)},
             ${faker.random.number(49)})
             `,
-        (error, results) => {
-          console.log(results);
-        },
+        () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
+
+  console.log('Inserted into addresses');
 });
 
 pool.getConnection((err, connection) => {
   try {
     connection.query(
       'INSERT INTO genders (name) VALUES ("male"), ("female"), ("other")',
-      (error, results) => {
-        console.log(results);
-      },
+      () => {},
     );
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
+
+  console.log('Inserted into genders');
 });
 
 pool.getConnection((err, connection) => {
   try {
     [...Array(100)].forEach(() => {
       connection.query(
-        `
-        INSERT INTO patients(
+        `INSERT INTO patients(
           first_name,
           last_name,
           birth_date,
@@ -94,23 +93,22 @@ pool.getConnection((err, connection) => {
         ) VALUES (
           "${faker.name.firstName()}",
           "${faker.name.lastName()}",
-          ${moment(faker.date.past()).format('YYYY-MM-DD')},
+          "${moment(faker.date.past()).format('YYYY-MM-DD')}",
           "${faker.phone.phoneNumber()}",
           "${faker.phone.phoneNumber()}",
-          "${faker.random.number()}",
-          "${faker.random.number()}",
+          "${faker.random.number(10)}",
+          "${faker.random.number(10)}",
           "${faker.lorem.sentence()}",
           ${faker.random.number({ min: 0, max: 2 })},
-          ${faker.random.number(99)}
-        )`,
-        (error, results) => {
-          console.log(results);
-        },
+          ${faker.random.number({ min: 0, max: 99 })}
+        )`, () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
+
+  console.log('PATIENTS');
 });
 
 pool.getConnection((err, connection) => {
@@ -118,14 +116,27 @@ pool.getConnection((err, connection) => {
     [...Array(100)].forEach(() => {
       connection.query(
         `INSERT INTO professions (name) VALUES ("${faker.name.jobTitle()}")`,
-        (error, results) => {
-          console.log(results);
-        },
+        () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
+
+  console.log('Inserted into professions');
+});
+
+pool.getConnection((err, connection) => {
+  try {
+    connection.query(
+      'INSERT INTO roles (name) VALUES ("admin"), ("user")',
+      () => {},
+    );
+  } catch (error) {
+    if (error) console.error(`Error: ${error}`);
+  }
+
+  console.log('Inserted into roles');
 });
 
 pool.getConnection((err, connection) => {
@@ -156,14 +167,14 @@ pool.getConnection((err, connection) => {
           ${faker.random.number({ min: 0, max: 1 })},
           ${faker.random.number(99)}
         )`,
-        (error, results) => {
-          console.log(results);
-        },
+        () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
+
+  console.log('Inserted into users');
 });
 
 pool.getConnection((err, connection) => {
@@ -184,110 +195,18 @@ pool.getConnection((err, connection) => {
           ${moment(faker.date.past()).format('HH:MM:SS')},
           ${faker.random.number(99)}
         )`,
-        (error, results) => {
-          console.log(results);
-        },
+        () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
+
+  console.log('Inserted into visits');
 });
 
 pool.getConnection((err, connection) => {
   try {
-    [...Array(100)].forEach(() => {
-      connection.query(
-        `INSERT INTO users(
-                    first_name,
-                    last_name,
-                    email,
-                    password,
-                    birth_date,
-                    created_at,
-                    afm,
-                    amka,
-                    role_id,
-                    profession_id
-                ) VALUES (
-                    "${faker.name.firstName()}",
-                    "${faker.name.lastName()}",
-                    "${faker.internet.email()}",
-                    "${faker.internet.password()}",
-                    "${moment(faker.date.past()).format('YYYY-MM-DD')}",
-                    "${moment(faker.date.past()).format('YYYY-MM-DD')}",
-                    "${faker.random.number({ precision: 9 })}",
-                    "${faker.random.number({ precision: 11 })}",
-                    "${faker.random.number({ min: 1, max: 2 })}",
-                    "${faker.random.number({ min: 1, max: 100 })}"
-                )`,
-        (error, results) => {
-          console.log(results);
-        },
-      );
-    });
-  } catch (error) {
-    console.error(`Error: ${error}`);
-  }
-});
-
-pool.getConnection((err, connection) => {
-  try {
-    [...Array(100)].forEach(() => {
-      connection.query(
-        `INSERT INTO professions (name) VALUES ("${faker.name.jobTitle()}")`,
-        (error, results) => {
-          console.log(results);
-        },
-      );
-    });
-  } catch (error) {
-    console.error(`Error: ${error}`);
-  }
-});
-
-pool.getConnection((err, connection) => {
-  try {
-    [...Array(100)].forEach(() => {
-      connection.query(
-        `INSERT INTO visits(
-                    date,
-                    comment,
-                    start_time,
-                    end_time,
-                    user_id
-                ) VALUES(
-                    "${moment(faker.date.past()).format('YYYY-MM-DD')}",
-                    "${faker.lorem.sentence()}",
-                    "${moment(faker.date.past()).format('HH:MM:SS')}",
-                    "${moment(faker.date.past()).format('HH:MM:SS')}",
-                    "${faker.random.number({ min: 1, max: 100 })}"
-                )`,
-        (error, results) => {
-          console.log(results);
-        },
-      );
-    });
-    [...Array(100)].forEach(() => {
-      connection.query(
-        `INSERT INTO visits(
-          date,
-          comment,
-          start_time,
-          end_time,
-          user_id
-        ) VALUES (
-          "${formatDate(faker.date.recent())}",
-          "${faker.lorem.sentence()}",
-          "11:00",
-          "12:00",
-          ${faker.random.number({ min: 1, max: 100 })}
-        )`,
-        (error, results) => {
-          console.log(results);
-        },
-      );
-    });
     [...Array(100)].forEach(() => {
       connection.query(
         `INSERT INTO users_patients (
@@ -297,12 +216,12 @@ pool.getConnection((err, connection) => {
                     "${faker.random.number({ min: 1, max: 100 })}", 
                     "${faker.random.number({ min: 1, max: 100 })}"
                 )`,
-        (error, results) => {
-          console.log(results);
-        },
+        () => {},
       );
     });
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error}`);
   }
+
+  console.log('Inserted into users_patients');
 });
