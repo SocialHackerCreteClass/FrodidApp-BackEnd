@@ -49,8 +49,8 @@ pool.getConnection((err, connection) => {
             "${faker.random.number({ min: 10000, max: 99999 })}",
             "region",
             "${faker.address.zipCode()}",
-            ${faker.random.number(99)},
-            ${faker.random.number(49)})
+            1,
+            1
             `,
         () => {},
       );
@@ -96,11 +96,11 @@ pool.getConnection((err, connection) => {
           "${moment(faker.date.past()).format('YYYY-MM-DD')}",
           "${faker.phone.phoneNumber()}",
           "${faker.phone.phoneNumber()}",
-          "${faker.random.number(10)}",
-          "${faker.random.number(10)}",
+          "${faker.random.number({ min: 10000, max: 99999 })}",
+          "${faker.random.number({ min: 10000, max: 99999 })}",
           "${faker.lorem.sentence()}",
-          ${faker.random.number({ min: 0, max: 2 })},
-          ${faker.random.number({ min: 0, max: 99 })}
+          1,
+          1
         )`, () => {},
       );
     });
@@ -156,16 +156,16 @@ pool.getConnection((err, connection) => {
           role_id,
           profession_id
         ) VALUES (
-          "${faker.name.firstName()}",
-          "${faker.name.lastName()}",
-          "${faker.internet.email()}",
-          "${faker.internet.password()}",
-          ${moment(faker.date.past()).format('YYYY-MM-DD')},
-          ${moment(faker.date.past()).format('YYYY-MM-DD')},
-          "${faker.random.number()}",
-          "${faker.random.number()}",
-          ${faker.random.number({ min: 0, max: 1 })},
-          ${faker.random.number(99)}
+          "YES",
+          "NO",
+          "YESNO@gmail.com",
+          "123password",
+          "${moment(faker.date.past()).format('YYYY-MM-DD')}",
+          "${moment(faker.date.past()).format('YYYY-MM-DD')}",
+          "123123",
+          "123123",
+          1,
+          1
         )`,
         () => {},
       );
@@ -193,7 +193,7 @@ pool.getConnection((err, connection) => {
           "${faker.lorem.sentence()}"
           ${moment(faker.date.past()).format('HH:MM:SS')},
           ${moment(faker.date.past()).format('HH:MM:SS')},
-          ${faker.random.number(99)}
+          1
         )`,
         () => {},
       );
