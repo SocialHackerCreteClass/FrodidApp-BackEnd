@@ -51,7 +51,10 @@ pool.getConnection((err, connection) => {
             "${faker.random.number({ min: 1, max: 50 })}"
             )
             `,
-        () => {},
+        (error, results) => {
+          if (error) console.error(`Error: ${error}`);
+          console.log(results);
+        },
       );
     });
     console.log('Inserted into addresses');
@@ -99,7 +102,10 @@ pool.getConnection((err, connection) => {
           "${faker.random.number({ min: 1, max: 3 })}",
           "${faker.random.number({ min: 1, max: 100 })}"
         )`,
-        () => {},
+        (error, results) => {
+          if (error) console.error(`Error: ${error}`);
+          console.log(results);
+        },
       );
     });
     console.log('Inserted into patients');
