@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `a004_visits`;
 CREATE TABLE `a004_visits` (
   `id` int NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
-  `comment` text NOT NULL,
+  `comment` text DEFAULT NULL,
   `start_time` time NOT NULL,
   `end_time` time NOT NULL,
   `user_id` int NOT NULL,

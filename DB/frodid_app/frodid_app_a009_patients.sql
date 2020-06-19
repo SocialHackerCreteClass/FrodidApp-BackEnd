@@ -31,7 +31,7 @@ CREATE TABLE `a009_patients` (
   `mobile` varchar(45) DEFAULT NULL,
   `amka` varchar(45) NOT NULL,
   `afm` varchar(45) NOT NULL,
-  `comments` text NOT NULL,
+  `comments` text DEFAULT NULL,
   `gender_id` int NOT NULL,
   `address_id` int NOT NULL,
   PRIMARY KEY (`id`),
