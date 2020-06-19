@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "db:migrate": "node DB/migrations/migration",
-    "db:seed": "node DB/seeders/testSeed"
+    "db:seed": "node DB/seeders/db_seed"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
