@@ -96,8 +96,8 @@ pool.getConnection((err, connection) => {
           "${faker.random.number({ min: 10000, max: 99999 })}",
           "${faker.random.number({ min: 10000, max: 99999 })}",
           "${faker.lorem.sentence()}",
-          1,
-          1
+          "${faker.random.number({ min: 1, max: 3 })}",
+          "${faker.random.number({ min: 1, max: 100 })}"
         )`,
         () => {},
       );
@@ -159,8 +159,8 @@ pool.getConnection((err, connection) => {
           "${moment(faker.date.past()).format('YYYY-MM-DD')}",
           "${faker.random.number({ min: 10000, max: 99999 })}",
           "${faker.random.number({ min: 10000, max: 99999 })}",
-          1,
-          1
+          "${faker.random.number({ min: 1, max: 2 })}",
+          "${faker.random.number({ min: 1, max: 100 })}"
         )`,
         () => {},
       );
@@ -202,17 +202,15 @@ pool.getConnection((err, connection) => {
   try {
     [...Array(100)].forEach(() => {
       connection.query(
-        `INSERT INTO users_patients (
-                    user_id, 
-                    patient_id
-                ) VALUES (
-                    "${faker.random.number({ min: 1, max: 100 })}", 
-                    "${faker.random.number({ min: 1, max: 100 })}"
-                )`,
-        () => {},
+        `INSERT INTO users_patients(
+          user_id,
+          patient_id
+          ) VALUES (
+            "${faker.random.number({ min: 1, max: 100 })}",
+            "${faker.random.number({ min: 1, max: 100 })}"
+          )`,
       );
     });
-    console.log('Inserted into users_patients');
   } catch (error) {
     if (error) console.error(`Error: ${error}`);
   }
