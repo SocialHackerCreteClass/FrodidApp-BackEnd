@@ -16,13 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `a009_patients`
+-- Table structure for table `a009_patients`
 --
 
-LOCK TABLES `a009_patients` WRITE;
-/*!40000 ALTER TABLE `a009_patients` DISABLE KEYS */;
-/*!40000 ALTER TABLE `a009_patients` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `a009_patients`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `a009_patients` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(45) NOT NULL,
+  `last_name` varchar(45) NOT NULL,
+  `birth_date` date NOT NULL,
+  `telephone` varchar(45) DEFAULT NULL,
+  `mobile` varchar(45) DEFAULT NULL,
+  `amka` varchar(45) NOT NULL,
+  `afm` varchar(45) NOT NULL,
+  `comments` text NOT NULL,
+  `gender_id` int NOT NULL,
+  `address_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `gender_id_idx` (`gender_id`),
+  KEY `address_id_idx` (`address_id`),
+  CONSTRAINT `fk_address` FOREIGN KEY (`address_id`) REFERENCES `a007_addresses` (`id`),
+  CONSTRAINT `fk_gender` FOREIGN KEY (`gender_id`) REFERENCES `a008_genders` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -33,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-19 12:44:25
+-- Dump completed on 2020-06-19 13:05:46

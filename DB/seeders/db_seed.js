@@ -28,7 +28,7 @@ function isNotBIO() {
 pool.getConnection((err, connection) => {
   try {
     connection.query(
-      'INSERT INTO roles (name) VALUES ("admin"), ("user");',
+      'INSERT INTO a001_roles (name) VALUES ("admin"), ("user");',
       () => {
         connection.release();
       },
@@ -41,7 +41,7 @@ pool.getConnection((err, connection) => {
 pool.getConnection((err, connection) => {
   try {
     connection.query(
-      'INSERT INTO genders (name) VALUES ("male"), ("female"), ("other");',
+      'INSERT INTO a008_genders (name) VALUES ("male"), ("female"), ("other");',
       () => {
         connection.release();
       },
@@ -52,15 +52,15 @@ pool.getConnection((err, connection) => {
 });
 
 (async () => {
-  await seed.seed(99, 'countries', {
+  await seed.seed(99, 'a005_countries', {
     name: isNotBIO,
   });
 
-  await seed.seed(49, 'states', {
+  await seed.seed(49, 'a006_states', {
     name: faker.address.state,
   });
 
-  await seed.seed(99, 'addresses', {
+  await seed.seed(99, 'a007_addresses', {
     street: faker.address.streetName,
     street_no: () => faker.random.number({ min: 1, max: 30 }),
     region: 'region',
@@ -69,11 +69,11 @@ pool.getConnection((err, connection) => {
     state_id: () => faker.random.number({ min: 1, max: 50 }),
   });
 
-  await seed.seed(99, 'professions', {
+  await seed.seed(99, 'a002_professions', {
     name: faker.name.jobTitle,
   });
 
-  await seed.seed(99, 'patients', {
+  await seed.seed(99, 'a009_patients', {
     first_name: faker.name.firstName,
     last_name: faker.name.lastName,
     birth_date: () => moment(faker.date.past()).format('YYYY-MM-DD'),
@@ -86,7 +86,7 @@ pool.getConnection((err, connection) => {
     address_id: () => faker.random.number({ min: 1, max: 100 }),
   });
 
-  await seed.seed(99, 'users', {
+  await seed.seed(99, 'a003_users', {
     first_name: faker.name.firstName,
     last_name: faker.name.lastName,
     email: faker.internet.email,
@@ -99,7 +99,7 @@ pool.getConnection((err, connection) => {
     profession_id: () => faker.random.number({ min: 1, max: 100 }),
   });
 
-  await seed.seed(99, 'visits', {
+  await seed.seed(99, 'a004_visits', {
     date: () => moment(faker.date.recent()).format('YYYY-MM-DD'),
     comment: faker.lorem.sentence,
     start_time: () => `${moment(faker.date.recent()).format('HH:MM')}:00`,
@@ -107,7 +107,7 @@ pool.getConnection((err, connection) => {
     user_id: () => faker.random.number({ min: 1, max: 100 }),
   });
 
-  await seed.seed(99, 'users_patients', {
+  await seed.seed(99, 'a010_users_patients', {
     user_id: () => faker.random.number({ min: 1, max: 100 }),
     patient_id: () => faker.random.number({ min: 1, max: 100 }),
   });

@@ -16,13 +16,23 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `a010_users_patients`
+-- Table structure for table `a010_users_patients`
 --
 
-LOCK TABLES `a010_users_patients` WRITE;
-/*!40000 ALTER TABLE `a010_users_patients` DISABLE KEYS */;
-/*!40000 ALTER TABLE `a010_users_patients` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `a010_users_patients`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `a010_users_patients` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `patient_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id_idx` (`user_id`),
+  KEY `fk_patient_idx` (`patient_id`),
+  CONSTRAINT `fk_patient` FOREIGN KEY (`patient_id`) REFERENCES `a009_patients` (`id`),
+  CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `a003_users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -33,4 +43,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-19 12:44:25
+-- Dump completed on 2020-06-19 13:05:46
