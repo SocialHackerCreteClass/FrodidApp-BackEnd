@@ -10,7 +10,6 @@ router.get('/', (req, res) => {
       connection.query('SELECT * FROM users', (error, results) => {
         connection.release();
         res.send(results);
-        res.redirect('/');
       });
     } catch (error) {
       if (error) console.error(`Error: ${error.message}`);
