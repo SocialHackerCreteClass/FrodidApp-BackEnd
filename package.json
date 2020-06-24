@@ -22,7 +22,8 @@
     "mysql": "^2.18.1",
     "mysql-db-seed": "0.0.4",
     "mysql-import": "^4.0.24",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "pg": "^8.2.1"
   },
   "devDependencies": {
     "eslint": "^6.8.0",

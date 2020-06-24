@@ -3,7 +3,8 @@ const pool = require('../connection/connection');
 
 const router = express.Router();
 
-// Get Method
+// Get Method MYSQL
+/*
 router.get('/', (req, res) => {
   pool.getConnection((err, connection) => {
     try {
@@ -14,6 +15,16 @@ router.get('/', (req, res) => {
     } catch (error) {
       if (error) console.error(`Error: ${error.message}`);
     }
+  });
+});
+*/
+
+// Get Method POSTGRESQL
+router.get('/', (req, res) => {
+  pool.query('SELECT NOW()', (err, r) => {
+    console.log(err);
+    res.send(r);
+    pool.end()
   });
 });
 
