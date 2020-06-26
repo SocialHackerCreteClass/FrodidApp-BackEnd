@@ -32,10 +32,13 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query(`SELECT * FROM users WHERE id=${req.params.id}`, (error, results) => {
-        connection.release();
-        res.send(results);
-      });
+      connection.query(
+        `SELECT * FROM users WHERE id=${req.params.id}`,
+        (error, results) => {
+          connection.release();
+          res.send(results);
+        },
+      );
     } catch (error) {
       if (error) console.error(`Error: ${error.message}`);
     }
@@ -59,7 +62,8 @@ router.post('/', (req, res) => {
     ];
 
     try {
-      connection.query(`INSERT INTO users (
+      connection.query(
+        `INSERT INTO users (
       first_name,
       last_name,
       email,
@@ -70,21 +74,47 @@ router.post('/', (req, res) => {
       amka,
       role_id,
       profession_id
-    ) VALUES (?)`, [userInfo], (error, results) => {
-        connection.release();
-        res.send(results);
-      });
+    ) VALUES (?)`,
+        [userInfo],
+        (error, results) => {
+          connection.release();
+          res.send(results);
+        },
+      );
     } catch (error) {
       if (error) console.error(`Error: ${error.message}`);
     }
   });
 });
 
+/* Login method */
+router.post('/login', (req, res) => {
+  const { email, password } = req.body;
+
+  if (email && password) {
+    pool.getConnection((err, connection) => {
+      connection.query(
+        'SELECT * FROM users WHERE email = ? AND password = ?',
+        [email, password],
+        (error, results) => {
+          connection.release();
+          if (results.length > 0) {
+            res.send(`Welcome, ${results[0].first_name}`);
+          } else {
+            res.send('Invalid email or password.');
+          }
+        },
+      );
+    });
+  }
+});
+
 // Put Method
 router.put('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query(`
+      connection.query(
+        `
     UPDATE patients SET 
     first_name="${req.body.first_name}",
     last_name="${req.body.last_name}",
@@ -94,10 +124,12 @@ router.put('/:id', (req, res) => {
     afm=${req.body.afm},
     role_id=${req.body.role_id},
     profession_id=${req.body.profession_id}
-    WHERE id=${req.params.id}`, (error, results) => {
-        connection.release();
-        res.send(results);
-      });
+    WHERE id=${req.params.id}`,
+        (error, results) => {
+          connection.release();
+          res.send(results);
+        },
+      );
     } catch (error) {
       if (error) console.error(`Error: ${error.message}`);
     }
@@ -108,10 +140,13 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query(`DELETE FROM users WHERE id=${req.params.id}`, (error, results) => {
-        connection.release();
-        res.send(results);
-      });
+      connection.query(
+        `DELETE FROM users WHERE id=${req.params.id}`,
+        (error, results) => {
+          connection.release();
+          res.send(results);
+        },
+      );
     } catch (error) {
       if (error) console.error(`Error: ${error.message}`);
     }
