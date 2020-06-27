@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "db:migrate": "node DB/migrations/migration",
-    "db:seed": "node DB/seeders/db_seed"
+    "db:seed": "knex seed:run"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -17,6 +17,7 @@
     "faker": "^4.1.0",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "knex": "^0.21.1",
     "moment": "^2.26.0",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
