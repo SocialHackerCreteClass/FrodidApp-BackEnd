@@ -3,6 +3,139 @@ const pool = require('../connection/connection');
 
 const router = express.Router();
 
+//  PG GET METHOD
+router.get('/', (req, res) => {
+  try {
+    pool.query('SELECT * FROM a003_users', (err, results) => {
+      res.send(results);
+      pool.end();
+    });
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+  }
+});
+
+// PG GET WITH ID METHOD
+router.get('/:id', (req, res) => {
+  try {
+    pool.query(
+      `SELECT * FROM a003_users WHERE id=${req.params.id}`,
+      (err, results) => {
+        res.send(results);
+        pool.end();
+      }
+    );
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+  }
+});
+
+//  PG POST METHOD
+router.post('/', (req, res) => {
+  pool.query(() => {
+    const userInfo = [
+      req.body.first_name,
+      req.body.last_name,
+      req.body.email,
+      req.body.password,
+      new Date(req.body.birth_date),
+      new Date(req.body.created_at),
+      req.body.amka,
+      req.body.afm,
+      req.body.role_id,
+      req.body.profession_id,
+    ];
+
+    try {
+      pool.query(
+        `INSERT INTO a003_users (
+      first_name,
+      last_name,
+      email,
+      password,
+      birth_date,
+      created_at,
+      afm,
+      amka,
+      role_id,
+      profession_id
+    ) VALUES (?)`,
+        [userInfo],
+        (error, results) => {
+          res.send(results);
+          pool.end();
+        }
+      );
+    } catch (error) {
+      if (error) console.error(`Error: ${error.message}`);
+    }
+  });
+});
+
+/* Login method */
+router.post('/login', (req, res) => {
+  const { email, password } = req.body;
+
+  if (email && password) {
+    pool.query(
+      'SELECT * FROM a003_users WHERE email = ? AND password = ?',
+      [email, password],
+      (error, results) => {
+        pool.end();
+        if (results.length > 0) {
+          res.send(`Welcome, ${results[0].first_name}`);
+        } else {
+          res.send('Invalid email or password.');
+        }
+      }
+    );
+  }
+});
+
+// Put Method
+router.put('/:id', (req, res) => {
+  try {
+    pool.query(
+      `
+  UPDATE a003_users SET 
+  first_name="${req.body.first_name}",
+  last_name="${req.body.last_name}",
+  birth_date=${new Date(req.body.birth_date)},
+  created_at=${new Date(req.body.created_at)},
+  amka=${req.body.amka},
+  afm=${req.body.afm},
+  role_id=${req.body.role_id},
+  profession_id=${req.body.profession_id}
+  WHERE id=${req.params.id}`,
+      (error, results) => {
+        pool.end();
+        res.send(results);
+      }
+    );
+  } catch (error) {
+    if (error) console.error(`Error: ${error.message}`);
+  }
+});
+
+// Delete Method
+router.delete('/:id', (req, res) => {
+  try {
+    pool.query(
+      `DELETE FROM a003_users WHERE id=${req.params.id}`,
+      (error, results) => {
+        pool.end();
+        res.send(results);
+      }
+    );
+  } catch (error) {
+    if (error) console.error(`Error: ${error.message}`);
+  }
+});
+
+module.exports = router;
+// ------------------
+// MYSQL
+// ------------------
 // Get Method MYSQL
 /*
 router.get('/', (req, res) => {
@@ -19,138 +152,127 @@ router.get('/', (req, res) => {
 });
 */
 
-// Get Method POSTGRESQL
-router.get('/', (req, res) => {
-  pool.query('SELECT NOW()', (err, r) => {
-    console.log(err);
-    res.send(r);
-    pool.end()
-  });
-});
-
 // Get with id Method
-router.get('/:id', (req, res) => {
-  pool.getConnection((err, connection) => {
-    try {
-      connection.query(
-        `SELECT * FROM users WHERE id=${req.params.id}`,
-        (error, results) => {
-          connection.release();
-          res.send(results);
-        },
-      );
-    } catch (error) {
-      if (error) console.error(`Error: ${error.message}`);
-    }
-  });
-});
+// router.get('/:id', (req, res) => {
+//   pool.getConnection((err, connection) => {
+//     try {
+//       connection.query(
+//         `SELECT * FROM users WHERE id=${req.params.id}`,
+//         (error, results) => {
+//           connection.release();
+//           res.send(results);
+//         },
+//       );
+//     } catch (error) {
+//       if (error) console.error(`Error: ${error.message}`);
+//     }
+//   });
+// });
 
 // Post Method
-router.post('/', (req, res) => {
-  pool.getConnection((err, connection) => {
-    const userInfo = [
-      req.body.first_name,
-      req.body.last_name,
-      req.body.email,
-      req.body.password,
-      new Date(req.body.birth_date),
-      new Date(req.body.created_at),
-      req.body.amka,
-      req.body.afm,
-      req.body.role_id,
-      req.body.profession_id,
-    ];
+// router.post('/', (req, res) => {
+//   pool.getConnection((err, connection) => {
+//     const userInfo = [
+//       req.body.first_name,
+//       req.body.last_name,
+//       req.body.email,
+//       req.body.password,
+//       new Date(req.body.birth_date),
+//       new Date(req.body.created_at),
+//       req.body.amka,
+//       req.body.afm,
+//       req.body.role_id,
+//       req.body.profession_id,
+//     ];
 
-    try {
-      connection.query(
-        `INSERT INTO users (
-      first_name,
-      last_name,
-      email,
-      password,
-      birth_date,
-      created_at,
-      afm,
-      amka,
-      role_id,
-      profession_id
-    ) VALUES (?)`,
-        [userInfo],
-        (error, results) => {
-          connection.release();
-          res.send(results);
-        },
-      );
-    } catch (error) {
-      if (error) console.error(`Error: ${error.message}`);
-    }
-  });
-});
+//     try {
+//       connection.query(
+//         `INSERT INTO users (
+//       first_name,
+//       last_name,
+//       email,
+//       password,
+//       birth_date,
+//       created_at,
+//       afm,
+//       amka,
+//       role_id,
+//       profession_id
+//     ) VALUES (?)`,
+//         [userInfo],
+//         (error, results) => {
+//           connection.release();
+//           res.send(results);
+//         },
+//       );
+//     } catch (error) {
+//       if (error) console.error(`Error: ${error.message}`);
+//     }
+//   });
+// });
 
 /* Login method */
-router.post('/login', (req, res) => {
-  const { email, password } = req.body;
+// router.post('/login', (req, res) => {
+//   const { email, password } = req.body;
 
-  if (email && password) {
-    pool.getConnection((err, connection) => {
-      connection.query(
-        'SELECT * FROM users WHERE email = ? AND password = ?',
-        [email, password],
-        (error, results) => {
-          connection.release();
-          if (results.length > 0) {
-            res.send(`Welcome, ${results[0].first_name}`);
-          } else {
-            res.send('Invalid email or password.');
-          }
-        },
-      );
-    });
-  }
-});
+//   if (email && password) {
+//     pool.getConnection((err, connection) => {
+//       connection.query(
+//         'SELECT * FROM users WHERE email = ? AND password = ?',
+//         [email, password],
+//         (error, results) => {
+//           connection.release();
+//           if (results.length > 0) {
+//             res.send(`Welcome, ${results[0].first_name}`);
+//           } else {
+//             res.send('Invalid email or password.');
+//           }
+//         },
+//       );
+//     });
+//   }
+// });
 
 // Put Method
-router.put('/:id', (req, res) => {
-  pool.getConnection((err, connection) => {
-    try {
-      connection.query(
-        `
-    UPDATE patients SET 
-    first_name="${req.body.first_name}",
-    last_name="${req.body.last_name}",
-    birth_date=${new Date(req.body.birth_date)},
-    created_at=${new Date(req.body.created_at)},
-    amka=${req.body.amka},
-    afm=${req.body.afm},
-    role_id=${req.body.role_id},
-    profession_id=${req.body.profession_id}
-    WHERE id=${req.params.id}`,
-        (error, results) => {
-          connection.release();
-          res.send(results);
-        },
-      );
-    } catch (error) {
-      if (error) console.error(`Error: ${error.message}`);
-    }
-  });
-});
+// router.put('/:id', (req, res) => {
+//   pool.getConnection((err, connection) => {
+//     try {
+//       connection.query(
+//         `
+//     UPDATE patients SET
+//     first_name="${req.body.first_name}",
+//     last_name="${req.body.last_name}",
+//     birth_date=${new Date(req.body.birth_date)},
+//     created_at=${new Date(req.body.created_at)},
+//     amka=${req.body.amka},
+//     afm=${req.body.afm},
+//     role_id=${req.body.role_id},
+//     profession_id=${req.body.profession_id}
+//     WHERE id=${req.params.id}`,
+//         (error, results) => {
+//           connection.release();
+//           res.send(results);
+//         },
+//       );
+//     } catch (error) {
+//       if (error) console.error(`Error: ${error.message}`);
+//     }
+//   });
+// });
 
 // Delete Method
-router.delete('/:id', (req, res) => {
-  pool.getConnection((err, connection) => {
-    try {
-      connection.query(
-        `DELETE FROM users WHERE id=${req.params.id}`,
-        (error, results) => {
-          connection.release();
-          res.send(results);
-        },
-      );
-    } catch (error) {
-      if (error) console.error(`Error: ${error.message}`);
-    }
-  });
-});
-
-module.exports = router;
+// router.delete('/:id', (req, res) => {
+//   pool.getConnection((err, connection) => {
+//     try {
+//       connection.query(
+//         `DELETE FROM users WHERE id=${req.params.id}`,
+//         (error, results) => {
+//           connection.release();
+//           res.send(results);
+//         },
+//       );
+//     } catch (error) {
+//       if (error) console.error(`Error: ${error.message}`);
+//     }
+//   });
+// });
