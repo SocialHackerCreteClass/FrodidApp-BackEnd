@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "db:migrate": "node DB/migrations/migration",
+    "db:migrate": "knex migrate:latest",
+    "db:rollback": "knex migrate:rollback",
     "db:seed": "knex seed:run"
   },
   "dependencies": {
