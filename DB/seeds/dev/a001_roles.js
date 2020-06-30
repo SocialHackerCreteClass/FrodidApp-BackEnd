@@ -1,6 +1,6 @@
-exports.seed = function (knex) {
-  knex('a001_roles').insert([
-    { id: 1, name: 'admin' },
-    { id: 2, name: 'user' },
+exports.seed = async function (knex) {
+  await knex('a001_roles').insert([
+    { name: 'admin' },
+    { name: 'user' },
   ]);
 };

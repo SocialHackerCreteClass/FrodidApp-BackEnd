@@ -10,8 +10,8 @@ const createFakePatient = () => ({
   amka: faker.random.number({ min: 1000000000, max: 9999999999 }),
   afm: faker.random.number({ min: 1000000000, max: 9999999999 }),
   comments: faker.lorem.sentence(),
-  gender_id: faker.random.number({ min: 1, max: 3 }),
   address_id: faker.random.number({ min: 1, max: 100 }),
+  gender_id: faker.random.number({ min: 1, max: 3 }),
 });
 
 exports.seed = async function (knex) {
