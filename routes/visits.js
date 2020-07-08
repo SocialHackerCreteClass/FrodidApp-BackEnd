@@ -6,10 +6,24 @@ const router = express.Router();
 // PG Get Method
 router.get('/', (req, res) => {
   try {
-    pool.query('SELECT * FROM a004_visits', (error, results) => {
-      res.send(results);
-      pool.end();
+    let data;
+    let page_length;
+
+    pool.query('SELECT Count(*) FROM a004_visits', (error, results) => {
+      data = results.rows[0].count;
     });
+
+    pool.query('SELECT * FROM a004_visits LIMIT ' + req.query.items_per_page +
+      ' OFFSET ' + (req.query.page_number - 1) * req.query.items_per_page, (error, results) => {
+        page_length = data / req.query.items_per_page;
+        res.send({
+          count: data,
+          items: results.rows,
+          pages_length: page_length,
+          items_per_page: req.query.items_per_page
+        });
+      });
+      pool.end();
   } catch (error) {
     if (error) console.error(`Error: ${error.message}`);
   }
