@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
           items_per_page: req.query.items_per_page
         });
       });
-      pool.end();
+      //pool.end();
   } catch (error) {
     if (error) console.error(`Error: ${error.message}`);
   }
@@ -36,7 +36,7 @@ router.get('/:id', (req, res) => {
       `SELECT * FROM a004_visits WHERE id=${req.params.id}`,
       (error, results) => {
         res.send(results);
-        pool.end();
+        //pool.end();
       }
     );
   } catch (error) {
@@ -59,7 +59,7 @@ router.post('/', (req, res) => {
       'INSERT INTO a004_visits (date, comment, start_time, end_time, user_id) VALUES (?)',
       [visitInfo],
       () => {
-        pool.end();
+        //pool.end();
         res.send('Entry added.');
       }
     );
@@ -92,7 +92,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   try {
     pool.query(`DELETE FROM a004_visits WHERE id=${req.params.id}`, () => {
-      pool.end();
+      //pool.end();
       res.send('Entry deleted.');
     });
   } catch (error) {

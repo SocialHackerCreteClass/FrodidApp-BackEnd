@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   try {
     pool.query('SELECT * FROM a006_states', (error, results) => {
-      pool.end();
+      //pool.end();
       res.send(results);
     });
   } catch (error) {
@@ -21,7 +21,7 @@ router.get('/:id', (req, res) => {
     pool.query(
       `SELECT * FROM a006_states WHERE id=${req.params.id}`,
       (error, results) => {
-        pool.end();
+        //pool.end();
         res.send(results);
       }
     );
@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
     pool.query(
       `INSERT INTO a006_states (id, name) VALUES (${req.body.id}, "${req.body.name}")`,
       () => {
-        pool.end();
+        //pool.end();
         res.send('Posted successfully.');
       }
     );
@@ -51,7 +51,7 @@ router.put('/:id', (req, res) => {
     pool.query(
       `UPDATE a006_states SET name="${req.body.name}" WHERE id=${req.params.id}`,
       () => {
-        pool.end();
+        //pool.end();
         res.send('Updated successfullt.');
       }
     );
@@ -64,7 +64,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   try {
     pool.query(`DELETE FROM a006_states WHERE id=${req.params.id}`, () => {
-      pool.end();
+      //pool.end();
       res.send('Deleted successfully.');
     });
   } catch (error) {

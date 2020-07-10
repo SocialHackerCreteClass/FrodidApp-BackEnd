@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   try {
     pool.query('SELECT * FROM a009_patients', (error, results) => {
-      pool.end();
+      //pool.end();
       res.send(results);
     });
   } catch (error) {
@@ -21,7 +21,7 @@ router.get('/:id', (req, res) => {
     pool.query(
       `SELECT * FROM a009_patients WHERE id=${req.params.id}`,
       (error, results) => {
-        pool.end();
+        //pool.end();
         res.send(results);
       }
     );
@@ -63,7 +63,7 @@ router.post('/', (req, res) => {
     ) VALUES (?)`,
       [patientInfo],
       () => {
-        pool.end();
+        //pool.end();
         res.send('Entry added.');
       }
     );
@@ -91,7 +91,7 @@ router.put('/:id', (req, res) => {
     WHERE id=${req.params.id}
     `,
       () => {
-        pool.end();
+        //pool.end();
         res.send('Entry updated.');
       }
     );
@@ -104,7 +104,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   try {
     pool.query(`DELETE FROM a009_patients WHERE id=${req.params.id}`, () => {
-      pool.end();
+      //pool.end();
       res.send('Entry deleted.');
     });
   } catch (error) {

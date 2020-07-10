@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   try {
     pool.query('SELECT * FROM a001_roles', (err, results) => {
       res.send(results);
-      pool.end();
+      //pool.end();
     });
   } catch (error) {
     console.error(`Error: ${error.message}`);
@@ -22,7 +22,7 @@ router.get('/:id', (req, res) => {
       `SELECT * FROM a001_roles WHERE id=${req.params.id}`,
       (err, results) => {
         res.send(results);
-        pool.end();
+        //pool.end();
       }
     );
   } catch (error) {
@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
       `INSERT INTO a001_roles (name) VALUES ("${req.params.name}")`,
       () => {
         res.send('Entry added.');
-        pool.end();
+        //pool.end();
       }
     );
   } catch (error) {
@@ -52,7 +52,7 @@ router.put('/:id', (req, res) => {
       `UPDATE a001_roles SET name=${req.params.name} WHERE id=${req.params.id}`,
       () => {
         res.send('Entry updated.');
-        pool.end();
+        //pool.end();
       }
     );
   } catch (error) {
@@ -65,7 +65,7 @@ router.delete('/:id', (req, res) => {
   try {
     pool.query(`DELETE FROM a001_roles WHERE id=${req.params.id}`, () => {
       res.send('Entry deleted.');
-      pool.end();
+      //pool.end();
     });
   } catch (error) {
     if (error) console.error(`Error: ${error.message}`);

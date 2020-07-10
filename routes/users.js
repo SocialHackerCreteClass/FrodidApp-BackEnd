@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   try {
     pool.query('SELECT * FROM a003_users', (err, results) => {
       res.send(results);
-      pool.end();
+      //pool.end();
     });
   } catch (error) {
     console.error(`Error: ${error.message}`);
@@ -22,7 +22,7 @@ router.get('/:id', (req, res) => {
       `SELECT * FROM a003_users WHERE id=${req.params.id}`,
       (err, results) => {
         res.send(results);
-        pool.end();
+        //pool.end();
       }
     );
   } catch (error) {
@@ -63,7 +63,7 @@ router.post('/', (req, res) => {
         [userInfo],
         (error, results) => {
           res.send(results);
-          pool.end();
+          //pool.end();
         }
       );
     } catch (error) {
@@ -81,7 +81,7 @@ router.post('/login', (req, res) => {
       'SELECT * FROM a003_users WHERE email = ? AND password = ?',
       [email, password],
       (error, results) => {
-        pool.end();
+        //pool.end();
         if (results.length > 0) {
           res.send(`Welcome, ${results[0].first_name}`);
         } else {
@@ -108,7 +108,7 @@ router.put('/:id', (req, res) => {
   profession_id=${req.body.profession_id}
   WHERE id=${req.params.id}`,
       (error, results) => {
-        pool.end();
+        //pool.end();
         res.send(results);
       }
     );
@@ -123,7 +123,7 @@ router.delete('/:id', (req, res) => {
     pool.query(
       `DELETE FROM a003_users WHERE id=${req.params.id}`,
       (error, results) => {
-        pool.end();
+        //pool.end();
         res.send(results);
       }
     );
