@@ -36,6 +36,18 @@ router.get('/whatever', (req, res) => {
   res.send('Whatever');
 });
 
+router.get('/countries', (req, res) => {
+  try {
+    pool.connect();
+    pool.query('SELECT * FROM a005_countries', (error, results) => {
+      //pool.end();
+      res.send(results);
+    });
+  } catch (error) {
+    console.error(`Error: ${error}`);
+  }
+});
+
 router.delete('/', (req, res) => {
   res.render('index', { title: 'Express' });
 });

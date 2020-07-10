@@ -15,18 +15,6 @@ router.get('/', (req, res) => {
   }
 });
 
-router.get('/countries', (req, res) => {
-  try {
-    pool.connect();
-    pool.query('SELECT * FROM a005_countries', (error, results) => {
-      //pool.end();
-      res.send(results);
-    });
-  } catch (error) {
-    console.error(`Error: ${error}`);
-  }
-});
-
 // Get with id Method
 router.get('/:id', (req, res) => {
   try {
