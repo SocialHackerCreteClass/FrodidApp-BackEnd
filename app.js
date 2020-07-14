@@ -5,6 +5,10 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config();
 
+// SWAGGER stuff
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const visitsRouter = require('./routes/visits');
@@ -18,6 +22,8 @@ const countriesRouter = require('./routes/countries');
 const statesRouter = require('./routes/states');
 
 const app = express();
+// SWAGGER stuff
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
