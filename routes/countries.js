@@ -6,13 +6,30 @@ const router = express.Router();
 /* PG GET method */
 router.get('/', (req, res) => {
   try {
-    pool.connect();
-    pool.query('SELECT * FROM a005_countries', (error, results) => {
-      //pool.end();
-      res.send(results);
+    let data;
+    let pageLength;
+
+    pool.query('SELECT Count(*) FROM a005_countries', (error, results) => {
+      data = results.rows[0].count;
     });
+
+    pool.query(
+      `SELECT * FROM a005_countries LIMIT ${req.query.items_per_page} OFFSET ${
+        (req.query.page_number - 1) * req.query.items_per_page
+      }`,
+      (error, results) => {
+        pageLength = data / req.query.items_per_page;
+        res.send({
+          count: data,
+          items: results.rows,
+          pages_length: pageLength,
+          items_per_page: req.query.items_per_page,
+        });
+      }
+    );
+    // pool.end();
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error.message}`);
   }
 });
 
@@ -22,7 +39,7 @@ router.get('/:id', (req, res) => {
     pool.query(
       `SELECT * FROM a005_countries WHERE id=${req.params.id}`,
       (error, results) => {
-        //pool.end();
+        // pool.end();
         res.send(results);
       }
     );
@@ -37,7 +54,7 @@ router.post('/', (req, res) => {
     pool.query(
       `INSERT INTO a005_countries (id, name) VALUES (${req.body.id}, "${req.body.name}")`,
       () => {
-        //pool.end();
+        // pool.end();
         res.send('Posted successfully.');
       }
     );
@@ -52,7 +69,7 @@ router.put('/:id', (req, res) => {
     pool.query(
       `UPDATE a005_countries SET name="${req.body.name}" WHERE id=${req.params.id}`,
       () => {
-        //pool.end();
+        // pool.end();
         res.send('Updated successfullt.');
       }
     );
@@ -65,7 +82,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   try {
     pool.query(`DELETE FROM a005_countries WHERE id=${req.params.id}`, () => {
-      //pool.end();
+      // pool.end();
       res.send('Deleted successfully.');
     });
   } catch (error) {
@@ -78,7 +95,7 @@ module.exports = router;
 // -----------------------
 // MYSQL
 // -----------------------
-/* GET method */
+// /* GET method */
 // router.get('/', (req, res) => {
 //   pool.getConnection((err, connection) => {
 //     try {
