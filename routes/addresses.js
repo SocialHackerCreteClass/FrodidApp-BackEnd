@@ -6,12 +6,30 @@ const router = express.Router();
 /* GET method */
 router.get('/', (req, res) => {
   try {
-    pool.query('SELECT * FROM a007_addresses', (error, results) => {
-      //pool.end();
-      res.send(results);
+    let data;
+    let pageLength;
+
+    pool.query('SELECT Count(*) FROM a007_addresses', (error, results) => {
+      data = results.rows[0].count;
     });
+
+    pool.query(
+      `SELECT * FROM a007_addresses LIMIT ${req.query.items_per_page} OFFSET ${
+        (req.query.page_number - 1) * req.query.items_per_page
+      }`,
+      (error, results) => {
+        pageLength = data / req.query.items_per_page;
+        res.send({
+          count: data,
+          items: results.rows,
+          pages_length: pageLength,
+          items_per_page: req.query.items_per_page,
+        });
+      }
+    );
+    // pool.end();
   } catch (error) {
-    console.error(`Error: ${error}`);
+    if (error) console.error(`Error: ${error.message}`);
   }
 });
 
