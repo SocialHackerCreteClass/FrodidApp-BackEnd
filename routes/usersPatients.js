@@ -3,13 +3,28 @@ const pool = require('../connection/connection');
 
 const router = express.Router();
 
-// Get Method
+//  PG GET METHOD
 router.get('/', (req, res) => {
   try {
-    pool.query('SELECT * FROM a010_users_patients', (error, results) => {
-      //pool.end();
-      res.send(results);
+    let data;
+    let page_length;
+
+    pool.query('SELECT Count(*) FROM a010_users_patients', (error, results) => {
+      console.log(results);
+      data = results.rows[0].count;
     });
+
+    pool.query('SELECT * FROM a010_users_patients LIMIT ' + req.query.items_per_page +
+      ' OFFSET ' + (req.query.page_number - 1) * req.query.items_per_page, (error, results) => {
+        page_length = data / req.query.items_per_page;
+        res.send({
+          count: data,
+          items: results.rows,
+          pages_length: page_length,
+          items_per_page: req.query.items_per_page
+        });
+      });
+      //pool.end();
   } catch (error) {
     if (error) console.error(`Error: ${error.message}`);
   }
