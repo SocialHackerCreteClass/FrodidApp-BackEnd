@@ -3,28 +3,34 @@ const pool = require('../connection/connection');
 
 const router = express.Router();
 
-//  PG GET METHOD
+/* GET method */
 router.get('/', (req, res) => {
   try {
     let data;
     let page_length;
 
-    pool.query('SELECT Count(*) FROM a010_users_patients', (error, results) => {
-      console.log(results);
-      data = results.rows[0].count;
-    });
-
-    pool.query('SELECT * FROM a010_users_patients LIMIT ' + req.query.items_per_page +
-      ' OFFSET ' + (req.query.page_number - 1) * req.query.items_per_page, (error, results) => {
-        page_length = data / req.query.items_per_page;
-        res.send({
-          count: data,
-          items: results.rows,
-          pages_length: page_length,
-          items_per_page: req.query.items_per_page
-        });
+    if (Object.keys(req.query).length === 0) {
+      pool.query('SELECT * FROM a010_users_patients', (error, results) => {
+        res.send(results);
       });
+    } else {
+      pool.query('SELECT Count(*) FROM a010_users_patients', (error, results) => {
+        console.log(results);
+        data = results.rows[0].count;
+      });
+
+      pool.query('SELECT * FROM a010_users_patients LIMIT ' + req.query.items_per_page +
+        ' OFFSET ' + (req.query.page_number - 1) * req.query.items_per_page, (error, results) => {
+          page_length = data / req.query.items_per_page;
+          res.send({
+            count: data,
+            items: results.rows,
+            pages_length: page_length,
+            items_per_page: req.query.items_per_page
+          });
+        });
       //pool.end();
+    }
   } catch (error) {
     if (error) console.error(`Error: ${error.message}`);
   }
