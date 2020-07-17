@@ -4,7 +4,7 @@ const pool = require('../connection/connection');
 const router = express.Router();
 
 /* PG GET method */
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
   try {
     let data;
     let pageLength;
@@ -57,13 +57,19 @@ router.get('/:id', (req, res) => {
 /* PG POST method */
 router.post('/', (req, res) => {
   try {
-    pool.query(
-      `INSERT INTO a005_countries (id, name) VALUES (${req.body.id}, "${req.body.name}")`,
-      () => {
-        // pool.end();
-        res.send('Posted successfully.');
-      }
-    );
+    console.log(req.query);
+    if (Object.keys(req.query).length === 0 || Object.keys(req.query) === undefined) {
+        res.send('Warning: No parameters. Data was not inserted.');
+    } else {
+      pool.query(
+        `INSERT INTO a005_countries (name) VALUES ("${req.query.name}")`,
+        (error, results) => {
+          // pool.end();
+          //res.send(results);
+          res.send('Posted successfully');
+        }
+      );
+    }
   } catch (error) {
     console.error(`Error: ${error}`);
   }
