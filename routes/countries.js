@@ -3,15 +3,16 @@ const pool = require('../connection/connection');
 
 const router = express.Router();
 
-/* PG GET method */
-router.get('/', (req, res, next) => {
+/* PG GET method. Th "next" param is related to enabling CORS */
+router.get('/', (req, res) => {
   try {
     let data;
     let pageLength;
 
     if (Object.keys(req.query).length === 0) {
       pool.query('SELECT * FROM a005_countries', (error, results) => {
-        res.send(results);
+        res.json(results);
+        //res.send(results);
       });
     } else {
       pool.query('SELECT Count(*) FROM a005_countries', (error, results) => {
@@ -62,10 +63,9 @@ router.post('/', (req, res) => {
         res.send('Warning: No parameters. Data was not inserted.');
     } else {
       pool.query(
-        `INSERT INTO a005_countries (name) VALUES ("${req.query.name}")`,
+        `INSERT INTO a005_countries (name) VALUES ('${req.query.name}')`,
         (error, results) => {
           // pool.end();
-          //res.send(results);
           res.send('Posted successfully');
         }
       );
@@ -79,10 +79,10 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   try {
     pool.query(
-      `UPDATE a005_countries SET name="${req.body.name}" WHERE id=${req.params.id}`,
+      `UPDATE a005_countries SET name='${req.body.name}' WHERE id=${req.params.id}`,
       () => {
         // pool.end();
-        res.send('Updated successfullt.');
+        res.send('Updated successfully.');
       }
     );
   } catch (error) {

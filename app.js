@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cors = require('cors');  // Enable CORS (For swagger)
 require('dotenv').config();
 
 // SWAGGER stuff
@@ -36,11 +37,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ENABLE CORS
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://ec2-18-185-66-15.eu-central-1.compute.amazonaws.com:5050/browser/"); // update to match the domain you will make the request from
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+app.use(cors({
+  methods: 'GET,POST,PATCH,DELETE,OPTIONS',
+  optionsSuccessStatus: 200,
+  origin: '*'
+}));
+app.options('*', cors());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
