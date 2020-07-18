@@ -35,6 +35,10 @@
         "description": "Find out more about our store",
         "url": "http://swagger.io"
       }
+    },
+    {
+      "name": "countries",
+      "description": "All about countries table"
     }
   ],
   "schemes": [
@@ -51,6 +55,20 @@
         "description": "This endpoint uses a get request to retrieve all countries",
         "produces": [
           "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "items_per_page",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "page_number",
+            "type": "integer",
+            "required": false
+          }
         ],
         "responses": {
           "405": {

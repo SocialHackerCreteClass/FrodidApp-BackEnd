@@ -9,15 +9,16 @@ router.get('/', (req, res) => {
     let data;
     let pageLength;
 
-    if (Object.keys(req.query).length === 0) {
+    console.log(Object.keys(req.query).length);
+    
+    if (Object.keys(req.query).length !== 2) {
       pool.query('SELECT * FROM a005_countries', (error, results) => {
-        res.json(results);
-        //res.send(results);
+        res.send(results);
       });
     } else {
-      pool.query('SELECT Count(*) FROM a005_countries', (error, results) => {
-        data = results.rows[0].count;
-      });
+        pool.query('SELECT Count(*) FROM a005_countries', (error, results) => {
+          data = results.rows[0].count;
+        });
 
       pool.query(
         `SELECT * FROM a005_countries LIMIT ${req.query.items_per_page} OFFSET ${
