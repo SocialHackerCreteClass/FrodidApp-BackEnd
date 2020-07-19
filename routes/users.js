@@ -52,21 +52,7 @@ router.get('/:id', (req, res) => {
 
 //  PG POST METHOD
 router.post('/', (req, res) => {
-  console.log(new Date(req.body.birth_date));
-  pool.query(() => {
-    const userInfo = [
-      `'${req.body.first_name}'`,
-      `'${req.body.last_name}'`,
-      `'${req.body.email}'`,
-      `'${req.body.password}'`,
-      `'${new Date(req.body.birth_date)}'`,
-      `'${new Date(req.body.created_at)}'`,
-      `'${req.body.amka}'`,
-      `'${req.body.afm}'`,
-      req.body.role_id,
-      req.body.profession_id,
-    ];
-
+  console.log(req.body);
     try {
       pool.query(
         `INSERT INTO a003_users (
@@ -80,8 +66,16 @@ router.post('/', (req, res) => {
       amka,
       role_id,
       profession_id
-    ) VALUES (?)`,
-        [userInfo],
+    ) VALUES ('${req.body.first_name}',
+    '${req.body.last_name}',
+    '${req.body.email}',
+    '${req.body.password}',
+    '${req.body.birth_date}',
+    '${req.body.created_at}',
+    '${req.body.amka}',
+    '${req.body.afm}',
+    ${req.body.role_id},
+    ${req.body.profession_id})`,
         (error, results) => {
           res.send(results);
         }
@@ -89,7 +83,6 @@ router.post('/', (req, res) => {
     } catch (error) {
       if (error) console.error(`Error: ${error.message}`);
     }
-  });
 });
 
 /* Login method */
@@ -118,17 +111,18 @@ router.put('/:id', (req, res) => {
     pool.query(
       `
   UPDATE a003_users SET 
-  first_name="${req.body.first_name}",
-  last_name="${req.body.last_name}",
-  birth_date=${new Date(req.body.birth_date)},
-  created_at=${new Date(req.body.created_at)},
-  amka=${req.body.amka},
-  afm=${req.body.afm},
+  first_name='${req.body.first_name}',
+  last_name='${req.body.last_name}',
+  birth_date='${req.body.birth_date}',
+  created_at='${req.body.created_at}',
+  email='${req.body.email}',
+  password='${req.body.password}',
+  amka='${req.body.amka}',
+  afm='${req.body.afm}',
   role_id=${req.body.role_id},
   profession_id=${req.body.profession_id}
   WHERE id=${req.params.id}`,
       (error, results) => {
-        //pool.end();
         res.send(results);
       }
     );
