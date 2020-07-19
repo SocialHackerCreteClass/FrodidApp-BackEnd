@@ -6,10 +6,9 @@ const router = express.Router();
 // POSTGRESQL GET METHOD
 router.get('/', (req, res) => {
   try {
-    pool.query('SELECT * FROM a001_roles', (err, results) => {
-      res.send(results);
-      //pool.end();
-    });
+      pool.query('SELECT * FROM a001_roles', (err, results) => {
+        res.send(results);
+      });
   } catch (error) {
     console.error(`Error: ${error.message}`);
   }
@@ -34,10 +33,9 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   try {
     pool.query(
-      `INSERT INTO a001_roles (name) VALUES ("${req.params.name}")`,
+      `INSERT INTO a001_roles (name) VALUES ('${req.body.name}')`,
       () => {
         res.send('Entry added.');
-        //pool.end();
       }
     );
   } catch (error) {
@@ -49,7 +47,7 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   try {
     pool.query(
-      `UPDATE a001_roles SET name=${req.params.name} WHERE id=${req.params.id}`,
+      `UPDATE a001_roles SET name='${req.body.name}' WHERE id=${req.params.id}`,
       () => {
         res.send('Entry updated.');
         //pool.end();

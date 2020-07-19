@@ -8,8 +8,6 @@ router.get('/', (req, res) => {
   try {
     let data;
     let pageLength;
-
-    console.log(Object.keys(req.query).length);
     
     if (Object.keys(req.query).length !== 2) {
       pool.query('SELECT * FROM a005_countries', (error, results) => {
