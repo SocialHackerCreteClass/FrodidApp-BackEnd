@@ -70,7 +70,7 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   try {
     pool.query(
-      `UPDATE a002_professions SET name="${req.body.name}" WHERE id=${req.params.id}`,
+      `UPDATE a002_professions SET name='${req.body.name}' WHERE id=${req.params.id}`,
       () => {
         res.send('Entry updated.');
         //pool.end();
