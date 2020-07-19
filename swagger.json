@@ -25,12 +25,24 @@
       }
     },
     {
-      "name": "countries",
-      "description": "All about countries table"
+      "name": "roles",
+      "description": "All about roles table"
     },
     {
       "name": "users",
       "description": "All about users table"
+    },
+    {
+      "name": "visits",
+      "description": "All about users table"
+    },
+    {
+      "name": "countries",
+      "description": "All about countries table"
+    },
+    {
+      "name": "users_patients",
+      "description": "All about countries table"
     }
   ],
   "schemes": [
@@ -38,6 +50,576 @@
     "https"
   ],
   "paths": {
+    "/roles": {
+      "post": {
+        "tags": [
+          "roles"
+        ],
+        "summary": "Creates new role",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Roles"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "roles"
+        ],
+        "summary": "Gets a list of all roles",
+        "description": "This endpoint uses a get request to retrieve all roles",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/roles/{id}": {
+      "get": {
+        "tags": [
+          "roles"
+        ],
+        "summary": "Gets a single role",
+        "description": "This endpoint uses a get request to retrieve a specific role",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Role unique identifier",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Roles"
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "roles"
+        ],
+        "summary": "Updates a role in the store with form data",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of role that needs to be updated",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated role object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Roles"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "roles"
+        ],
+        "summary": "Deletes a role",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Role id to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Role not found"
+          }
+        }
+      }
+    },
+    "/professions": {
+      "post": {
+        "tags": [
+          "professions"
+        ],
+        "summary": "Creates new profession",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created profession object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Professions"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "professions"
+        ],
+        "summary": "Gets a list of all professions",
+        "description": "This endpoint uses a get request to retrieve all professions",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "items_per_page",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "page_number",
+            "type": "integer",
+            "required": false
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/professions/{id}": {
+      "get": {
+        "tags": [
+          "professions"
+        ],
+        "summary": "Gets a single profession",
+        "description": "This endpoint uses a get request to retrieve a specific profession",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Profession unique identifier",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Professions"
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "professions"
+        ],
+        "summary": "Updates a profession in the store with form data",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of profession that needs to be updated",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated profession object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Professions"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "professions"
+        ],
+        "summary": "Deletes a profession",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Profession id to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Role not found"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Creates new user",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Gets a list of all countries",
+        "description": "This endpoint uses a get request to retrieve all countries",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "items_per_page",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "page_number",
+            "type": "integer",
+            "required": false
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Gets a single user",
+        "description": "This endpoint uses a get request to retrieve a specific user",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User unique identifier",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Users"
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Updates a user in the users table",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of country that needs to be updated",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Deletes a country",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Country not found"
+          }
+        }
+      }
+    },
+    "/visits": {
+      "post": {
+        "tags": [
+          "visits"
+        ],
+        "summary": "Creates new visit",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Visits"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "visits"
+        ],
+        "summary": "Gets a list of all visits",
+        "description": "This endpoint uses a get request to retrieve all visits",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "items_per_page",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "page_number",
+            "type": "integer",
+            "required": false
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/visits/{id}": {
+      "get": {
+        "tags": [
+          "visits"
+        ],
+        "summary": "Gets a single visit",
+        "description": "This endpoint uses a get request to retrieve a specific visit",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User unique identifier",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Visits"
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "visits"
+        ],
+        "summary": "Updates a user in the visits table",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of visit that needs to be updated",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created visit object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Visits"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "visits"
+        ],
+        "summary": "Deletes a visit",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Visit id to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Visit not found"
+          }
+        }
+      }
+    },
     "/countries": {
       "post": {
         "tags": [
@@ -192,12 +774,12 @@
         }
       }
     },
-    "/users": {
+    "/users_patients": {
       "post": {
         "tags": [
-          "users"
+          "users_patients"
         ],
-        "summary": "Creates new user",
+        "summary": "Creates new user_patient row",
         "description": "",
         "produces": [
           "application/json"
@@ -209,7 +791,7 @@
             "description": "Created user object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Users"
+              "$ref": "#/definitions/Users_Patients"
             }
           }
         ],
@@ -221,10 +803,10 @@
       },
       "get": {
         "tags": [
-          "users"
+          "users_patients"
         ],
-        "summary": "Gets a list of all countries",
-        "description": "This endpoint uses a get request to retrieve all countries",
+        "summary": "Gets a list of all users_patients",
+        "description": "This endpoint uses a get request to retrieve all users_patients",
         "produces": [
           "application/json"
         ],
@@ -249,13 +831,13 @@
         }
       }
     },
-    "/users/{id}": {
+    "/users_patients/{id}": {
       "get": {
         "tags": [
-          "users"
+          "users_patients"
         ],
-        "summary": "Gets a single user",
-        "description": "This endpoint uses a get request to retrieve a specific user",
+        "summary": "Gets a single users_patients row",
+        "description": "This endpoint uses a get request to retrieve a specific users_patients",
         "produces": [
           "application/json"
         ],
@@ -263,7 +845,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "User unique identifier",
+            "description": "users_patients unique identifier",
             "required": true,
             "type": "integer"
           }
@@ -274,7 +856,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Users"
+                "$ref": "#/definitions/Countries"
               }
             }
           },
@@ -285,25 +867,25 @@
       },
       "put": {
         "tags": [
-          "users"
+          "users_patients"
         ],
-        "summary": "Updates a user in the users table",
+        "summary": "Updates a users_patients in the store with form data",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "ID of country that needs to be updated",
+            "description": "ID of users_patients that needs to be updated",
             "required": true,
             "type": "integer"
           },
           {
             "in": "body",
             "name": "body",
-            "description": "Created user object",
+            "description": "Created users_patients object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Users"
+              "$ref": "#/definitions/Users_Patients"
             }
           }
         ],
@@ -315,15 +897,15 @@
       },
       "delete": {
         "tags": [
-          "users"
+          "users_patients"
         ],
-        "summary": "Deletes a country",
+        "summary": "Deletes a users_patients",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "Country id to delete",
+            "description": "users_patients id to delete",
             "required": true,
             "type": "integer"
           }
@@ -333,7 +915,7 @@
             "description": "Invalid ID supplied"
           },
           "404": {
-            "description": "Country not found"
+            "description": "users_patients not found"
           }
         }
       }
@@ -629,12 +1211,21 @@
     }
   },
   "definitions": {
-    "Countries": {
+    "Professions": {
       "type": "object",
       "properties": {
         "name": {
           "type": "string",
-          "example": "Greece"
+          "example": "expert in experts"
+        }
+      }
+    },
+    "Roles": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "admin"
         }
       }
     },
@@ -680,6 +1271,54 @@
           "example": 1
         },
         "profession_id": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    },
+    "Visits": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2000-01-31"
+        },
+        "comment": {
+          "type": "string",
+          "example": "Patient requires more medicine and a second visit"
+        },
+        "start_time": {
+          "type": "string",
+          "example": "03:07:00"
+        },
+        "end_time": {
+          "type": "string",
+          "example": "05:10:00"
+        },
+        "user_id": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    },
+    "Countries": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Greece"
+        }
+      }
+    },
+    "Users_Patients": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "patient_id": {
           "type": "integer",
           "example": 1
         }
