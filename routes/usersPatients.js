@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     let data;
     let page_length;
 
-    if (Object.keys(req.query).length === 0) {
+    if (Object.keys(req.query).length !== 2) {
       pool.query('SELECT * FROM a010_users_patients', (error, results) => {
         res.send(results);
       });
@@ -85,7 +85,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   try {
     pool.query(
-      `DELETE FROM a010_user_patients WHERE id=${req.params.id}`,
+      `DELETE FROM a010_users_patients WHERE id=${req.params.id}`,
       () => {
         //pool.end();
         res.send('Entry deleted.');
