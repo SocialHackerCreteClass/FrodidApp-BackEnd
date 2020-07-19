@@ -56,19 +56,15 @@ router.get('/:id', (req, res) => {
 
 /* PG POST method */
 router.post('/', (req, res) => {
+  console.log(req.body.name);
   try {
-    console.log(req.query);
-    if (Object.keys(req.query).length === 0 || Object.keys(req.query) === undefined) {
-        res.send('Warning: No parameters. Data was not inserted.');
-    } else {
       pool.query(
-        `INSERT INTO a005_countries (name) VALUES ('${req.query.name}')`,
+        `INSERT INTO a005_countries (name) VALUES ('${req.body.name}')`,
         (error, results) => {
           // pool.end();
           res.send('Posted successfully');
         }
       );
-    }
   } catch (error) {
     console.error(`Error: ${error}`);
   }

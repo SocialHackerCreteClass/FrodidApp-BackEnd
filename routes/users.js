@@ -52,16 +52,17 @@ router.get('/:id', (req, res) => {
 
 //  PG POST METHOD
 router.post('/', (req, res) => {
+  console.log(new Date(req.body.birth_date));
   pool.query(() => {
     const userInfo = [
-      req.body.first_name,
-      req.body.last_name,
-      req.body.email,
-      req.body.password,
-      new Date(req.body.birth_date),
-      new Date(req.body.created_at),
-      req.body.amka,
-      req.body.afm,
+      `'${req.body.first_name}'`,
+      `'${req.body.last_name}'`,
+      `'${req.body.email}'`,
+      `'${req.body.password}'`,
+      `'${new Date(req.body.birth_date)}'`,
+      `'${new Date(req.body.created_at)}'`,
+      `'${req.body.amka}'`,
+      `'${req.body.afm}'`,
       req.body.role_id,
       req.body.profession_id,
     ];
@@ -83,7 +84,6 @@ router.post('/', (req, res) => {
         [userInfo],
         (error, results) => {
           res.send(results);
-          //pool.end();
         }
       );
     } catch (error) {
