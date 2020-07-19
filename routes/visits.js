@@ -9,12 +9,11 @@ router.get('/', (req, res) => {
     let data;
     let pageLength;
 
-    if (Object.keys(req.query).length === 0) {
+    if (Object.keys(req.query).length !== 2) {
       pool.query('SELECT * FROM a004_visits', (error, results) => {
         res.send(results);
       });
-    } else
-    {
+    } else {
       pool.query('SELECT Count(*) FROM a004_visits', (error, results) => {
         data = results.rows[0].count;
       });
@@ -34,7 +33,6 @@ router.get('/', (req, res) => {
         }
       );
     }
-    // pool.end();
   } catch (error) {
     if (error) console.error(`Error: ${error.message}`);
   }
@@ -58,19 +56,13 @@ router.get('/:id', (req, res) => {
 // PG  Post Method
 router.post('/', (req, res) => {
   try {
-    const visitInfo = [
-      new Date(req.body.date),
-      req.body.comment,
-      new Date(req.body.start_time),
-      new Date(req.body.end_time),
-      req.body.user_id,
-    ];
-
     pool.query(
-      'INSERT INTO a004_visits (date, comment, start_time, end_time, user_id) VALUES (?)',
-      [visitInfo],
+      `INSERT INTO a004_visits (date, comment, start_time, end_time, user_id) VALUES ('${req.body.date}',
+      '${req.body.comment}',
+      '${req.body.start_time}',
+      '${req.body.end_time}',
+      ${req.body.user_id})`,
       () => {
-        // pool.end();
         res.send('Entry added.');
       }
     );
@@ -84,13 +76,13 @@ router.put('/:id', (req, res) => {
   try {
     pool.query(
       `UPDATE a004_visits SET 
-    date=${new Date(req.body.date)},
-    comment="${req.body.comment}",
-    start_time=${new Date(req.body.start_time)},
-    end_time=${req.body.end_time},
-    user_id=${req.body.user_id} WHERE id=${req.params.id}`,
+        date='${req.body.date}',
+        comment='${req.body.comment}',
+        start_time='${req.body.start_time}',
+        end_time='${req.body.end_time}',
+        user_id=${req.body.user_id} 
+      WHERE id=${req.params.id}`,
       () => {
-        pool.release();
         res.send('Entry updated.');
       }
     );
@@ -103,7 +95,6 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   try {
     pool.query(`DELETE FROM a004_visits WHERE id=${req.params.id}`, () => {
-      // pool.end();
       res.send('Entry deleted.');
     });
   } catch (error) {
