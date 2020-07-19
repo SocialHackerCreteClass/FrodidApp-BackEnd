@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     let data;
     let page_length;
 
-    if (Object.keys(req.query).length === 0) {
+    if (Object.keys(req.query).length !== 2) {
       pool.query('SELECT * FROM a002_professions', (error, results) => {
         res.send(results);
       });
