@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     let data;
     let page_length;
 
-    if (Object.keys(req.query).length === 0) {
+    if (Object.keys(req.query).length !== 2) {
       pool.query('SELECT * FROM a003_users', (error, results) => {
         res.send(results);
       });
@@ -29,7 +29,6 @@ router.get('/', (req, res) => {
             items_per_page: req.query.items_per_page
           });
         });
-      //pool.end();
     }
   } catch (error) {
     if (error) console.error(`Error: ${error.message}`);

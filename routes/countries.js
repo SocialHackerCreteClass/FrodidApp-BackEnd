@@ -34,7 +34,6 @@ router.get('/', (req, res) => {
           });
         }
       );
-      // pool.end();
     }
   } catch (error) {
     if (error) console.error(`Error: ${error.message}`);
@@ -47,7 +46,6 @@ router.get('/:id', (req, res) => {
     pool.query(
       `SELECT * FROM a005_countries WHERE id=${req.params.id}`,
       (error, results) => {
-        // pool.end();
         res.send(results);
       }
     );
