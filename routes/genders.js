@@ -7,7 +7,6 @@ const router = express.Router();
 router.get('/', (req, res) => {
   try {
     pool.query('SELECT * FROM a008_genders', (error, results) => {
-      //pool.end();
       res.send(results);
     });
   } catch (error) {
@@ -15,13 +14,26 @@ router.get('/', (req, res) => {
   }
 });
 
+// PG GET METHOD WITH ID
+router.get('/:id', (req, res) => {
+  try {
+    pool.query(
+      `SELECT * FROM a008_genders WHERE id=${req.params.id}`,
+      (err, results) => {
+        res.send(results);
+      }
+    );
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+  }
+});
+
 /* POST gender listing. */
 router.post('/', (req, res) => {
   try {
     pool.query(
-      `INSERT INTO a008_genders (id, name) VALUES (${req.body.id}, "${req.body.name}")`,
+      `INSERT INTO a008_genders (name) VALUES ('${req.body.name}')`,
       () => {
-        //pool.end();
         res.send('Posted successfully');
       }
     );
@@ -34,9 +46,8 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   try {
     pool.query(
-      `UPDATE a008_genders SET name="${req.body.name}" WHERE id=${req.params.id}`,
+      `UPDATE a008_genders SET name='${req.body.name}' WHERE id=${req.params.id}`,
       () => {
-        //pool.end();
         res.send('Updated successfully');
       }
     );

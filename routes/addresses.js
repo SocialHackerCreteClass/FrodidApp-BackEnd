@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     let data;
     let pageLength;
 
-    if (Object.keys(req.query).length === 0) {
+    if (Object.keys(req.query).length !== 2) {
       pool.query('SELECT * FROM a007_addresses', (error, results) => {
         res.send(results);
       });
@@ -32,7 +32,6 @@ router.get('/', (req, res) => {
           });
         }
       );
-      // pool.end();
     }
   } catch (error) {
     if (error) console.error(`Error: ${error.message}`);
@@ -45,7 +44,6 @@ router.get('/:id', (req, res) => {
     pool.query(
       `SELECT * FROM a007_addresses WHERE id=${req.params.id}`,
       (error, results) => {
-        //pool.end();
         res.send(results);
       }
     );
@@ -57,21 +55,15 @@ router.get('/:id', (req, res) => {
 /* POST method */
 router.post('/', (req, res) => {
   try {
-    const addressInfo = [
-      req.body.id,
-      req.body.street,
-      req.body.street_no,
-      req.body.region,
-      req.body.zipcode,
-      req.body.country_id,
-      req.body.state_id,
-    ];
-
     pool.query(
-      'INSERT INTO a007_addresses (id, street, street_no, region, zipcode, country_id, state_id) VALUES (?)',
-      [addressInfo],
+      `INSERT INTO a007_addresses (street, street_no, region, zipcode, country_id, state_id) 
+      VALUES ('${req.body.street}',
+    '${req.body.street_no}',
+    '${req.body.region}',
+    '${req.body.zipcode}',
+    ${req.body.country_id},
+    ${req.body.state_id})`,
       () => {
-        //pool.end();
         res.send('Posted successfully.');
       }
     );
@@ -86,10 +78,10 @@ router.put('/:id', (req, res) => {
     pool.query(
       `
     UPDATE a007_addresses SET
-    street="${req.body.street}",
-    street_no="${req.body.street_no}",
-    region="${req.body.region}",
-    zipcode="${req.body.zipcode}",
+    street='${req.body.street}',
+    street_no='${req.body.street_no}',
+    region='${req.body.region}',
+    zipcode='${req.body.zipcode}',
     country_id=${req.body.country_id},
     state_id=${req.body.state_id}
     WHERE id=${req.params.id}

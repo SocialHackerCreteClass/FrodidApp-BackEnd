@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     let data;
     let pageLength;
 
-    if (Object.keys(req.query).length === 0) {
+    if (Object.keys(req.query).length !== 2) {
       pool.query('SELECT * FROM a009_patients', (error, results) => {
         res.send(results);
       });
@@ -57,20 +57,6 @@ router.get('/:id', (req, res) => {
 /* POST method */
 router.post('/', (req, res) => {
   try {
-    const patientInfo = [
-      req.body.id,
-      req.body.first_name,
-      req.body.last_name,
-      new Date(req.body.birth_date),
-      req.body.telephone,
-      req.body.mobile,
-      req.body.amka,
-      req.body.afm,
-      req.body.comments,
-      req.body.gender_id,
-      req.body.address_id,
-    ];
-
     pool.query(
       `
     INSERT INTO a009_patients(
@@ -84,10 +70,17 @@ router.post('/', (req, res) => {
       comments,
       gender_id,
       address_id
-    ) VALUES (?)`,
-      [patientInfo],
+    ) VALUES ('${req.body.first_name}',
+    '${req.body.last_name}',
+    '${req.body.birth_date}',
+    '${req.body.telephone}',
+    '${req.body.mobile}',
+    '${req.body.amka}',
+    '${req.body.afm}',
+    '${req.body.comments}',
+    ${req.body.gender_id},
+    ${req.body.address_id})`,
       () => {
-        //pool.end();
         res.send('Entry added.');
       }
     );
@@ -102,20 +95,19 @@ router.put('/:id', (req, res) => {
     pool.query(
       `
     UPDATE a009_patients SET 
-    first_name="${req.body.first_name}",
-    last_name="${req.body.last_name}",
-    birth_date=${new Date(req.body.birth_date)},
-    telephone=${req.body.telephone},
-    mobile=${req.body.mobile},
-    amka=${req.body.amka},
-    afm=${req.body.afm},
-    comments=${req.body.comments},
+    first_name='${req.body.first_name}',
+    last_name='${req.body.last_name}',
+    birth_date='${req.body.birth_date}',
+    telephone='${req.body.telephone}',
+    mobile='${req.body.mobile}',
+    amka='${req.body.amka}',
+    afm='${req.body.afm}',
+    comments='${req.body.comments}',
     gender_id=${req.body.gender_id},
     address_id=${req.body.address_id}
     WHERE id=${req.params.id}
     `,
       () => {
-        //pool.end();
         res.send('Entry updated.');
       }
     );
@@ -128,7 +120,6 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   try {
     pool.query(`DELETE FROM a009_patients WHERE id=${req.params.id}`, () => {
-      //pool.end();
       res.send('Entry deleted.');
     });
   } catch (error) {

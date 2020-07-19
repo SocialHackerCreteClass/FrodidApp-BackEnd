@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     let data;
     let pageLength;
 
-    if (Object.keys(req.query).length === 0) {
+    if (Object.keys(req.query).length !== 2) {
       pool.query('SELECT * FROM a006_states', (error, results) => {
         res.send(results);
       });
@@ -32,7 +32,6 @@ router.get('/', (req, res) => {
           });
         }
       );
-      // pool.end();
     }
   } catch (error) {
     if (error) console.error(`Error: ${error.message}`);
@@ -45,7 +44,6 @@ router.get('/:id', (req, res) => {
     pool.query(
       `SELECT * FROM a006_states WHERE id=${req.params.id}`,
       (error, results) => {
-        //pool.end();
         res.send(results);
       }
     );
@@ -58,9 +56,8 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   try {
     pool.query(
-      `INSERT INTO a006_states (id, name) VALUES (${req.body.id}, "${req.body.name}")`,
+      `INSERT INTO a006_states (name) VALUES ('${req.body.name}')`,
       () => {
-        //pool.end();
         res.send('Posted successfully.');
       }
     );
@@ -73,10 +70,9 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   try {
     pool.query(
-      `UPDATE a006_states SET name="${req.body.name}" WHERE id=${req.params.id}`,
+      `UPDATE a006_states SET name='${req.body.name}' WHERE id=${req.params.id}`,
       () => {
-        //pool.end();
-        res.send('Updated successfullt.');
+        res.send('Updated successfully.');
       }
     );
   } catch (error) {
