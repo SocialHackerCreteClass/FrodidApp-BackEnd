@@ -6,6 +6,9 @@ const logger = require('morgan');
 const cors = require('cors');  // Enable CORS (For swagger)
 require('dotenv').config();
 
+// LOGIN - LOGOUT
+const session = require('express-session');
+
 // SWAGGER stuff
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
@@ -22,9 +25,18 @@ const addressesRouter = require('./routes/addresses');
 const countriesRouter = require('./routes/countries');
 const statesRouter = require('./routes/states');
 
+const authRouter = require('./routes/auth');
+
 const app = express();
 // SWAGGER stuff
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// LOGIN - LOGOUT
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -55,6 +67,8 @@ app.use('/genders', gendersRouter);
 app.use('/addresses', addressesRouter);
 app.use('/countries', countriesRouter);
 app.use('/states', statesRouter);
+
+app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
