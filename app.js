@@ -7,7 +7,7 @@ const cors = require('cors');  // Enable CORS (For swagger)
 require('dotenv').config();
 
 // LOGIN - LOGOUT
-const session = require('express-session');
+var cookieSession = require('cookie-session')
 
 // SWAGGER stuff
 const swaggerUi = require('swagger-ui-express');
@@ -31,13 +31,6 @@ const app = express();
 // SWAGGER stuff
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// LOGIN - LOGOUT
-app.use(session({
-	secret: 'secret',
-	resave: true,
-	saveUninitialized: true
-}));
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -47,6 +40,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// LOGIN-LOGOUT
+app.use(cookieSession({
+  name: 'session',
+  keys: ["Frodid"],
+
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
 
 // ENABLE CORS
 app.use(cors({

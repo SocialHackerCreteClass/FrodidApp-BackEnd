@@ -5,13 +5,31 @@ const router = express.Router();
 
 // PG Get with id Method
 router.post('/login', (req, res) => {
-  if(!req.session.test) {
-    req.session.test = [];
-  }
+  const { email, password } = req.body;
 
-  req.session.test.push(Math.floor((Math.random() * 10) + 1));
-  res.send(req.session);
+  if (email && password) {
+    pool.query(
+      `SELECT * FROM a003_users WHERE email = '${email}' AND password = '${password}'`,
+      (error, results) => {
+        if (results.rows.length) {
+          req.session.user = results.rows[0];
+          req.session.token = [...Array(400)].map(i=>(~~(Math.random()*36)).toString(36)).join('');
+          const data = {
+            user: req.session.user,
+            token: req.session.token
+          }
+          res.send(data);
+        } else {
+          res.send('Invalid email or password.');
+        }
+      }
+    );
+  }
 });
 
+router.post('/logout', (req, res) => {
+  req.session = null;
+  res.send("You have successfully logged out");
+});
 
 module.exports = router;

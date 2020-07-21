@@ -1,5 +1,6 @@
 const express = require('express');
 const pool = require('../connection/connection');
+const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
@@ -36,13 +37,13 @@ router.get('/', (req, res) => {
 });
 
 // PG GET WITH ID METHOD
-router.get('/:id', (req, res) => {
+router.get('/:id', [auth], (req, res) => {
+  //res.send(req.headers);
   try {
     pool.query(
       `SELECT * FROM a003_users WHERE id=${req.params.id}`,
       (err, results) => {
-        res.send(results);
-        //pool.end();
+        res.send(results.rows[0]);
       }
     );
   } catch (error) {
@@ -132,7 +133,7 @@ router.put('/:id', (req, res) => {
 });
 
 // Delete Method
-router.delete('/:id', (req, res) => {
+router.delete('/:id',(req, res) => {
   try {
     pool.query(
       `DELETE FROM a003_users WHERE id=${req.params.id}`,
