@@ -13,7 +13,7 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "localhost:9000",
+  "host": "ec2-18-185-66-15.eu-central-1.compute.amazonaws.com",
   "basePath": "/",
   "tags": [
     {
