@@ -1,6 +1,7 @@
 const express = require('express');
 const pool = require('../connection/connection');
 const auth = require('../middlewares/auth');
+const permission = require('../middlewares/permission');
 
 const router = express.Router();
 
@@ -20,16 +21,21 @@ router.get('/', (req, res) => {
         data = results.rows[0].count;
       });
 
-      pool.query('SELECT * FROM a003_users LIMIT ' + req.query.items_per_page +
-        ' OFFSET ' + (req.query.page_number - 1) * req.query.items_per_page, (error, results) => {
+      pool.query(
+        'SELECT * FROM a003_users LIMIT ' +
+          req.query.items_per_page +
+          ' OFFSET ' +
+          (req.query.page_number - 1) * req.query.items_per_page,
+        (error, results) => {
           page_length = data / req.query.items_per_page;
           res.send({
             count: data,
             items: results.rows,
             pages_length: page_length,
-            items_per_page: req.query.items_per_page
+            items_per_page: req.query.items_per_page,
           });
-        });
+        }
+      );
     }
   } catch (error) {
     if (error) console.error(`Error: ${error.message}`);
@@ -37,8 +43,8 @@ router.get('/', (req, res) => {
 });
 
 // PG GET WITH ID METHOD
-router.get('/:id', [auth], (req, res) => {
-  //res.send(req.headers);
+router.get('/:id', [auth, permission], (req, res) => {
+  // res.send(req.headers);
   try {
     pool.query(
       `SELECT * FROM a003_users WHERE id=${req.params.id}`,
@@ -54,9 +60,9 @@ router.get('/:id', [auth], (req, res) => {
 //  PG POST METHOD
 router.post('/', (req, res) => {
   console.log(req.body);
-    try {
-      pool.query(
-        `INSERT INTO a003_users (
+  try {
+    pool.query(
+      `INSERT INTO a003_users (
       first_name,
       last_name,
       email,
@@ -77,13 +83,13 @@ router.post('/', (req, res) => {
     '${req.body.afm}',
     ${req.body.role_id},
     ${req.body.profession_id})`,
-        (error, results) => {
-          res.send(results);
-        }
-      );
-    } catch (error) {
-      if (error) console.error(`Error: ${error.message}`);
-    }
+      (error, results) => {
+        res.send(results);
+      }
+    );
+  } catch (error) {
+    if (error) console.error(`Error: ${error.message}`);
+  }
 });
 
 /* Login method */
@@ -133,7 +139,7 @@ router.put('/:id', (req, res) => {
 });
 
 // Delete Method
-router.delete('/:id',(req, res) => {
+router.delete('/:id', (req, res) => {
   try {
     pool.query(
       `DELETE FROM a003_users WHERE id=${req.params.id}`,
