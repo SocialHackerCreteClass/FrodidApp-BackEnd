@@ -2,6 +2,7 @@ const express = require('express');
 const pool = require('../connection/connection');
 const auth = require('../middlewares/auth');
 const permission = require('../middlewares/permission');
+const id = require('../middlewares/id');
 
 const router = express.Router();
 
@@ -44,7 +45,6 @@ router.get('/', (req, res) => {
 
 // PG GET WITH ID METHOD
 router.get('/:id', [auth, permission], (req, res) => {
-  // res.send(req.headers);
   try {
     pool.query(
       `SELECT * FROM a003_users WHERE id=${req.params.id}`,
@@ -92,28 +92,8 @@ router.post('/', (req, res) => {
   }
 });
 
-/* Login method */
-router.post('/login', (req, res) => {
-  const { email, password } = req.body;
-
-  if (email && password) {
-    pool.query(
-      'SELECT * FROM a003_users WHERE email = ? AND password = ?',
-      [email, password],
-      (error, results) => {
-        //pool.end();
-        if (results.length > 0) {
-          res.send(`Welcome, ${results[0].first_name}`);
-        } else {
-          res.send('Invalid email or password.');
-        }
-      }
-    );
-  }
-});
-
 // Put Method
-router.put('/:id', (req, res) => {
+router.put('/:id', [auth, permission, id], (req, res) => {
   try {
     pool.query(
       `

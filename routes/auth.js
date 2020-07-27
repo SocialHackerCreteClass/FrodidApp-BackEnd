@@ -17,7 +17,7 @@ router.post('/login', (req, res) => {
           const data = {
             user: req.session.user,
             token: req.session.token
-          }
+          } 
           res.send(data);
         } else {
           res.send('Invalid email or password.');
