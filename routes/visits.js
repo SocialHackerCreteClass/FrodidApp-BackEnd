@@ -3,7 +3,7 @@ const pool = require('../connection/connection');
 const auth = require('../middlewares/auth');
 const permission = require('../middlewares/permission');
 const admin = require('../middlewares/admin');
-const admin_id = require('../middlewares/admin_id');
+const admin_perm = require('../middlewares/admin_perm');
 
 const router = express.Router();
 
@@ -49,7 +49,20 @@ router.get('/:id', (req, res) => {
       `SELECT * FROM a004_visits WHERE id=${req.params.id}`,
       (error, results) => {
         res.send(results);
-        // pool.end();
+      }
+    );
+  } catch (error) {
+    if (error) console.error(`Error: ${error.message}`);
+  }
+});
+
+// PG Get with user id
+router.get('/user/:id', [auth, permission], (req, res) => {
+  try {
+    pool.query(
+      `SELECT * FROM a004_visits WHERE user_id=${req.params.id}`,
+      (error, results) => {
+        res.send(results);
       }
     );
   } catch (error) {
@@ -58,14 +71,14 @@ router.get('/:id', (req, res) => {
 });
 
 // PG  Post Method
-router.post('/', (req, res) => {
+router.post('/', [auth, permission], (req, res) => {
   try {
     pool.query(
       `INSERT INTO a004_visits (date, comment, start_time, end_time, user_id) VALUES ('${req.body.date}',
       '${req.body.comment}',
       '${req.body.start_time}',
       '${req.body.end_time}',
-      ${req.body.user_id})`,
+      ${req.session.user.id})`,
       () => {
         res.send('Entry added.');
       }
@@ -76,7 +89,7 @@ router.post('/', (req, res) => {
 });
 
 // PG Put Method
-router.put('/:id', (req, res) => {
+router.put('/:id', [auth, permission], (req, res) => {
   try {
     pool.query(
       `UPDATE a004_visits SET 
@@ -84,7 +97,7 @@ router.put('/:id', (req, res) => {
         comment='${req.body.comment}',
         start_time='${req.body.start_time}',
         end_time='${req.body.end_time}',
-        user_id=${req.body.user_id} 
+        user_id=${req.session.user.id} 
       WHERE id=${req.params.id}`,
       () => {
         res.send('Entry updated.');
@@ -96,7 +109,7 @@ router.put('/:id', (req, res) => {
 });
 
 // PG Delete Method
-router.delete('/:id', (req, res) => {
+router.delete('/:id', [auth, admin_perm], (req, res) => {
   try {
     pool.query(`DELETE FROM a004_visits WHERE id=${req.params.id}`, () => {
       res.send('Entry deleted.');

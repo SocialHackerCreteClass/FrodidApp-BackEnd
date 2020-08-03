@@ -1,4 +1,4 @@
-const admin_id = (req, res, next) => {
+const admin_perm = (req, res, next) => {
     if (req.session.user.role_id === 1 || req.params.id == req.session.user.id) {
         next();
       } else {
@@ -6,4 +6,4 @@ const admin_id = (req, res, next) => {
       }
   };
   
-  module.exports = admin_id;
+  module.exports = admin_perm;

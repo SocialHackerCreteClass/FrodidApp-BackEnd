@@ -3,7 +3,7 @@ const pool = require('../connection/connection');
 const auth = require('../middlewares/auth');
 const permission = require('../middlewares/permission');
 const admin = require('../middlewares/admin');
-const admin_id = require('../middlewares/admin_id');
+const admin_perm = require('../middlewares/admin_perm');
 
 const router = express.Router();
 
@@ -94,7 +94,7 @@ router.post('/', [auth, admin], (req, res) => {
 });
 
 // Put Method Only valid for users
-router.put('/:id', [auth, permission, admin_id], (req, res) => {
+router.put('/:id', [auth, permission, admin_perm], (req, res) => {
   try {
     pool.query(
       `
