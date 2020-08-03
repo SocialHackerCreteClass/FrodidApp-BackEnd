@@ -1,10 +1,12 @@
 const express = require('express');
 const pool = require('../connection/connection');
+const auth = require('../middlewares/auth');
+const admin = require('../middlewares/admin');
 
 const router = express.Router();
 
 /* GET method */
-router.get('/', (req, res) => {
+router.get('/', [auth, admin], (req, res) => {
   try {
     let data;
     let pageLength;
@@ -39,7 +41,7 @@ router.get('/', (req, res) => {
 });
 
 /* Specific GET method */
-router.get('/:id', (req, res) => {
+router.get('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(
       `SELECT * FROM a006_states WHERE id=${req.params.id}`,
@@ -53,7 +55,7 @@ router.get('/:id', (req, res) => {
 });
 
 /* POST method */
-router.post('/', (req, res) => {
+router.post('/', [auth, admin], (req, res) => {
   try {
     pool.query(
       `INSERT INTO a006_states (name) VALUES ('${req.body.name}')`,
@@ -67,7 +69,7 @@ router.post('/', (req, res) => {
 });
 
 /* PUT method */
-router.put('/:id', (req, res) => {
+router.put('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(
       `UPDATE a006_states SET name='${req.body.name}' WHERE id=${req.params.id}`,
@@ -81,7 +83,7 @@ router.put('/:id', (req, res) => {
 });
 
 /* DELETE method */
-router.delete('/:id', (req, res) => {
+router.delete('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(`DELETE FROM a006_states WHERE id=${req.params.id}`, () => {
       //pool.end();

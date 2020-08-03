@@ -65,14 +65,21 @@
       "description": "All about patients table"
     }
   ],
-  "schemes": ["http", "https"],
+  "schemes": [
+    "http",
+    "https"
+  ],
   "paths": {
     "/roles": {
       "post": {
-        "tags": ["roles"],
+        "tags": [
+          "roles"
+        ],
         "summary": "Creates new role",
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -91,10 +98,14 @@
         }
       },
       "get": {
-        "tags": ["roles"],
+        "tags": [
+          "roles"
+        ],
         "summary": "Gets a list of all roles",
         "description": "This endpoint uses a get request to retrieve all roles",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "405": {
             "description": "Invalid input"
@@ -104,10 +115,14 @@
     },
     "/roles/{id}": {
       "get": {
-        "tags": ["roles"],
+        "tags": [
+          "roles"
+        ],
         "summary": "Gets a single role",
         "description": "This endpoint uses a get request to retrieve a specific role",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -133,7 +148,9 @@
         }
       },
       "put": {
-        "tags": ["roles"],
+        "tags": [
+          "roles"
+        ],
         "summary": "Updates a role in the store with form data",
         "description": "",
         "parameters": [
@@ -161,7 +178,9 @@
         }
       },
       "delete": {
-        "tags": ["roles"],
+        "tags": [
+          "roles"
+        ],
         "summary": "Deletes a role",
         "description": "",
         "parameters": [
@@ -185,10 +204,14 @@
     },
     "/professions": {
       "post": {
-        "tags": ["professions"],
+        "tags": [
+          "professions"
+        ],
         "summary": "Creates new profession",
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -207,10 +230,14 @@
         }
       },
       "get": {
-        "tags": ["professions"],
+        "tags": [
+          "professions"
+        ],
         "summary": "Gets a list of all professions",
         "description": "This endpoint uses a get request to retrieve all professions",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -234,10 +261,14 @@
     },
     "/professions/{id}": {
       "get": {
-        "tags": ["professions"],
+        "tags": [
+          "professions"
+        ],
         "summary": "Gets a single profession",
         "description": "This endpoint uses a get request to retrieve a specific profession",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -263,7 +294,9 @@
         }
       },
       "put": {
-        "tags": ["professions"],
+        "tags": [
+          "professions"
+        ],
         "summary": "Updates a profession in the store with form data",
         "description": "",
         "parameters": [
@@ -291,7 +324,9 @@
         }
       },
       "delete": {
-        "tags": ["professions"],
+        "tags": [
+          "professions"
+        ],
         "summary": "Deletes a profession",
         "description": "",
         "parameters": [
@@ -315,10 +350,14 @@
     },
     "/users": {
       "post": {
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "Creates new user",
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -337,10 +376,14 @@
         }
       },
       "get": {
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "Gets a list of all countries",
         "description": "This endpoint uses a get request to retrieve all countries",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -364,10 +407,14 @@
     },
     "/users/{id}": {
       "get": {
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "Gets a single user",
         "description": "This endpoint uses a get request to retrieve a specific user",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -393,7 +440,9 @@
         }
       },
       "put": {
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "Updates a user in the users table",
         "description": "",
         "parameters": [
@@ -421,7 +470,9 @@
         }
       },
       "delete": {
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "Deletes a country",
         "description": "",
         "parameters": [
@@ -445,10 +496,14 @@
     },
     "/visits": {
       "post": {
-        "tags": ["visits"],
+        "tags": [
+          "visits"
+        ],
         "summary": "Creates new visit",
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -467,10 +522,14 @@
         }
       },
       "get": {
-        "tags": ["visits"],
+        "tags": [
+          "visits"
+        ],
         "summary": "Gets a list of all visits",
         "description": "This endpoint uses a get request to retrieve all visits",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -494,10 +553,14 @@
     },
     "/visits/{id}": {
       "get": {
-        "tags": ["visits"],
+        "tags": [
+          "visits"
+        ],
         "summary": "Gets a single visit",
         "description": "This endpoint uses a get request to retrieve a specific visit",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -523,7 +586,9 @@
         }
       },
       "put": {
-        "tags": ["visits"],
+        "tags": [
+          "visits"
+        ],
         "summary": "Updates a user in the visits table",
         "description": "",
         "parameters": [
@@ -551,7 +616,9 @@
         }
       },
       "delete": {
-        "tags": ["visits"],
+        "tags": [
+          "visits"
+        ],
         "summary": "Deletes a visit",
         "description": "",
         "parameters": [
@@ -575,10 +642,14 @@
     },
     "/countries": {
       "post": {
-        "tags": ["countries"],
+        "tags": [
+          "countries"
+        ],
         "summary": "Creates new country",
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -597,10 +668,14 @@
         }
       },
       "get": {
-        "tags": ["countries"],
+        "tags": [
+          "countries"
+        ],
         "summary": "Gets a list of all countries",
         "description": "This endpoint uses a get request to retrieve all countries",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -624,10 +699,14 @@
     },
     "/countries/{id}": {
       "get": {
-        "tags": ["countries"],
+        "tags": [
+          "countries"
+        ],
         "summary": "Gets a single country",
         "description": "This endpoint uses a get request to retrieve a specific country",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -653,7 +732,9 @@
         }
       },
       "put": {
-        "tags": ["countries"],
+        "tags": [
+          "countries"
+        ],
         "summary": "Updates a country in the store with form data",
         "description": "",
         "parameters": [
@@ -689,7 +770,9 @@
         }
       },
       "delete": {
-        "tags": ["countries"],
+        "tags": [
+          "countries"
+        ],
         "summary": "Deletes a country",
         "description": "",
         "parameters": [
@@ -713,10 +796,14 @@
     },
     "/users_patients": {
       "post": {
-        "tags": ["users_patients"],
+        "tags": [
+          "users_patients"
+        ],
         "summary": "Creates new user_patient row",
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -735,10 +822,14 @@
         }
       },
       "get": {
-        "tags": ["users_patients"],
+        "tags": [
+          "users_patients"
+        ],
         "summary": "Gets a list of all users_patients",
         "description": "This endpoint uses a get request to retrieve all users_patients",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -762,10 +853,14 @@
     },
     "/users_patients/{id}": {
       "get": {
-        "tags": ["users_patients"],
+        "tags": [
+          "users_patients"
+        ],
         "summary": "Gets a single users_patients row",
         "description": "This endpoint uses a get request to retrieve a specific users_patients",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -791,7 +886,9 @@
         }
       },
       "put": {
-        "tags": ["users_patients"],
+        "tags": [
+          "users_patients"
+        ],
         "summary": "Updates a users_patients in the store with form data",
         "description": "",
         "parameters": [
@@ -819,7 +916,9 @@
         }
       },
       "delete": {
-        "tags": ["users_patients"],
+        "tags": [
+          "users_patients"
+        ],
         "summary": "Deletes a users_patients",
         "description": "",
         "parameters": [
@@ -843,11 +942,16 @@
     },
     "/user": {
       "post": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Create user",
         "description": "This can only be done by the logged in user.",
         "operationId": "createUser",
-        "produces": ["application/xml", "application/json"],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -868,11 +972,16 @@
     },
     "/user/createWithArray": {
       "post": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Creates list of users with given input array",
         "description": "",
         "operationId": "createUsersWithArrayInput",
-        "produces": ["application/xml", "application/json"],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -896,11 +1005,16 @@
     },
     "/user/createWithList": {
       "post": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Creates list of users with given input array",
         "description": "",
         "operationId": "createUsersWithListInput",
-        "produces": ["application/xml", "application/json"],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -924,11 +1038,16 @@
     },
     "/user/login": {
       "get": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Logs user into the system",
         "description": "",
         "operationId": "loginUser",
-        "produces": ["application/xml", "application/json"],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "username",
@@ -972,11 +1091,16 @@
     },
     "/user/logout": {
       "get": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Logs out current logged in user session",
         "description": "",
         "operationId": "logoutUser",
-        "produces": ["application/xml", "application/json"],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
         "parameters": [],
         "responses": {
           "default": {
@@ -987,11 +1111,16 @@
     },
     "/user/{username}": {
       "get": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Get user by user name",
         "description": "",
         "operationId": "getUserByName",
-        "produces": ["application/xml", "application/json"],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "username",
@@ -1017,11 +1146,16 @@
         }
       },
       "put": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Updated user",
         "description": "This can only be done by the logged in user.",
         "operationId": "updateUser",
-        "produces": ["application/xml", "application/json"],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "username",
@@ -1050,11 +1184,16 @@
         }
       },
       "delete": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Delete user",
         "description": "This can only be done by the logged in user.",
         "operationId": "deleteUser",
-        "produces": ["application/xml", "application/json"],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "username",
@@ -1076,10 +1215,14 @@
     },
     "/states": {
       "post": {
-        "tags": ["states"],
+        "tags": [
+          "states"
+        ],
         "summary": "Creates new state",
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -1098,10 +1241,14 @@
         }
       },
       "get": {
-        "tags": ["states"],
+        "tags": [
+          "states"
+        ],
         "summary": "Gets a list of all states",
         "description": "This endpoint uses a get request to retrieve all states",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -1125,10 +1272,14 @@
     },
     "/states/{id}": {
       "get": {
-        "tags": ["states"],
+        "tags": [
+          "states"
+        ],
         "summary": "Gets a single state",
         "description": "This endpoint uses a get request to retrieve a specific state",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -1154,7 +1305,9 @@
         }
       },
       "put": {
-        "tags": ["states"],
+        "tags": [
+          "states"
+        ],
         "summary": "Updates a state in the store with form data",
         "description": "",
         "parameters": [
@@ -1182,7 +1335,9 @@
         }
       },
       "delete": {
-        "tags": ["states"],
+        "tags": [
+          "states"
+        ],
         "summary": "Deletes a state",
         "description": "",
         "parameters": [
@@ -1206,10 +1361,14 @@
     },
     "/addresses": {
       "post": {
-        "tags": ["addresses"],
+        "tags": [
+          "addresses"
+        ],
         "summary": "Creates new address",
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -1228,10 +1387,14 @@
         }
       },
       "get": {
-        "tags": ["addresses"],
+        "tags": [
+          "addresses"
+        ],
         "summary": "Gets a list of all addresses",
         "description": "This endpoint uses a get request to retrieve all addresses",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -1255,10 +1418,14 @@
     },
     "/addresses/{id}": {
       "get": {
-        "tags": ["addresses"],
+        "tags": [
+          "addresses"
+        ],
         "summary": "Gets a single address",
         "description": "This endpoint uses a get request to retrieve a specific address",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -1284,7 +1451,9 @@
         }
       },
       "put": {
-        "tags": ["addresses"],
+        "tags": [
+          "addresses"
+        ],
         "summary": "Updates a user in the addresses table",
         "description": "",
         "parameters": [
@@ -1312,7 +1481,9 @@
         }
       },
       "delete": {
-        "tags": ["addresses"],
+        "tags": [
+          "addresses"
+        ],
         "summary": "Deletes an address",
         "description": "",
         "parameters": [
@@ -1336,10 +1507,14 @@
     },
     "/genders": {
       "post": {
-        "tags": ["genders"],
+        "tags": [
+          "genders"
+        ],
         "summary": "Creates new gender",
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -1358,10 +1533,14 @@
         }
       },
       "get": {
-        "tags": ["genders"],
+        "tags": [
+          "genders"
+        ],
         "summary": "Gets a list of all genders",
         "description": "This endpoint uses a get request to retrieve all genders",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "405": {
             "description": "Invalid input"
@@ -1371,10 +1550,14 @@
     },
     "/genders/{id}": {
       "get": {
-        "tags": ["genders"],
+        "tags": [
+          "genders"
+        ],
         "summary": "Gets a single gender",
         "description": "This endpoint uses a get request to retrieve a specific gender",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -1400,7 +1583,9 @@
         }
       },
       "put": {
-        "tags": ["genders"],
+        "tags": [
+          "genders"
+        ],
         "summary": "Updates a gender in the store with form data",
         "description": "",
         "parameters": [
@@ -1428,7 +1613,9 @@
         }
       },
       "delete": {
-        "tags": ["genders"],
+        "tags": [
+          "genders"
+        ],
         "summary": "Deletes a gender",
         "description": "",
         "parameters": [
@@ -1452,10 +1639,14 @@
     },
     "/patients": {
       "post": {
-        "tags": ["patients"],
+        "tags": [
+          "patients"
+        ],
         "summary": "Creates new patient",
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -1474,10 +1665,14 @@
         }
       },
       "get": {
-        "tags": ["patients"],
+        "tags": [
+          "patients"
+        ],
         "summary": "Gets a list of all patients",
         "description": "This endpoint uses a get request to retrieve all patients",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -1501,10 +1696,14 @@
     },
     "/patients/{id}": {
       "get": {
-        "tags": ["patients"],
+        "tags": [
+          "patients"
+        ],
         "summary": "Gets a single patient",
         "description": "This endpoint uses a get request to retrieve a specific patient",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -1530,7 +1729,9 @@
         }
       },
       "put": {
-        "tags": ["patients"],
+        "tags": [
+          "patients"
+        ],
         "summary": "Updates a user in the patients table",
         "description": "",
         "parameters": [
@@ -1558,7 +1759,9 @@
         }
       },
       "delete": {
-        "tags": ["patients"],
+        "tags": [
+          "patients"
+        ],
         "summary": "Deletes a patient",
         "description": "",
         "parameters": [
@@ -1652,10 +1855,6 @@
         "amka": {
           "type": "string",
           "example": "2222222"
-        },
-        "role_id": {
-          "type": "integer",
-          "example": 1
         },
         "profession_id": {
           "type": "integer",

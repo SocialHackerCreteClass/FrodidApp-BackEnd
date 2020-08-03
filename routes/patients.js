@@ -1,10 +1,12 @@
 const express = require('express');
 const pool = require('../connection/connection');
+const auth = require('../middlewares/auth');
+const admin = require('../middlewares/admin');
 
 const router = express.Router();
 
 /* GET method */
-router.get('/', (req, res) => {
+router.get('/', [auth, admin], (req, res) => {
   try {
     let data;
     let pageLength;
@@ -40,7 +42,7 @@ router.get('/', (req, res) => {
 });
 
 /* Specific GET method */
-router.get('/:id', (req, res) => {
+router.get('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(
       `SELECT * FROM a009_patients WHERE id=${req.params.id}`,
@@ -55,7 +57,7 @@ router.get('/:id', (req, res) => {
 });
 
 /* POST method */
-router.post('/', (req, res) => {
+router.post('/', [auth, admin], (req, res) => {
   try {
     pool.query(
       `
@@ -90,7 +92,7 @@ router.post('/', (req, res) => {
 });
 
 /* PUT method */
-router.put('/:id', (req, res) => {
+router.put('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(
       `
@@ -117,7 +119,7 @@ router.put('/:id', (req, res) => {
 });
 
 /* DELETE method */
-router.delete('/:id', (req, res) => {
+router.delete('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(`DELETE FROM a009_patients WHERE id=${req.params.id}`, () => {
       res.send('Entry deleted.');

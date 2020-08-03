@@ -1,10 +1,14 @@
 const express = require('express');
 const pool = require('../connection/connection');
+const auth = require('../middlewares/auth');
+const permission = require('../middlewares/permission');
+const admin = require('../middlewares/admin');
+const admin_id = require('../middlewares/admin_id');
 
 const router = express.Router();
 
 // PG Get with id Method
-router.get('/', (req, res) => {
+router.get('/', [auth, admin], (req, res) => {
   try {
     let data;
     let pageLength;

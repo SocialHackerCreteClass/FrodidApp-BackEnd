@@ -1,10 +1,12 @@
 const express = require('express');
 const pool = require('../connection/connection');
+const auth = require('../middlewares/auth');
+const admin = require('../middlewares/admin');
 
 const router = express.Router();
 
 /* PG GET method. Th "next" param is related to enabling CORS */
-router.get('/', (req, res) => {
+router.get('/', [auth, admin], (req, res) => {
   try {
     let data;
     let pageLength;
@@ -39,7 +41,7 @@ router.get('/', (req, res) => {
 });
 
 /* PG Specific GET method */
-router.get('/:id', (req, res) => {
+router.get('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(
       `SELECT * FROM a005_countries WHERE id=${req.params.id}`,
@@ -53,7 +55,7 @@ router.get('/:id', (req, res) => {
 });
 
 /* PG POST method */
-router.post('/', (req, res) => {
+router.post('/', [auth, admin], (req, res) => {
   console.log(req.body.name);
   try {
       pool.query(
@@ -69,7 +71,7 @@ router.post('/', (req, res) => {
 });
 
 /* PG PUT method */
-router.put('/:id', (req, res) => {
+router.put('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(
       `UPDATE a005_countries SET name='${req.body.name}' WHERE id=${req.params.id}`,
@@ -84,7 +86,7 @@ router.put('/:id', (req, res) => {
 });
 
 /* PG DELETE method */
-router.delete('/:id', (req, res) => {
+router.delete('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(`DELETE FROM a005_countries WHERE id=${req.params.id}`, () => {
       // pool.end();

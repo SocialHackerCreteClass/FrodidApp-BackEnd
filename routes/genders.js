@@ -1,10 +1,12 @@
 const express = require('express');
 const pool = require('../connection/connection');
+const auth = require('../middlewares/auth');
+const admin = require('../middlewares/admin');
 
 const router = express.Router();
 
 /* GET gender listing. */
-router.get('/', (req, res) => {
+router.get('/', [auth, admin], (req, res) => {
   try {
     pool.query('SELECT * FROM a008_genders', (error, results) => {
       res.send(results);
@@ -15,7 +17,7 @@ router.get('/', (req, res) => {
 });
 
 // PG GET METHOD WITH ID
-router.get('/:id', (req, res) => {
+router.get('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(
       `SELECT * FROM a008_genders WHERE id=${req.params.id}`,
@@ -29,7 +31,7 @@ router.get('/:id', (req, res) => {
 });
 
 /* POST gender listing. */
-router.post('/', (req, res) => {
+router.post('/', [auth, admin], (req, res) => {
   try {
     pool.query(
       `INSERT INTO a008_genders (name) VALUES ('${req.body.name}')`,
@@ -43,7 +45,7 @@ router.post('/', (req, res) => {
 });
 
 /* PUT gender listing. */
-router.put('/:id', (req, res) => {
+router.put('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(
       `UPDATE a008_genders SET name='${req.body.name}' WHERE id=${req.params.id}`,
@@ -57,7 +59,7 @@ router.put('/:id', (req, res) => {
 });
 
 /* DELETE gender listing. */
-router.delete('/:id', (req, res) => {
+router.delete('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(`DELETE FROM a008_genders WHERE id=${req.params.id}`, () => {
       //pool.end();

@@ -1,10 +1,12 @@
 const express = require('express');
 const pool = require('../connection/connection');
+const auth = require('../middlewares/auth');
+const admin = require('../middlewares/admin');
 
 const router = express.Router();
 
 /* GET method */
-router.get('/', (req, res) => {
+router.get('/', [auth, admin], (req, res) => {
   try {
     let data;
     let page_length;
@@ -37,7 +39,7 @@ router.get('/', (req, res) => {
 });
 
 // Get with id Method
-router.get('/:id', (req, res) => {
+router.get('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(
       `SELECT * FROM a010_users_patients WHERE id=${req.params.id}`,
@@ -52,7 +54,7 @@ router.get('/:id', (req, res) => {
 });
 
 // Post Method
-router.post('/', (req, res) => {
+router.post('/', [auth, admin], (req, res) => {
   try {
     pool.query(
       `INSERT INTO a010_users_patients (user_id, patient_id) VALUES (${req.body.user_id}, ${req.body.patient_id})`,
@@ -67,7 +69,7 @@ router.post('/', (req, res) => {
 });
 
 // Put Method
-router.put('/:id', (req, res) => {
+router.put('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(
       `UPDATE a010_users_patients SET user_id=${req.body.user_id}, patient_id=${req.body.patient_id} WHERE id=${req.params.id}`,
@@ -82,7 +84,7 @@ router.put('/:id', (req, res) => {
 });
 
 // Delete Method
-router.delete('/:id', (req, res) => {
+router.delete('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(
       `DELETE FROM a010_users_patients WHERE id=${req.params.id}`,

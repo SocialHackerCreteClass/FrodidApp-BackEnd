@@ -1,10 +1,12 @@
 const express = require('express');
 const pool = require('../connection/connection');
+const auth = require('../middlewares/auth');
+const admin = require('../middlewares/admin');
 
 const router = express.Router();
 
 // POSTGRESQL GET METHOD
-router.get('/', (req, res) => {
+router.get('/', [auth, admin], (req, res) => {
   try {
       pool.query('SELECT * FROM a001_roles', (err, results) => {
         res.send(results);
@@ -15,7 +17,7 @@ router.get('/', (req, res) => {
 });
 
 // PG GET METHOD WITH ID
-router.get('/:id', (req, res) => {
+router.get('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(
       `SELECT * FROM a001_roles WHERE id=${req.params.id}`,
@@ -30,7 +32,7 @@ router.get('/:id', (req, res) => {
 });
 
 // PG POST METHOD
-router.post('/', (req, res) => {
+router.post('/', [auth, admin], (req, res) => {
   try {
     pool.query(
       `INSERT INTO a001_roles (name) VALUES ('${req.body.name}')`,
@@ -44,7 +46,7 @@ router.post('/', (req, res) => {
 });
 
 // PG PUT METHOD
-router.put('/:id', (req, res) => {
+router.put('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(
       `UPDATE a001_roles SET name='${req.body.name}' WHERE id=${req.params.id}`,
@@ -59,7 +61,7 @@ router.put('/:id', (req, res) => {
 });
 
 //  PG DELETE METHOD
-router.delete('/:id', (req, res) => {
+router.delete('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(`DELETE FROM a001_roles WHERE id=${req.params.id}`, () => {
       res.send('Entry deleted.');
