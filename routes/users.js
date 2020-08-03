@@ -59,7 +59,7 @@ router.get('/:id', [auth, permission], (req, res) => {
 });
 
 //  PG POST METHOD
-router.post('/', (req, res) => {
+router.post('/', [auth, admin], (req, res) => {
   console.log(req.body);
   try {
     pool.query(
@@ -93,8 +93,8 @@ router.post('/', (req, res) => {
   }
 });
 
-// Put Method
-router.put('/:id', [auth, permission, admin], (req, res) => {
+// Put Method Only valid for users
+router.put('/:id', [auth, permission, admin_id], (req, res) => {
   try {
     pool.query(
       `
@@ -107,7 +107,6 @@ router.put('/:id', [auth, permission, admin], (req, res) => {
   password='${req.body.password}',
   amka='${req.body.amka}',
   afm='${req.body.afm}',
-  role_id=${req.body.role_id},
   profession_id=${req.body.profession_id}
   WHERE id=${req.params.id}`,
       (error, results) => {
@@ -120,7 +119,7 @@ router.put('/:id', [auth, permission, admin], (req, res) => {
 });
 
 // Delete Method
-router.delete('/:id', (req, res) => {
+router.delete('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(
       `DELETE FROM a003_users WHERE id=${req.params.id}`,
