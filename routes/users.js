@@ -2,12 +2,13 @@ const express = require('express');
 const pool = require('../connection/connection');
 const auth = require('../middlewares/auth');
 const permission = require('../middlewares/permission');
-const id = require('../middlewares/id');
+const admin = require('../middlewares/admin');
+const admin_id = require('../middlewares/admin_id');
 
 const router = express.Router();
 
 /* GET method */
-router.get('/', (req, res) => {
+router.get('/', [auth, admin], (req, res) => {
   try {
     let data;
     let page_length;
@@ -93,7 +94,7 @@ router.post('/', (req, res) => {
 });
 
 // Put Method
-router.put('/:id', [auth, permission, id], (req, res) => {
+router.put('/:id', [auth, permission, admin], (req, res) => {
   try {
     pool.query(
       `

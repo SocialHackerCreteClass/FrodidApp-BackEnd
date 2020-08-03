@@ -1,4 +1,4 @@
-const id = (req, res, next) => {
+const admin = (req, res, next) => {
     if (req.session.user.role_id === 1) {
         next();
       } else {
@@ -6,4 +6,4 @@ const id = (req, res, next) => {
       }
   };
   
-  module.exports = id;
+  module.exports = admin;
