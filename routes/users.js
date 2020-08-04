@@ -45,7 +45,7 @@ router.get('/', [auth, admin], (req, res) => {
 });
 
 // PG GET WITH ID METHOD
-router.get('/:id', [auth, permission], (req, res) => {
+router.get('/:id', [auth, admin_perm], (req, res) => {
   try {
     pool.query(
       `SELECT * FROM a003_users WHERE id=${req.params.id}`,
@@ -94,7 +94,7 @@ router.post('/', [auth, admin], (req, res) => {
 });
 
 // Put Method Only valid for users
-router.put('/:id', [auth, permission, admin_perm], (req, res) => {
+router.put('/:id', [auth, admin_perm], (req, res) => {
   try {
     pool.query(
       `
