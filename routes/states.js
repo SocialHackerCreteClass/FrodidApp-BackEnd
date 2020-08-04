@@ -6,7 +6,7 @@ const admin = require('../middlewares/admin');
 const router = express.Router();
 
 /* GET method */
-router.get('/', [auth, admin], (req, res) => {
+router.get('/', (req, res) => {
   try {
     let data;
     let pageLength;
