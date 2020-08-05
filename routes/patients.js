@@ -34,7 +34,6 @@ router.get('/', [auth, admin], (req, res) => {
           });
         }
       );
-      // pool.end();
     }
   } catch (error) {
     if (error) console.error(`Error: ${error.message}`);

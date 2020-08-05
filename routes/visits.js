@@ -43,7 +43,7 @@ router.get('/', [auth, admin], (req, res) => {
 });
 
 // PG Get with id Method
-router.get('/:id', (req, res) => {
+router.get('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(
       `SELECT * FROM a004_visits WHERE id=${req.params.id}`,
@@ -57,7 +57,7 @@ router.get('/:id', (req, res) => {
 });
 
 // PG Get with user id
-router.get('/user/:id', [auth, permission], (req, res) => {
+router.get('/user/:id', [auth, admin_perm], (req, res) => {
   try {
     pool.query(
       `SELECT * FROM a004_visits WHERE user_id=${req.params.id}`,
@@ -71,7 +71,7 @@ router.get('/user/:id', [auth, permission], (req, res) => {
 });
 
 // PG  Post Method
-router.post('/', [auth, permission], (req, res) => {
+router.post('/', [auth, admin_perm], (req, res) => {
   try {
     pool.query(
       `INSERT INTO a004_visits (date, comment, start_time, end_time, user_id) VALUES ('${req.body.date}',
@@ -89,7 +89,7 @@ router.post('/', [auth, permission], (req, res) => {
 });
 
 // PG Put Method
-router.put('/:id', [auth, permission], (req, res) => {
+router.put('/:id', [auth, admin_perm], (req, res) => {
   try {
     pool.query(
       `UPDATE a004_visits SET 
@@ -109,7 +109,7 @@ router.put('/:id', [auth, permission], (req, res) => {
 });
 
 // PG Delete Method
-router.delete('/:id', [auth, admin_perm], (req, res) => {
+router.delete('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(`DELETE FROM a004_visits WHERE id=${req.params.id}`, () => {
       res.send('Entry deleted.');
