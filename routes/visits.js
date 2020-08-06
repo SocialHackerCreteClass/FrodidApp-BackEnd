@@ -43,25 +43,12 @@ router.get('/', [auth, admin], (req, res) => {
 });
 
 // PG Get with id Method
-router.get('/:id', [auth, admin], (req, res) => {
+router.get('/:id', [auth, admin_perm], (req, res) => {
   try {
     pool.query(
       `SELECT * FROM a004_visits WHERE id=${req.params.id}`,
       (error, results) => {
-        res.send(results);
-      }
-    );
-  } catch (error) {
-    if (error) console.error(`Error: ${error.message}`);
-  }
-});
-
-// PG Get with user id
-router.get('/user/:id', [auth, admin_perm], (req, res) => {
-  try {
-    pool.query(
-      `SELECT * FROM a004_visits WHERE user_id=${req.params.id}`,
-      (error, results) => {
+        console.log(results);
         res.send(results);
       }
     );
