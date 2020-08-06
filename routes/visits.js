@@ -1,9 +1,9 @@
 const express = require('express');
 const pool = require('../connection/connection');
 const auth = require('../middlewares/auth');
-const permission = require('../middlewares/permission');
 const admin = require('../middlewares/admin');
 const admin_perm = require('../middlewares/admin_perm');
+const visit_edit_perm = require('../middlewares/visit_edit_perm');
 
 const router = express.Router();
 
@@ -43,12 +43,11 @@ router.get('/', [auth, admin], (req, res) => {
 });
 
 // PG Get with id Method
-router.get('/:id', [auth, admin_perm], (req, res) => {
+router.get('/:id', [auth, visit_edit_perm], (req, res) => {
   try {
     pool.query(
       `SELECT * FROM a004_visits WHERE id=${req.params.id}`,
       (error, results) => {
-        console.log(results);
         res.send(results);
       }
     );
@@ -58,7 +57,7 @@ router.get('/:id', [auth, admin_perm], (req, res) => {
 });
 
 // PG  Post Method
-router.post('/', [auth, admin_perm], (req, res) => {
+router.post('/', [auth], (req, res) => {
   try {
     pool.query(
       `INSERT INTO a004_visits (date, comment, start_time, end_time, user_id) VALUES ('${req.body.date}',
@@ -76,7 +75,7 @@ router.post('/', [auth, admin_perm], (req, res) => {
 });
 
 // PG Put Method
-router.put('/:id', [auth, admin_perm], (req, res) => {
+router.put('/:id', [auth, visit_edit_perm], (req, res) => {
   try {
     pool.query(
       `UPDATE a004_visits SET 
