@@ -2,7 +2,6 @@ const express = require('express');
 const pool = require('../connection/connection');
 const auth = require('../middlewares/auth');
 const admin = require('../middlewares/admin');
-const admin_perm = require('../middlewares/admin_perm');
 const visit_edit_perm = require('../middlewares/visit_edit_perm');
 
 const router = express.Router();
