@@ -13,7 +13,7 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "localhost:9000",
+  "host": "ec2-18-217-60-252.us-east-2.compute.amazonaws.com",
   "basePath": "/",
   "tags": [
     {
@@ -65,14 +65,6 @@
     "http",
     "https"
   ],
-  "securityDefinitions": {
-    "Bearer": {
-      "description": "Authorization header using the Bearer scheme. Example \\\"Authorization: Bearer {token}\\\"",
-      "type": "apiKey",
-      "in": "header",
-      "name": "Authorization"
-    }
-  },
   "paths": {
     "/auth/login": {
       "post": {
@@ -138,6 +130,12 @@
             "schema": {
               "$ref": "#/definitions/Roles"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -154,6 +152,14 @@
         "description": "This endpoint uses a get request to retrieve all roles",
         "produces": [
           "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
         ],
         "responses": {
           "405": {
@@ -179,6 +185,12 @@
             "description": "Role unique identifier",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -218,6 +230,12 @@
             "schema": {
               "$ref": "#/definitions/Roles"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -239,6 +257,12 @@
             "description": "Role id to delete",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -270,6 +294,12 @@
             "schema": {
               "$ref": "#/definitions/Professions"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -299,6 +329,12 @@
             "name": "page_number",
             "type": "integer",
             "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -325,6 +361,12 @@
             "description": "Profession unique identifier",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -364,6 +406,12 @@
             "schema": {
               "$ref": "#/definitions/Professions"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -385,6 +433,12 @@
             "description": "Profession id to delete",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -416,6 +470,12 @@
             "schema": {
               "$ref": "#/definitions/Users"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -445,11 +505,12 @@
             "name": "page_number",
             "type": "integer",
             "required": false
-          }
-        ],
-        "security": [
+          },
           {
-            "Bearer": []
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -476,6 +537,12 @@
             "description": "User unique identifier",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -515,6 +582,12 @@
             "schema": {
               "$ref": "#/definitions/Users"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -536,6 +609,12 @@
             "description": "User id to delete",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -567,6 +646,12 @@
             "schema": {
               "$ref": "#/definitions/Visits"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -596,6 +681,12 @@
             "name": "page_number",
             "type": "integer",
             "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -622,6 +713,12 @@
             "description": "User unique identifier",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -661,6 +758,12 @@
             "schema": {
               "$ref": "#/definitions/Visits"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -682,6 +785,12 @@
             "description": "Visit id to delete",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -713,6 +822,12 @@
             "schema": {
               "$ref": "#/definitions/Countries"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -742,6 +857,12 @@
             "name": "page_number",
             "type": "integer",
             "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -768,6 +889,12 @@
             "description": "Country unique identifier",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -815,6 +942,12 @@
                 "name": "Banana Republic"
               }
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -836,6 +969,12 @@
             "description": "Country id to delete",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -867,6 +1006,12 @@
             "schema": {
               "$ref": "#/definitions/Users_Patients"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -896,6 +1041,12 @@
             "name": "page_number",
             "type": "integer",
             "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -922,6 +1073,12 @@
             "description": "users_patients unique identifier",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -961,6 +1118,12 @@
             "schema": {
               "$ref": "#/definitions/Users_Patients"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -982,6 +1145,12 @@
             "description": "users_patients id to delete",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1013,6 +1182,12 @@
             "schema": {
               "$ref": "#/definitions/States"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1042,6 +1217,12 @@
             "name": "page_number",
             "type": "integer",
             "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1068,6 +1249,12 @@
             "description": "State unique identifier",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1107,6 +1294,12 @@
             "schema": {
               "$ref": "#/definitions/States"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1128,6 +1321,12 @@
             "description": "State id to delete",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1159,6 +1358,12 @@
             "schema": {
               "$ref": "#/definitions/Addresses"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1188,6 +1393,12 @@
             "name": "page_number",
             "type": "integer",
             "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1214,6 +1425,12 @@
             "description": "Address unique identifier",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1253,6 +1470,12 @@
             "schema": {
               "$ref": "#/definitions/Addresses"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1274,6 +1497,12 @@
             "description": "Address id to delete",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1305,6 +1534,12 @@
             "schema": {
               "$ref": "#/definitions/Genders"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1321,6 +1556,14 @@
         "description": "This endpoint uses a get request to retrieve all genders",
         "produces": [
           "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
         ],
         "responses": {
           "405": {
@@ -1346,6 +1589,12 @@
             "description": "Gender unique identifier",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1385,6 +1634,12 @@
             "schema": {
               "$ref": "#/definitions/Genders"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1406,6 +1661,12 @@
             "description": "Gender id to delete",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1437,6 +1698,12 @@
             "schema": {
               "$ref": "#/definitions/Patients"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1466,6 +1733,12 @@
             "name": "page_number",
             "type": "integer",
             "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1492,6 +1765,12 @@
             "description": "Patient unique identifier",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1531,6 +1810,12 @@
             "schema": {
               "$ref": "#/definitions/Users"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -1552,6 +1837,12 @@
             "description": "Patient id to delete",
             "required": true,
             "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
