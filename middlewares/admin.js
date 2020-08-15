@@ -2,7 +2,7 @@ const admin = (req, res, next) => {
     if (req.session.user.role_id === 1) {
         next();
       } else {
-        res.send('Your account is not authorized to access this option.');
+        res.status(401).send('Your account is not authorized to access this option.');
       }
   };
   
