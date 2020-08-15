@@ -21,14 +21,14 @@ router.get('/', [auth, admin], (req, res) => {
         data = results.rows[0].count;
       });
 
-      pool.query('SELECT * FROM a010_users_patients LIMIT ' + req.query.items_per_page +
-        ' OFFSET ' + (req.query.page_number - 1) * req.query.items_per_page, (error, results) => {
-          page_length = data / req.query.items_per_page;
+      pool.query('SELECT * FROM a010_users_patients LIMIT ' + req.query.pageSize +
+        ' OFFSET ' + (req.query.pageIndex) * req.query.pageSize, (error, results) => {
+          page_length = data / req.query.pageSize;
           res.send({
-            count: data,
-            items: results.rows,
+            total: data,
+            data: results.rows,
             pages_length: page_length,
-            items_per_page: req.query.items_per_page
+            pageSize: req.query.pageSize
           });
         });
       //pool.end();

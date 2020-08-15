@@ -23,7 +23,6 @@ router.post('/login', (req, res) => {
           data.user.visits_id = [];
           results.rows.forEach(el => data.user.visits_id.push(el.visit_id));
           delete data.user.visit_id;
-
           res.send(data);
         } else {
           res.send('Invalid email or password.');

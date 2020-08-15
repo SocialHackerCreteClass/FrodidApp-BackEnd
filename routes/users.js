@@ -14,26 +14,27 @@ router.get('/', [auth, admin], (req, res) => {
 
     if (Object.keys(req.query).length !== 2) {
       pool.query('SELECT * FROM a003_users', (error, results) => {
+        //res.clearCookie("session");
+        //res.clearCookie("session.sig");
         res.send(results);
       });
     } else {
       pool.query('SELECT Count(*) FROM a003_users', (error, results) => {
-        console.log(results);
         data = results.rows[0].count;
       });
 
       pool.query(
         'SELECT * FROM a003_users LIMIT ' +
-          req.query.items_per_page +
+          req.query.pageSize +
           ' OFFSET ' +
-          (req.query.page_number - 1) * req.query.items_per_page,
+          (req.query.pageIndex) * req.query.pageSize,
         (error, results) => {
-          page_length = data / req.query.items_per_page;
+          page_length = data / req.query.pageSize;
           res.send({
-            count: data,
-            items: results.rows,
+            total: data,
+            data: results.rows,
             pages_length: page_length,
-            items_per_page: req.query.items_per_page,
+            pageSize: req.query.pageSize,
           });
         }
       );

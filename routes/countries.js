@@ -21,16 +21,16 @@ router.get('/', [auth, admin], (req, res) => {
         });
 
       pool.query(
-        `SELECT * FROM a005_countries LIMIT ${req.query.items_per_page} OFFSET ${
-        (req.query.page_number - 1) * req.query.items_per_page
+        `SELECT * FROM a005_countries LIMIT ${req.query.pageSize} OFFSET ${
+        (req.query.pageIndex) * req.query.pageSize
         }`,
         (error, results) => {
-          pageLength = data / req.query.items_per_page;
+          pageLength = data / req.query.pageSize;
           res.send({
-            count: data,
-            items: results.rows,
+            total: data,
+            data: results.rows,
             pages_length: pageLength,
-            items_per_page: req.query.items_per_page,
+            pageSize: req.query.pageSize,
           });
         }
       );
