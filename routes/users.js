@@ -14,8 +14,6 @@ router.get('/', [auth, admin], (req, res) => {
 
     if (Object.keys(req.query).length !== 2) {
       pool.query('SELECT * FROM a003_users', (error, results) => {
-        //res.clearCookie("session");
-        //res.clearCookie("session.sig");
         res.send(results);
       });
     } else {
