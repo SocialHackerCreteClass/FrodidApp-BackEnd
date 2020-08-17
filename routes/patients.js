@@ -12,7 +12,12 @@ router.get('/', [auth, admin], (req, res) => {
     let pageLength;
 
     if (Object.keys(req.query).length !== 2) {
-      pool.query('SELECT * FROM a009_patients', (error, results) => {
+      pool.query(`SELECT p.id, p.first_name, p.last_name, p.birth_date, p.telephone, p.mobile, p.amka, p.afm, p.comments, 
+      a.street, a.street_no, a.region, a.zipcode, c.name country, s.name state, g.name gender
+      FROM a009_patients p, a007_addresses a, a008_genders g, a005_countries c, a006_states s
+      WHERE p.address_id = a.id AND p.gender_id = g.id AND a.country_id = c.id AND a.country_id = c.id
+      AND a.state_id = s.id ORDER BY p.id;
+      `, (error, results) => {
         res.send(results);
       });
     } else {
@@ -21,10 +26,13 @@ router.get('/', [auth, admin], (req, res) => {
       });
 
       pool.query(
-        `SELECT * FROM a009_patients LIMIT ${req.query.pageSize} OFFSET ${
-        (req.query.pageIndex) * req.query.pageSize
-        }`,
-        (error, results) => {
+        `SELECT p.id, p.first_name, p.last_name, p.birth_date, p.telephone, p.mobile, p.amka, p.afm, p.comments, 
+        a.street, a.street_no, a.region, a.zipcode, c.name country, s.name state, g.name gender
+        FROM a009_patients p, a007_addresses a, a008_genders g, a005_countries c, a006_states s
+        WHERE p.address_id = a.id AND p.gender_id = g.id AND a.country_id = c.id AND a.country_id = c.id
+        AND a.state_id = s.id ORDER BY p.id 
+        LIMIT ${req.query.pageSize} OFFSET ${(req.query.pageIndex) * req.query.pageSize}
+        `,(error, results) => {
           pageLength = data / req.query.pageSize;
           res.send({
             total: data,
@@ -44,9 +52,12 @@ router.get('/', [auth, admin], (req, res) => {
 router.get('/:id', [auth, admin], (req, res) => {
   try {
     pool.query(
-      `SELECT * FROM a009_patients WHERE id=${req.params.id}`,
+      `SELECT p.id, p.first_name, p.last_name, p.birth_date, p.telephone, p.mobile, p.amka, p.afm, p.comments,  
+      a.street, a.street_no, a.region, a.zipcode, c.name country, s.name state, g.name gender
+      FROM a009_patients p, a007_addresses a, a008_genders g, a005_countries c, a006_states s
+      WHERE p.id=${req.params.id} AND p.address_id = a.id AND p.gender_id = g.id AND a.country_id = c.id 
+      AND a.state_id = s.id`,
       (error, results) => {
-        //pool.end();
         res.send(results);
       }
     );
