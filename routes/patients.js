@@ -18,7 +18,9 @@ router.get('/', [auth, admin], (req, res) => {
       WHERE p.address_id = a.id AND p.gender_id = g.id AND a.country_id = c.id AND a.country_id = c.id
       AND a.state_id = s.id ORDER BY p.id;
       `, (error, results) => {
-        res.send(results);
+        res.send({
+          data: format_results(results.rows),
+        });
       });
     } else {
       pool.query('SELECT Count(*) FROM a009_patients', (error, results) => {
@@ -37,7 +39,7 @@ router.get('/', [auth, admin], (req, res) => {
           res.send({
             total: data,
             total_results: results.rows.length,
-            data: results.rows,
+            data: format_results(results.rows),
             pages_length: pageLength,
             pageSize: req.query.pageSize,
           });
@@ -59,9 +61,8 @@ router.get('/:id', [auth, admin], (req, res) => {
       WHERE p.id=${req.params.id} AND p.address_id = a.id AND p.gender_id = g.id AND a.country_id = c.id 
       AND a.state_id = s.id`,
       (error, results) => {
-        const total = results.rows.length;
         res.send({
-          data: results.rows,
+          data: format_results(results.rows),
         });
         //res.send(results);
       }
@@ -143,6 +144,32 @@ router.delete('/:id', [auth, admin], (req, res) => {
     console.error(`Error: ${error}`);
   }
 });
+
+const format_results = results => {
+  const results_array = results.map(el => {
+    return {
+      id: el.id,
+      first_name: el.first_name,
+      last_name: el.last_name,
+      birth_date: el.birth_date,
+      telephone: el.telephone,
+      mobile: el.mobile,
+      amka: el.amka,
+      afm: el.afm,
+      comments: el.comments,
+      address: {
+        street: el.street,
+        street_no: el.street_no,
+        region: el.region,
+        zipcode: el.zipcode,
+        country: el.country,
+        state: el.state
+      },
+      gender: el.id
+    }
+  })
+  return results_array;
+}
 
 module.exports = router;
 
