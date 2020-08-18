@@ -36,6 +36,7 @@ router.get('/', [auth, admin], (req, res) => {
           pageLength = data / req.query.pageSize;
           res.send({
             total: data,
+            total_results: results.rows.length,
             data: results.rows,
             pages_length: pageLength,
             pageSize: req.query.pageSize,
@@ -58,7 +59,11 @@ router.get('/:id', [auth, admin], (req, res) => {
       WHERE p.id=${req.params.id} AND p.address_id = a.id AND p.gender_id = g.id AND a.country_id = c.id 
       AND a.state_id = s.id`,
       (error, results) => {
-        res.send(results);
+        const total = results.rows.length;
+        res.send({
+          data: results.rows,
+        });
+        //res.send(results);
       }
     );
   } catch (error) {
