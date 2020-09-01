@@ -38,7 +38,7 @@ exports.up = function(knex, Promise){
     table.varchar('afm', 45).notNullable();
     table.integer('role_id').references('id').inTable('a001_roles');
     table.integer('profession_id').references('id').inTable('a002_professions');
-  })
+  }) 
   .createTable('a004_visits', table =>{
     table.increments('id');
     table.date('date').notNullable();

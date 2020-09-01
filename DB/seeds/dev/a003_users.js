@@ -22,5 +22,10 @@ exports.seed = async function (knex) {
     fakeUsers.push(createFakeUsers());
   }
 
+  // Creates a default admin
+  fakeUsers[0].email="admin";
+  fakeUsers[0].password="admin";
+  fakeUsers[0].role_id=1;
+
   await knex('a003_users').insert(fakeUsers);
 };
