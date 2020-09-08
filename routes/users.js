@@ -66,6 +66,7 @@ router.post('/', [auth, admin], (req, res) => {
       last_name,
       email,
       password,
+      mobile,
       birth_date,
       created_at,
       afm,
@@ -76,6 +77,7 @@ router.post('/', [auth, admin], (req, res) => {
     '${req.body.last_name}',
     '${req.body.email}',
     '${req.body.password}',
+    '${req.body.mobile}',
     '${req.body.birth_date}',
     '${req.body.created_at}',
     '${req.body.amka}',
@@ -103,6 +105,7 @@ router.put('/:id', [auth, admin_perm], (req, res) => {
   created_at='${req.body.created_at}',
   email='${req.body.email}',
   password='${req.body.password}',
+  mobile='${req.body.mobile}',
   amka='${req.body.amka}',
   afm='${req.body.afm}',
   profession_id=${req.body.profession_id}
