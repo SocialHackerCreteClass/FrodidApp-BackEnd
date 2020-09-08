@@ -18,31 +18,47 @@
   "tags": [
     {
       "name": "auth",
-      "description": "Authenticate admin"
+      "description": "Authenticate user"
     },
     {
       "name": "roles",
       "description": "All about roles table"
     },
     {
+      "name": "users",
+      "description": "All about users table"
+    },
+    {
+      "name": "visits",
+      "description": "All about visits table"
+    },
+    {
+      "name": "countries",
+      "description": "All about countries table"
+    },
+    {
+      "name": "users_patients",
+      "description": "All about user_patients table"
+    },
+    {
+      "name": "professions",
+      "description": "All about professions table"
+    },
+    {
+      "name": "states",
+      "description": "All about states table"
+    },
+    {
+      "name": "addresses",
+      "description": "All about addresses table"
+    },
+    {
       "name": "genders",
       "description": "All about genders table"
     },
     {
-      "name": "apps",
-      "description": "All about apps table"
-    },
-    {
-      "name": "admins",
-      "description": "All about admins table"
-    },
-    {
-      "name": "positions",
-      "description": "All about positions table"
-    },
-    {
-      "name": "downloads",
-      "description": "All about downloads table"
+      "name": "patients",
+      "description": "All about patients table"
     }
   ],
   "schemes": [
@@ -259,6 +275,1246 @@
         }
       }
     },
+    "/professions": {
+      "post": {
+        "tags": [
+          "professions"
+        ],
+        "summary": "Creates new profession",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created profession object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Professions"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "professions"
+        ],
+        "summary": "Gets a list of all professions",
+        "description": "This endpoint uses a get request to retrieve all professions",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "pageIndex",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/professions/{id}": {
+      "get": {
+        "tags": [
+          "professions"
+        ],
+        "summary": "Gets a single profession",
+        "description": "This endpoint uses a get request to retrieve a specific profession",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Profession unique identifier",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Professions"
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "professions"
+        ],
+        "summary": "Updates a profession in the store with form data",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of profession that needs to be updated",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated profession object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Professions"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "professions"
+        ],
+        "summary": "Deletes a profession",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Profession id to delete",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Role not found"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Creates new user",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Gets a list of all countries",
+        "description": "This endpoint uses a get request to retrieve all countries",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "pageIndex",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Gets a single user",
+        "description": "This endpoint uses a get request to retrieve a specific user",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User unique identifier",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Users"
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Updates a user in the users table",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of country that needs to be updated",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Deletes a country",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id to delete",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Country not found"
+          }
+        }
+      }
+    },
+    "/visits": {
+      "post": {
+        "tags": [
+          "visits"
+        ],
+        "summary": "Creates new visit",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Visits"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "visits"
+        ],
+        "summary": "Gets a list of all visits",
+        "description": "This endpoint uses a get request to retrieve all visits",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "pageIndex",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/visits/{id}": {
+      "get": {
+        "tags": [
+          "visits"
+        ],
+        "summary": "Gets a single visit",
+        "description": "This endpoint uses a get request to retrieve a specific visit",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User unique identifier",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Visits"
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "visits"
+        ],
+        "summary": "Updates a user in the visits table",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of visit that needs to be updated",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created visit object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Visits"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "visits"
+        ],
+        "summary": "Deletes a visit",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Visit id to delete",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Visit not found"
+          }
+        }
+      }
+    },
+    "/countries": {
+      "post": {
+        "tags": [
+          "countries"
+        ],
+        "summary": "Creates new country",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Countries"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "countries"
+        ],
+        "summary": "Gets a list of all countries",
+        "description": "This endpoint uses a get request to retrieve all countries",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "pageIndex",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/countries/{id}": {
+      "get": {
+        "tags": [
+          "countries"
+        ],
+        "summary": "Gets a single country",
+        "description": "This endpoint uses a get request to retrieve a specific country",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Country unique identifier",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Countries"
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "countries"
+        ],
+        "summary": "Updates a country in the store with form data",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of country that needs to be updated",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated user object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "name": "Banana Republic"
+              }
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "countries"
+        ],
+        "summary": "Deletes a country",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Country id to delete",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Country not found"
+          }
+        }
+      }
+    },
+    "/users_patients": {
+      "post": {
+        "tags": [
+          "users_patients"
+        ],
+        "summary": "Creates new user_patient row",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Users_Patients"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "users_patients"
+        ],
+        "summary": "Gets a list of all users_patients",
+        "description": "This endpoint uses a get request to retrieve all users_patients",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "pageIndex",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/users_patients/{id}": {
+      "get": {
+        "tags": [
+          "users_patients"
+        ],
+        "summary": "Gets a single users_patients row",
+        "description": "This endpoint uses a get request to retrieve a specific users_patients",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "users_patients unique identifier",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Countries"
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "users_patients"
+        ],
+        "summary": "Updates a users_patients in the store with form data",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of users_patients that needs to be updated",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created users_patients object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Users_Patients"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "users_patients"
+        ],
+        "summary": "Deletes a users_patients",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "users_patients id to delete",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "users_patients not found"
+          }
+        }
+      }
+    },
+    "/states": {
+      "post": {
+        "tags": [
+          "states"
+        ],
+        "summary": "Creates new state",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created state object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/States"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "states"
+        ],
+        "summary": "Gets a list of all states",
+        "description": "This endpoint uses a get request to retrieve all states",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "pageIndex",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/states/{id}": {
+      "get": {
+        "tags": [
+          "states"
+        ],
+        "summary": "Gets a single state",
+        "description": "This endpoint uses a get request to retrieve a specific state",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "State unique identifier",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/States"
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "states"
+        ],
+        "summary": "Updates a state in the store with form data",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of state that needs to be updated",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated state object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/States"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "states"
+        ],
+        "summary": "Deletes a state",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "State id to delete",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "State not found"
+          }
+        }
+      }
+    },
+    "/addresses": {
+      "post": {
+        "tags": [
+          "addresses"
+        ],
+        "summary": "Creates new address",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created address object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Addresses"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "addresses"
+        ],
+        "summary": "Gets a list of all addresses",
+        "description": "This endpoint uses a get request to retrieve all addresses",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "pageIndex",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/addresses/{id}": {
+      "get": {
+        "tags": [
+          "addresses"
+        ],
+        "summary": "Gets a single address",
+        "description": "This endpoint uses a get request to retrieve a specific address",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Address unique identifier",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Addresses"
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "addresses"
+        ],
+        "summary": "Updates a user in the addresses table",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of address that needs to be updated",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created address object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Addresses"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "addresses"
+        ],
+        "summary": "Deletes an address",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Address id to delete",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Address not found"
+          }
+        }
+      }
+    },
     "/genders": {
       "post": {
         "tags": [
@@ -423,12 +1679,12 @@
         }
       }
     },
-    "/apps": {
+    "/patients": {
       "post": {
         "tags": [
-          "apps"
+          "patients"
         ],
-        "summary": "Creates new app",
+        "summary": "Creates new patient",
         "description": "",
         "produces": [
           "application/json"
@@ -437,10 +1693,10 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Created app object",
+            "description": "Created patient object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Apps"
+              "$ref": "#/definitions/Patients"
             }
           },
           {
@@ -458,10 +1714,10 @@
       },
       "get": {
         "tags": [
-          "apps"
+          "patients"
         ],
-        "summary": "Gets a list of all apps",
-        "description": "This endpoint uses a get request to retrieve all apps",
+        "summary": "Gets a list of all patients",
+        "description": "This endpoint uses a get request to retrieve all patients",
         "produces": [
           "application/json"
         ],
@@ -492,13 +1748,13 @@
         }
       }
     },
-    "/apps/{id}": {
+    "/patients/{id}": {
       "get": {
         "tags": [
-          "apps"
+          "patients"
         ],
-        "summary": "Gets a single application",
-        "description": "This endpoint uses a get request to retrieve a specific application",
+        "summary": "Gets a single patient",
+        "description": "This endpoint uses a get request to retrieve a specific patient",
         "produces": [
           "application/json"
         ],
@@ -506,7 +1762,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "Application unique identifier",
+            "description": "Patient unique identifier",
             "required": true,
             "type": "integer"
           },
@@ -523,7 +1779,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Apps"
+                "$ref": "#/definitions/Patients"
               }
             }
           },
@@ -534,25 +1790,25 @@
       },
       "put": {
         "tags": [
-          "apps"
+          "patients"
         ],
-        "summary": "Updates an app in the store with form data",
+        "summary": "Updates a user in the patients table",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "ID of an app that needs to be updated",
+            "description": "ID of patient that needs to be updated",
             "required": true,
             "type": "integer"
           },
           {
             "in": "body",
             "name": "body",
-            "description": "Updated app object",
+            "description": "Created patient object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Apps"
+              "$ref": "#/definitions/Users"
             }
           },
           {
@@ -570,15 +1826,15 @@
       },
       "delete": {
         "tags": [
-          "apps"
+          "patients"
         ],
-        "summary": "Deletes an app",
+        "summary": "Deletes a patient",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "App id to delete",
+            "description": "Patient id to delete",
             "required": true,
             "type": "integer"
           },
@@ -594,541 +1850,22 @@
             "description": "Invalid ID supplied"
           },
           "404": {
-            "description": "App not found"
-          }
-        }
-      }
-    },
-    "/admins": {
-      "post": {
-        "tags": [
-          "admins"
-        ],
-        "summary": "Creates new admin",
-        "description": "",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Created admin object",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Admins"
-            }
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "successful operation"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "admins"
-        ],
-        "summary": "Gets a list of all admins",
-        "description": "This endpoint uses a get request to retrieve all admins",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "pageSize",
-            "type": "integer",
-            "required": false
-          },
-          {
-            "in": "query",
-            "name": "pageIndex",
-            "type": "integer",
-            "required": false
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "405": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
-    "/admins/{id}": {
-      "get": {
-        "tags": [
-          "admins"
-        ],
-        "summary": "Gets a single admin",
-        "description": "This endpoint uses a get request to retrieve a specific admin",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Admin unique identifier",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Admins"
-              }
-            }
-          },
-          "405": {
-            "description": "Invalid input"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "admins"
-        ],
-        "summary": "Updates an admin in the admins table",
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of admin that needs to be updated",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Created admin object",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Admins"
-            }
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "405": {
-            "description": "Invalid input"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "admins"
-        ],
-        "summary": "Deletes an admin",
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Admin id to delete",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Admin not found"
-          }
-        }
-      }
-    },
-    "/positions": {
-      "post": {
-        "tags": [
-          "positions"
-        ],
-        "summary": "Creates new position",
-        "description": "",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Created position object",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Positions"
-            }
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "successful operation"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "positions"
-        ],
-        "summary": "Gets a list of all positions",
-        "description": "This endpoint uses a get request to retrieve all positions",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "pageSize",
-            "type": "integer",
-            "required": false
-          },
-          {
-            "in": "query",
-            "name": "pageIndex",
-            "type": "integer",
-            "required": false
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "405": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
-    "/positions/{id}": {
-      "get": {
-        "tags": [
-          "positions"
-        ],
-        "summary": "Gets a single position",
-        "description": "This endpoint uses a get request to retrieve a specific position",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Position unique identifier",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Positions"
-              }
-            }
-          },
-          "405": {
-            "description": "Invalid input"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "positions"
-        ],
-        "summary": "Updates a position in the positions table",
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of position that needs to be updated",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Created position object",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Positions"
-            }
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "405": {
-            "description": "Invalid input"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "positions"
-        ],
-        "summary": "Deletes a position",
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Position id to delete",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Position not found"
-          }
-        }
-      }
-    },
-    "/downloads": {
-      "post": {
-        "tags": [
-          "downloads"
-        ],
-        "summary": "Creates new download row",
-        "description": "",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Created download object",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Downloads"
-            }
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "successful operation"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "downloads"
-        ],
-        "summary": "Gets a list of all downloads",
-        "description": "This endpoint uses a get request to retrieve all downloads",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "pageSize",
-            "type": "integer",
-            "required": false
-          },
-          {
-            "in": "query",
-            "name": "pageIndex",
-            "type": "integer",
-            "required": false
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "405": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
-    "/downloads/{id}": {
-      "get": {
-        "tags": [
-          "downloads"
-        ],
-        "summary": "Gets a single download",
-        "description": "This endpoint uses a get request to retrieve a specific download row",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Download unique identifier",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Downloads"
-              }
-            }
-          },
-          "405": {
-            "description": "Invalid input"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "downloads"
-        ],
-        "summary": "Updates a download row",
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of download row that needs to be updated",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Created download object",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Downloads"
-            }
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "405": {
-            "description": "Invalid input"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "downloads"
-        ],
-        "summary": "Deletes a download row",
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Download id to delete",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Download not found"
+            "description": "Patient not found"
           }
         }
       }
     }
   },
   "definitions": {
+    "Professions": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "expert in experts"
+        }
+      }
+    },
     "Roles": {
       "type": "object",
       "properties": {
@@ -1138,108 +1875,92 @@
         }
       }
     },
-    "Genders": {
+    "Users": {
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string",
-          "example": "female"
-        }
-      }
-    },
-    "Apps": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "example": "ISO_GREAT"
-        }
-      }
-    },
-    "Admins": {
-      "type": "object",
-      "properties": {
-        "user_name": {
-          "type": "string",
-          "example": "Buda2000"
-        },
-        "email": {
-          "type": "string",
-          "example": "buda2000@hotmail.com"
-        },
-        "password": {
-          "type": "string",
-          "example": "password"
-        },
-        "role_id": {
-          "type": "integer",
-          "example": 2
-        }
-      }
-    },
-    "Positions": {
-      "type": "object",
-      "properties": {
-        "latitude": {
-          "type": "string",
-          "example": 11.111111111
-        },
-        "longitude": {
-          "type": "string",
-          "example": 11.111111111
-        },
-        "country": {
-          "type": "string",
-          "example": "UK"
-        },
-        "state": {
-          "type": "string",
-          "example": "Ohio"
-        },
-        "city": {
-          "type": "string",
-          "example": "Manila"
-        },
-        "street_name": {
-          "type": "string",
-          "example": "Av. Bordeaux"
-        },
-        "zipcode": {
-          "type": "string",
-          "example": 12345
-        }
-      }
-    },
-    "Downloads": {
-      "type": "object",
-      "properties": {
-        "user_name": {
+        "first_name": {
           "type": "string",
           "example": "John"
+        },
+        "last_name": {
+          "type": "string",
+          "example": "Doe"
         },
         "email": {
           "type": "string",
           "example": "johndoe@gmail.com"
         },
-        "downloaded_at": {
+        "password": {
+          "type": "string",
+          "example": "pass12345"
+        },
+        "birth_date": {
           "type": "string",
           "format": "date-time",
-          "example": "14:08:00"
+          "example": "2000-01-31"
         },
-        "download_date": {
+        "created_at": {
           "type": "string",
           "format": "date-time",
           "example": "2020-01-31"
         },
-        "app_id": {
+        "afm": {
+          "type": "string",
+          "example": "111111"
+        },
+        "amka": {
+          "type": "string",
+          "example": "2222222"
+        },
+        "profession_id": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    },
+    "Visits": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2000-01-31"
+        },
+        "comment": {
+          "type": "string",
+          "example": "Patient requires more medicine and a second visit"
+        },
+        "start_time": {
+          "type": "string",
+          "example": "03:07:00"
+        },
+        "end_time": {
+          "type": "string",
+          "example": "05:10:00"
+        },
+        "user_id": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    },
+    "Countries": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Greece"
+        }
+      }
+    },
+    "Users_Patients": {
+      "type": "object",
+      "properties": {
+        "user_id": {
           "type": "integer",
           "example": 1
         },
-        "gender_id": {
-          "type": "integer",
-          "example": 1
-        },
-        "position_id": {
+        "patient_id": {
           "type": "integer",
           "example": 1
         }
@@ -1270,6 +1991,99 @@
         },
         "message": {
           "type": "string"
+        }
+      }
+    },
+    "States": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Attiki"
+        }
+      }
+    },
+    "Addresses": {
+      "type": "object",
+      "properties": {
+        "street": {
+          "type": "string",
+          "example": "Stournari"
+        },
+        "street_no": {
+          "type": "string",
+          "example": "15A"
+        },
+        "region": {
+          "type": "string",
+          "example": "Exarchia"
+        },
+        "zipcode": {
+          "type": "string",
+          "example": "75 254A"
+        },
+        "country_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "state_id": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    },
+    "Genders": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "female"
+        }
+      }
+    },
+    "Patients": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string",
+          "example": "John"
+        },
+        "last_name": {
+          "type": "string",
+          "example": "Doe"
+        },
+        "telephone": {
+          "type": "string",
+          "example": "+030 2310827834"
+        },
+        "mobile": {
+          "type": "string",
+          "example": "+030 6954827834"
+        },
+        "birth_date": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2000-01-31"
+        },
+        "comment": {
+          "type": "string",
+          "example": "Patient has lost an eye."
+        },
+        "afm": {
+          "type": "string",
+          "example": "111111"
+        },
+        "amka": {
+          "type": "string",
+          "example": "2222222"
+        },
+        "gender_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "address_id": {
+          "type": "integer",
+          "example": 1
         }
       }
     }
