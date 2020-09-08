@@ -32,6 +32,7 @@ exports.up = function(knex, Promise){
     table.varchar('last_name', 45).notNullable();
     table.varchar('email', 45).notNullable();
     table.varchar('password', 45).notNullable();
+    table.varchar('mobile', 45);
     table.date('birth_date').notNullable();
     table.date('created_at').notNullable();
     table.varchar('amka', 45).notNullable();

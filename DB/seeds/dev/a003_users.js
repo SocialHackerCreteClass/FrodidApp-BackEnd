@@ -6,6 +6,7 @@ const createFakeUsers = () => ({
   last_name: faker.name.lastName(),
   email: faker.internet.email(),
   password: faker.internet.password(),
+  mobile: faker.phone.phoneNumber(),
   birth_date: moment(faker.date.past()).format('YYYY-MM-DD'),
   created_at: moment(faker.date.recent()).format('YYYY-MM-DD'),
   amka: faker.random.number({ min: 1000000000, max: 9999999999 }),
