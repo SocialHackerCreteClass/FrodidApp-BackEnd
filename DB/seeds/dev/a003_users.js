@@ -10,7 +10,7 @@ const createFakeUsers = () => ({
   email: faker.internet.email(),
   password: faker.internet.password(),
   mobile: faker.phone.phoneNumber(),
-  birth_date: new Date(faker.date.between('1980-01-01', '2015-01-05')),
+  birth_date: new Date(moment(faker.date.past()).format('YYYY-MM-DD')).getTime(),
   created_at: moment(faker.date.recent()).format('YYYY-MM-DD'),
   amka: faker.random.number({ min: 1000000000, max: 9999999999 }),
   afm: faker.random.number({ min: 1000000000, max: 9999999999 }),

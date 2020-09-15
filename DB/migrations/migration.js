@@ -33,8 +33,8 @@ exports.up = function(knex, Promise){
     table.varchar('email', 45).notNullable();
     table.varchar('password', 45).notNullable();
     table.varchar('mobile', 45);
-    table.date('birth_date').notNullable();
-    table.date('created_at').notNullable();
+    table.varchar('birth_date', 50).notNullable();
+    table.datetime('created_at').notNullable();
     table.varchar('amka', 45).notNullable();
     table.varchar('afm', 45).notNullable();
     table.integer('role_id').references('id').inTable('a001_roles');
