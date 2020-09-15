@@ -1,13 +1,16 @@
 const faker = require('faker');
 const moment = require('moment');
 
+console.log(new Date('October 15, 1996 05:35:32').getTime());
+console.log(new Date(moment(faker.date.past()).format('YYYY-MM-DD')).getTime());
+
 const createFakeUsers = () => ({
   first_name: faker.name.firstName(),
   last_name: faker.name.lastName(),
   email: faker.internet.email(),
   password: faker.internet.password(),
   mobile: faker.phone.phoneNumber(),
-  birth_date: moment(faker.date.past()).format('YYYY-MM-DD'),
+  birth_date: new Date(faker.date.between('1980-01-01', '2015-01-05')),
   created_at: moment(faker.date.recent()).format('YYYY-MM-DD'),
   amka: faker.random.number({ min: 1000000000, max: 9999999999 }),
   afm: faker.random.number({ min: 1000000000, max: 9999999999 }),
