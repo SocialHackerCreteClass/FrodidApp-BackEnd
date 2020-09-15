@@ -13,8 +13,14 @@ router.get('/', [auth, admin], (req, res) => {
     let page_length;
 
     if (Object.keys(req.query).length !== 2) {
-      pool.query('SELECT * FROM a003_users', (error, results) => {
-        res.send(results);
+      pool.query(`SELECT u.id as user_id, u.first_name, u.last_name, u.email, u.password, u.mobile, u.birth_date, u.created_at,
+      u.amka, u.afm, r.name role_name, p.name prof_name
+      FROM a003_users u, a001_roles r, a002_professions p
+      WHERE u.role_id=r.id AND u.profession_id=p.id
+      `, (error, results) => {
+        res.send({
+          data: format_results(results.rows)
+        });
       });
     } else {
       pool.query('SELECT Count(*) FROM a003_users', (error, results) => {
@@ -22,15 +28,17 @@ router.get('/', [auth, admin], (req, res) => {
       });
 
       pool.query(
-        'SELECT * FROM a003_users LIMIT ' +
-          req.query.pageSize +
-          ' OFFSET ' +
-          (req.query.pageIndex) * req.query.pageSize,
+        `SELECT u.id as user_id, u.first_name, u.last_name, u.email, u.password, u.mobile, u.birth_date, u.created_at,
+        u.amka, u.afm, r.name role_name, p.name prof_name
+        FROM a003_users u, a001_roles r, a002_professions p
+        WHERE u.role_id=r.id AND u.profession_id=p.id
+        LIMIT ${req.query.pageSize} OFFSET ${(req.query.pageIndex) * req.query.pageSize}
+        `,
         (error, results) => {
           page_length = data / req.query.pageSize;
           res.send({
             total: data,
-            data: results.rows,
+            data: format_results(results.rows),
             pages_length: page_length,
             pageSize: req.query.pageSize,
           });
@@ -46,9 +54,15 @@ router.get('/', [auth, admin], (req, res) => {
 router.get('/:id', [auth, admin_perm], (req, res) => {
   try {
     pool.query(
-      `SELECT * FROM a003_users WHERE id=${req.params.id}`,
+      `SELECT u.id as user_id, u.first_name, u.last_name, u.email, u.password, u.mobile, u.birth_date, u.created_at,
+      u.amka, u.afm, r.name role_name, p.name prof_name
+      FROM a003_users u, a001_roles r, a002_professions p
+      WHERE u.id=${req.params.id} AND u.role_id=r.id AND u.profession_id=p.id
+      `,
       (err, results) => {
-        res.send(results.rows[0]);
+        res.send({
+          data: format_results(results.rows)
+        });
       }
     );
   } catch (error) {
@@ -133,6 +147,26 @@ router.delete('/:id', [auth, admin], (req, res) => {
     if (error) console.error(`Error: ${error.message}`);
   }
 });
+
+const format_results = results => {
+  const results_array = results.map(el => {
+    return {
+      id: el.id,
+      first_name: el.first_name,
+      last_name: el.last_name,
+      email: el.email,
+      password: el.password,
+      mobile: el.mobile,
+      birth_date: el.birth_date,
+      created_at: el.created_at,
+      amka: el.amka,
+      afm: el.afm,
+      role: el.role_name,
+      profession: el.prof_name,
+    }
+  })
+  return results_array;
+}
 
 module.exports = router;
 // ------------------

@@ -13,8 +13,16 @@ router.get('/', [auth, admin], (req, res) => {
     let pageLength;
 
     if (Object.keys(req.query).length !== 2) {
-      pool.query('SELECT * FROM a004_visits', (error, results) => {
-        res.send(results);
+      pool.query(`SELECT v.id, v.date, v.comment, v.start_time, v.end_time, 
+      u.id as user_id, u.first_name, u.last_name, u.email, u.password, u.mobile, u.birth_date, u.created_at,
+      u.amka, u.afm, r.name role_name, p.name prof_name
+      FROM a004_visits v, a003_users u, a001_roles r, a002_professions p
+      WHERE v.user_id=u.id AND u.role_id=r.id AND u.profession_id=p.id
+      ORDER BY v.id;
+      `, (error, results) => {
+        res.send({
+          data: format_results(results.rows)
+        });
       });
     } else {
       pool.query('SELECT Count(*) FROM a004_visits', (error, results) => {
@@ -22,14 +30,19 @@ router.get('/', [auth, admin], (req, res) => {
       });
 
       pool.query(
-        `SELECT * FROM a004_visits LIMIT ${req.query.pageSize} OFFSET ${
-        (req.query.pageIndex) * req.query.pageSize
-        }`,
+        `SELECT v.id, v.date, v.comment, v.start_time, v.end_time, 
+        u.id as user_id, u.first_name, u.last_name, u.email, u.password, u.mobile, u.birth_date, u.created_at,
+        u.amka, u.afm, r.name role_name, p.name prof_name
+        FROM a004_visits v, a003_users u, a001_roles r, a002_professions p
+        WHERE v.user_id=u.id AND u.role_id=r.id AND u.profession_id=p.id
+        ORDER BY v.id
+        LIMIT ${req.query.pageSize} OFFSET ${(req.query.pageIndex) * req.query.pageSize}
+        `,
         (error, results) => {
           pageLength = data / req.query.pageSize;
           res.send({
             total: data,
-            data: results.rows,
+            data: format_results(results.rows),
             pages_length: pageLength,
             pageSize: req.query.pageSize,
           });
@@ -45,9 +58,17 @@ router.get('/', [auth, admin], (req, res) => {
 router.get('/:id', [auth, visit_edit_perm], (req, res) => {
   try {
     pool.query(
-      `SELECT * FROM a004_visits WHERE id=${req.params.id}`,
+      `SELECT v.id, v.date, v.comment, v.start_time, v.end_time, 
+      u.id as user_id, u.first_name, u.last_name, u.email, u.password, u.mobile, u.birth_date, u.created_at,
+      u.amka, u.afm, r.name role_name, p.name prof_name
+      FROM a004_visits v, a003_users u, a001_roles r, a002_professions p
+      WHERE v.id=${req.params.id} AND v.user_id=u.id AND u.role_id=r.id AND u.profession_id=p.id
+      ORDER BY v.id;
+      `,
       (error, results) => {
-        res.send(results);
+        res.send({
+          data: format_results(results.rows),
+        });
       }
     );
   } catch (error) {
@@ -103,6 +124,33 @@ router.delete('/:id', [auth, admin], (req, res) => {
     if (error) console.error(`Error: ${error.message}`);
   }
 });
+
+const format_results = results => {
+  const results_array = results.map(el => {
+    return {
+      id: el.id,
+      date: el.date,
+      comment: el.comment,
+      start_time: el.start_time,
+      end_time: el.end_time,
+      user: {
+        id: el.user_id,
+        first_name: el.first_name,
+        last_name: el.last_name,
+        email: el.email,
+        password: el.password,
+        mobile: el.mobile,
+        birth_date: el.birth_date,
+        created_at: el.created_at,
+        amka: el.amka,
+        afm: el.afm,
+        role: el.role_name,
+        profession: el.prof_name,
+      },
+    }
+  })
+  return results_array;
+}
 
 module.exports = router;
 // -----------------

@@ -64,7 +64,6 @@ router.get('/:id', [auth, admin], (req, res) => {
         res.send({
           data: format_results(results.rows),
         });
-        //res.send(results);
       }
     );
   } catch (error) {
@@ -165,7 +164,7 @@ const format_results = results => {
         country: el.country,
         state: el.state
       },
-      gender: el.id
+      gender: el.gender
     }
   })
   return results_array;
