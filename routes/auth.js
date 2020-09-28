@@ -17,7 +17,6 @@ router.post('/login', (req, res) => {
       AND u.role_id=r.id AND u.profession_id=p.id`,
       (error, results) => {
         if (results.rows.length) {
-          console.log(results.rows);
           req.session.user = results.rows[0];
           req.session.token = [...Array(400)].map(i=>(~~(Math.random()*36)).toString(36)).join('');
           const data = {
@@ -38,23 +37,21 @@ router.post('/logout', (req, res) => {
   res.send("You have successfully logged out");
 });
 
-const format_results = results => {
-  const results_array = results.map(el => {
-    return {
-      id: el.id,
-      first_name: el.first_name,
-      last_name: el.last_name,
-      email: el.email,
-      password: el.password,
-      mobile: el.mobile,
-      birth_date: Math.round(el.birth_date.getTime()/1000),
-      created_at: Math.round(el.created_at.getTime()/1000),
-      amka: el.amka,
-      afm: el.afm,
-      role: el.role_name,
-      profession: el.prof_name,
+const format_results = result => {
+  const results_array = {
+      id: result.id,
+      first_name: result.first_name,
+      last_name: result.last_name,
+      email: result.email,
+      password: result.password,
+      mobile: result.mobile,
+      birth_date: Math.round(result.birth_date.getTime()/1000),
+      created_at: Math.round(result.created_at.getTime()/1000),
+      amka: result.amka,
+      afm: result.afm,
+      role: result.role_name,
+      profession: result.prof_name,
     }
-  })
   return results_array;
 }
 
