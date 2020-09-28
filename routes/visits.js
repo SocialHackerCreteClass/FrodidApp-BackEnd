@@ -13,28 +13,26 @@ router.get('/', [auth, admin], (req, res) => {
     let pageLength;
 
     if (Object.keys(req.query).length !== 2) {
-      pool.query(`SELECT v.id, v.date, v.comment, v.start_time, v.end_time, 
-      u.id as up_id, u.first_name, u.last_name, u.email, u.password, u.mobile, u.birth_date, u.created_at,
-      u.amka, u.afm, r.name role_name, p.name prof_name
-      FROM a010_users_patients up, a004_visits v, a003_users u, a001_roles r, a002_professions p
-      WHERE v.up_id=up.id AND u.role_id=r.id AND u.profession_id=p.id
-      ORDER BY v.id;
+      pool.query(`SELECT v.id, v.date, v.comment, v.start_time, v.end_time,
+      us.first_name, us.last_name, pr.name, pa.first_name, pa.last_name, pa.comments
+            FROM a011_visits v, a010_users_patients up, a003_users us, a002_professions pr, a009_patients pa
+            WHERE v.up_id=up.id AND up.user_id=us.id AND us.profession_id=pr.id AND up.patient_id=pa.id
+            ORDER BY v.id;
       `, (error, results) => {
         res.send({
           data: format_results(results.rows)
         });
       });
     } else {
-      pool.query('SELECT Count(*) FROM a004_visits', (error, results) => {
+      pool.query('SELECT Count(*) FROM a011_visits', (error, results) => {
         data = results.rows[0].count;
       });
 
       pool.query(
-        `SELECT v.id, v.date, v.comment, v.start_time, v.end_time, 
-        u.id as user_id, u.first_name, u.last_name, u.email, u.password, u.mobile, u.birth_date, u.created_at,
-        u.amka, u.afm, r.name role_name, p.name prof_name
-        FROM a010_users_patients up, a004_visits v, a003_users u, a001_roles r, a002_professions p
-        WHERE v.user_id=up.id AND u.role_id=r.id AND u.profession_id=p.id
+        `SELECT v.id, v.date, v.comment, v.start_time, v.end_time,
+        us.first_name, us.last_name, pr.name, pa.first_name, pa.last_name, pa.comments
+              FROM a011_visits v, a010_users_patients up, a003_users us, a002_professions pr, a009_patients pa
+              WHERE v.up_id=up.id AND up.user_id=us.id AND us.profession_id=pr.id AND up.patient_id=pa.id
         ORDER BY v.id
         LIMIT ${req.query.pageSize} OFFSET ${(req.query.pageIndex) * req.query.pageSize}
         `,
@@ -58,12 +56,12 @@ router.get('/', [auth, admin], (req, res) => {
 router.get('/:id', [auth, visit_edit_perm], (req, res) => {
   try {
     pool.query(
-      `SELECT v.id, v.date, v.comment, v.start_time, v.end_time, 
-      u.id as user_id, u.first_name, u.last_name, u.email, u.password, u.mobile, u.birth_date, u.created_at,
-      u.amka, u.afm, r.name role_name, p.name prof_name
-      FROM a004_visits v, a003_users u, a001_roles r, a002_professions p
-      WHERE v.id=${req.params.id} AND v.up_id=u.id AND u.role_id=r.id AND u.profession_id=p.id
-      ORDER BY v.id;
+      `SELECT v.id, v.date, v.comment, v.start_time, v.end_time,
+        us.first_name, us.last_name, pr.name, pa.first_name, pa.last_name, pa.comments
+          FROM a011_visits v, a010_users_patients up, a003_users us, a002_professions pr, a009_patients pa
+          WHERE v.up_id=up.id AND up.user_id=us.id AND us.profession_id=pr.id 
+          AND up.patient_id=pa.id AND us.id=${req.params.id}
+        ORDER BY v.date DESC;;
       `,
       (error, results) => {
         res.send({
@@ -84,7 +82,7 @@ router.post('/', [auth], (req, res) => {
       '${req.body.comment}',
       '${req.body.start_time}',
       '${req.body.end_time}',
-      ${req.session.user.id})`,
+      ${req.session.up.id})`,
       () => {
         res.send('Entry added.');
       }
@@ -95,6 +93,7 @@ router.post('/', [auth], (req, res) => {
 });
 
 // PG Put Method
+/*
 router.put('/:id', [auth, visit_edit_perm], (req, res) => {
   try {
     pool.query(
@@ -103,7 +102,7 @@ router.put('/:id', [auth, visit_edit_perm], (req, res) => {
         comment='${req.body.comment}',
         start_time='${req.body.start_time}',
         end_time='${req.body.end_time}',
-        user_id=${req.session.user.id} 
+        up_id=${req.session.up.id} 
       WHERE id=${req.params.id}`,
       () => {
         res.send('Entry updated.');
@@ -113,6 +112,7 @@ router.put('/:id', [auth, visit_edit_perm], (req, res) => {
     if (error) console.error(`Error: ${error.message}`);
   }
 });
+*/
 
 // PG Delete Method
 router.delete('/:id', [auth, admin], (req, res) => {
