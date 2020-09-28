@@ -14,7 +14,7 @@ router.get('/', [auth, admin], (req, res) => {
 
     if (Object.keys(req.query).length !== 2) {
       pool.query(`SELECT v.id, v.date, v.comment, v.start_time, v.end_time,
-      us.id user_id, us.first_name user_first_name, us.last_name last_first_name, pr.name prof_name, 
+      us.id user_id, us.first_name user_first_name, us.last_name user_last_name, pr.name user_prof_name, 
 	    pa.id patient_id, pa.first_name patient_first_name, pa.last_name patient_last_name, pa.comments patient_comment
             FROM a011_visits v, a010_users_patients up, a003_users us, a002_professions pr, a009_patients pa
             WHERE v.up_id=up.id AND up.user_id=us.id AND us.profession_id=pr.id AND up.patient_id=pa.id
@@ -31,7 +31,7 @@ router.get('/', [auth, admin], (req, res) => {
 
       pool.query(
         `SELECT v.id, v.date, v.comment, v.start_time, v.end_time,
-        us.id user_id, us.first_name user_first_name, us.last_name last_first_name, pr.name prof_name, 
+        us.id user_id, us.first_name user_first_name, us.last_name user_last_name, pr.name user_prof_name,
         pa.id patient_id, pa.first_name patient_first_name, pa.last_name patient_last_name, pa.comments patient_comment
               FROM a011_visits v, a010_users_patients up, a003_users us, a002_professions pr, a009_patients pa
               WHERE v.up_id=up.id AND up.user_id=us.id AND us.profession_id=pr.id AND up.patient_id=pa.id
@@ -59,7 +59,7 @@ router.get('/:id', [auth, visit_edit_perm], (req, res) => {
   try {
     pool.query(
       `SELECT v.id, v.date, v.comment, v.start_time, v.end_time,
-      us.id user_id, us.first_name user_first_name, us.last_name last_first_name, pr.name prof_name, 
+      us.id user_id, us.first_name user_first_name, us.last_name user_last_name, pr.name user_prof_name,
 	    pa.id patient_id, pa.first_name patient_first_name, pa.last_name patient_last_name, pa.comments patient_comment
             FROM a011_visits v, a010_users_patients up, a003_users us, a002_professions pr, a009_patients pa
             WHERE v.up_id=up.id AND up.user_id=us.id AND us.profession_id=pr.id AND up.patient_id=pa.id
