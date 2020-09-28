@@ -10,11 +10,11 @@ router.post('/login', (req, res) => {
 
   if (email && password) {
     pool.query(
-      `SELECT SELECT u.id as user_id, u.first_name, u.last_name, u.email, u.password, u.mobile, u.birth_date, u.created_at,
+      `SELECT u.id as user_id, u.first_name, u.last_name, u.email, u.password, u.mobile, u.birth_date, u.created_at,
       u.amka, u.afm, r.name role_name, p.name prof_name 
-      FROM a003_users u, a001_roles r, a002_professions p, a010_users_patients up, a011_visits v
+      FROM a003_users u, a001_roles r, a002_professions p
       WHERE email = '${email}' AND password = '${password}' 
-      AND u.id = up.user_id AND up.id = v.up_id`,
+      AND u.role_id=r.id AND u.profession_id=p.id`,
       (error, results) => {
         if (results.rows.length) {
           req.session.user = results.rows[0];
