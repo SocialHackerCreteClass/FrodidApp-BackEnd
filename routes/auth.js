@@ -11,7 +11,7 @@ router.post('/login', (req, res) => {
   if (email && password) {
     pool.query(
       `SELECT u.id as user_id, u.first_name, u.last_name, u.email, u.password, u.mobile, u.birth_date, u.created_at,
-      u.amka, u.afm, r.name role_name, p.name prof_name 
+      u.amka, u.afm, u.role_id, r.name role_name, p.name prof_name 
       FROM a003_users u, a001_roles r, a002_professions p
       WHERE email = '${email}' AND password = '${password}' 
       AND u.role_id=r.id AND u.profession_id=p.id`,
@@ -49,6 +49,7 @@ const format_results = result => {
       created_at: Math.round(result.created_at.getTime()/1000),
       amka: result.amka,
       afm: result.afm,
+      role_id: result.role_id,
       role: result.role_name,
       profession: result.prof_name,
     }
