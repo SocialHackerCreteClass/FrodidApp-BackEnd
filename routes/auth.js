@@ -17,6 +17,7 @@ router.post('/login', (req, res) => {
       AND u.role_id=r.id AND u.profession_id=p.id`,
       (error, results) => {
         if (results.rows.length) {
+          console.log(results.rows);
           req.session.user = results.rows[0];
           req.session.token = [...Array(400)].map(i=>(~~(Math.random()*36)).toString(36)).join('');
           const data = {
