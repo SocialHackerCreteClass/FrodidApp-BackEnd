@@ -72,7 +72,7 @@ router.get('/:id', [auth, admin_perm], (req, res) => {
 
 //  PG POST METHOD
 router.post('/', [auth, admin], (req, res) => {
-  console.log(req.body);
+  //console.log(req.body);
   try {
     pool.query(
       `INSERT INTO a003_users (
@@ -157,8 +157,8 @@ const format_results = results => {
       email: el.email,
       password: el.password,
       mobile: el.mobile,
-      birth_date: el.birth_date,
-      created_at: el.created_at,
+      birth_date: Math.round(el.birth_date.getTime()/1000),
+      created_at: Math.round(el.created_at.getTime()/1000),
       amka: el.amka,
       afm: el.afm,
       role: el.role_name,
