@@ -10,8 +10,9 @@ router.post('/login', (req, res) => {
 
   if (email && password) {
     pool.query(
-      `SELECT u.*, v.id visit_id FROM a003_users u, a004_visits v WHERE email = '${email}' AND password = '${password}' 
-      AND u.id = v.user_id`,
+      `SELECT u.*, v.id visit_id FROM a003_users u, a010_users_patients up, a011_visits v 
+      WHERE email = '${email}' AND password = '${password}' 
+      AND u.id = up.user_id AND up.id = v.up_id`,
       (error, results) => {
         if (results.rows.length) {
           req.session.user = results.rows[0];
@@ -20,9 +21,9 @@ router.post('/login', (req, res) => {
             user: req.session.user,
             token: req.session.token
           } 
-          data.user.visits_id = [];
-          results.rows.forEach(el => data.user.visits_id.push(el.visit_id));
-          delete data.user.visit_id;
+          //data.user.visits_id = [];
+          //results.rows.forEach(el => data.user.visits_id.push(el.visit_id));
+          //delete data.user.visit_id;
           res.send(data);
         } else {
           res.send('Invalid email or password.');
