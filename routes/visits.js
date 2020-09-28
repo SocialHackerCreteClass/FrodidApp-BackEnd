@@ -131,8 +131,8 @@ const format_results = results => {
       id: el.id,
       date: el.date,
       comment: el.comment,
-      start_time: el.start_time,
-      end_time: el.end_time,
+      start_time: Math.round(el.start_time.getTime()/1000),
+      end_time: Math.round(el.end_time.getTime()/1000),
       user: {
         id: el.user_id,
         first_name: el.user_first_name,

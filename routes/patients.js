@@ -150,7 +150,7 @@ const format_results = results => {
       id: el.id,
       first_name: el.first_name,
       last_name: el.last_name,
-      birth_date: el.birth_date,
+      birth_date: Math.round(el.birth_date.getTime()/1000),
       telephone: el.telephone,
       mobile: el.mobile,
       amka: el.amka,
