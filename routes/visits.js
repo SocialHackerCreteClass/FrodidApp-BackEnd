@@ -96,7 +96,6 @@ router.post('/', [auth], (req, res) => {
 });
 
 // PG Put Method
-/*
 router.put('/:id', [auth, visit_edit_perm], (req, res) => {
   try {
     pool.query(
@@ -105,7 +104,6 @@ router.put('/:id', [auth, visit_edit_perm], (req, res) => {
         comment='${req.body.comment}',
         start_time='${req.body.start_time}',
         end_time='${req.body.end_time}',
-        up_id=${req.session.up.id} 
       WHERE id=${req.params.id}`,
       () => {
         res.send('Entry updated.');
@@ -115,7 +113,6 @@ router.put('/:id', [auth, visit_edit_perm], (req, res) => {
     if (error) console.error(`Error: ${error.message}`);
   }
 });
-*/
 
 // PG Delete Method
 router.delete('/:id', [auth, admin], (req, res) => {
