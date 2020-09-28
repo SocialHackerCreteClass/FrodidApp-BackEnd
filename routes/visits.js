@@ -14,7 +14,8 @@ router.get('/', [auth, admin], (req, res) => {
 
     if (Object.keys(req.query).length !== 2) {
       pool.query(`SELECT v.id, v.date, v.comment, v.start_time, v.end_time,
-      us.first_name, us.last_name, pr.name, pa.first_name, pa.last_name, pa.comments
+      us.id user_id, us.first_name user_first_name, us.last_name last_first_name, pr.name prof_name, 
+	    pa.id patient_id, pa.first_name patient_first_name, pa.last_name patient_last_name, pa.comments patient_comment
             FROM a011_visits v, a010_users_patients up, a003_users us, a002_professions pr, a009_patients pa
             WHERE v.up_id=up.id AND up.user_id=us.id AND us.profession_id=pr.id AND up.patient_id=pa.id
             ORDER BY v.id;
@@ -30,10 +31,11 @@ router.get('/', [auth, admin], (req, res) => {
 
       pool.query(
         `SELECT v.id, v.date, v.comment, v.start_time, v.end_time,
-        us.first_name, us.last_name, pr.name, pa.first_name, pa.last_name, pa.comments
+        us.id user_id, us.first_name user_first_name, us.last_name last_first_name, pr.name prof_name, 
+        pa.id patient_id, pa.first_name patient_first_name, pa.last_name patient_last_name, pa.comments patient_comment
               FROM a011_visits v, a010_users_patients up, a003_users us, a002_professions pr, a009_patients pa
               WHERE v.up_id=up.id AND up.user_id=us.id AND us.profession_id=pr.id AND up.patient_id=pa.id
-        ORDER BY v.id
+              ORDER BY v.id;
         LIMIT ${req.query.pageSize} OFFSET ${(req.query.pageIndex) * req.query.pageSize}
         `,
         (error, results) => {
@@ -57,11 +59,12 @@ router.get('/:id', [auth, visit_edit_perm], (req, res) => {
   try {
     pool.query(
       `SELECT v.id, v.date, v.comment, v.start_time, v.end_time,
-        us.first_name, us.last_name, pr.name, pa.first_name, pa.last_name, pa.comments
-          FROM a011_visits v, a010_users_patients up, a003_users us, a002_professions pr, a009_patients pa
-          WHERE v.up_id=up.id AND up.user_id=us.id AND us.profession_id=pr.id 
-          AND up.patient_id=pa.id AND us.id=${req.params.id}
-        ORDER BY v.date DESC;;
+      us.id user_id, us.first_name user_first_name, us.last_name last_first_name, pr.name prof_name, 
+	    pa.id patient_id, pa.first_name patient_first_name, pa.last_name patient_last_name, pa.comments patient_comment
+            FROM a011_visits v, a010_users_patients up, a003_users us, a002_professions pr, a009_patients pa
+            WHERE v.up_id=up.id AND up.user_id=us.id AND us.profession_id=pr.id AND up.patient_id=pa.id
+            AND us.id=${req.params.id}
+            ORDER BY v.id DESC;
       `,
       (error, results) => {
         res.send({
@@ -135,18 +138,16 @@ const format_results = results => {
       end_time: el.end_time,
       user: {
         id: el.user_id,
-        first_name: el.first_name,
-        last_name: el.last_name,
-        email: el.email,
-        password: el.password,
-        mobile: el.mobile,
-        birth_date: el.birth_date,
-        created_at: el.created_at,
-        amka: el.amka,
-        afm: el.afm,
-        role: el.role_name,
-        profession: el.prof_name,
+        first_name: el.user_first_name,
+        last_name: el.user_last_name,
+        profession: el.user_prof_name,
       },
+      patient: {
+        id: el.patient_id,
+        first_name: el.patient_first_name,
+        last_name: el.patient_last_name,
+        comment: el.patient_comment,
+      }
     }
   })
   return results_array;
