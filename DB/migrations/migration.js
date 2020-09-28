@@ -33,7 +33,7 @@ exports.up = function(knex, Promise){
     table.varchar('email', 45).notNullable();
     table.varchar('password', 45).notNullable();
     table.varchar('mobile', 45);
-    table.datetime('birth_date', 50).notNullable();
+    table.date('birth_date').notNullable();
     table.datetime('created_at').notNullable();
     table.varchar('amka', 45).notNullable();
     table.varchar('afm', 45).notNullable();
