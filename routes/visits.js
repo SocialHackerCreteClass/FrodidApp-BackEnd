@@ -129,10 +129,10 @@ const format_results = results => {
   const results_array = results.map(el => {
     return {
       id: el.id,
-      date: el.date,
+      date: Math.round(el.date.getTime()/1000),
       comment: el.comment,
-      start_time: Math.round(el.start_time.getTime()/1000),
-      end_time: Math.round(el.end_time.getTime()/1000),
+      start_time: el.start_time,
+      end_time: el.end_time,
       user: {
         id: el.user_id,
         first_name: el.user_first_name,
