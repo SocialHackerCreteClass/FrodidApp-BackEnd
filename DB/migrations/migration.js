@@ -40,14 +40,6 @@ exports.up = function(knex, Promise){
     table.integer('role_id').references('id').inTable('a001_roles');
     table.integer('profession_id').references('id').inTable('a002_professions');
   }) 
-  .createTable('a004_visits', table =>{
-    table.increments('id');
-    table.date('date').notNullable();
-    table.text('comment').notNullable();
-    table.time('start_time').notNullable();
-    table.time('end_time').notNullable();
-    table.integer('user_id').references('id').inTable('a003_users');
-  })
   .createTable('a005_countries', table =>{
     table.increments('id');
     table.varchar('name', 45).notNullable();
@@ -85,19 +77,27 @@ exports.up = function(knex, Promise){
   .createTable('a010_users_patients', table =>{
     table.increments('id');
     table.integer('patient_id').references('id').inTable('a009_patients');
+    table.integer('user_id').references('id').inTable('a003_users');
+  })
+  .createTable('a011_visits', table =>{
+    table.increments('id');
+    table.date('date').notNullable();
+    table.text('comment').notNullable();
+    table.time('start_time').notNullable();
+    table.time('end_time').notNullable();
     table.integer('up_id').references('id').inTable('a010_users_patients');
   })
 };
 
 exports.down = function(knex, Promise){
   return knex.schema
+          .dropTable('a011_visits')
           .dropTable('a010_users_patients')
           .dropTable('a009_patients')
           .dropTable('a008_genders')
           .dropTable('a007_addresses')
           .dropTable('a006_states')
           .dropTable('a005_countries')
-          .dropTable('a004_visits')
           .dropTable('a003_users')
           .dropTable('a002_professions')
           .dropTable('a001_roles')

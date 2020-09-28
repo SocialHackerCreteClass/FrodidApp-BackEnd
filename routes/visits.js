@@ -14,10 +14,10 @@ router.get('/', [auth, admin], (req, res) => {
 
     if (Object.keys(req.query).length !== 2) {
       pool.query(`SELECT v.id, v.date, v.comment, v.start_time, v.end_time, 
-      u.id as user_id, u.first_name, u.last_name, u.email, u.password, u.mobile, u.birth_date, u.created_at,
+      u.id as up_id, u.first_name, u.last_name, u.email, u.password, u.mobile, u.birth_date, u.created_at,
       u.amka, u.afm, r.name role_name, p.name prof_name
-      FROM a004_visits v, a003_users u, a001_roles r, a002_professions p
-      WHERE v.user_id=u.id AND u.role_id=r.id AND u.profession_id=p.id
+      FROM a010_users_patients up, a004_visits v, a003_users u, a001_roles r, a002_professions p
+      WHERE v.up_id=up.id AND u.role_id=r.id AND u.profession_id=p.id
       ORDER BY v.id;
       `, (error, results) => {
         res.send({
@@ -33,8 +33,8 @@ router.get('/', [auth, admin], (req, res) => {
         `SELECT v.id, v.date, v.comment, v.start_time, v.end_time, 
         u.id as user_id, u.first_name, u.last_name, u.email, u.password, u.mobile, u.birth_date, u.created_at,
         u.amka, u.afm, r.name role_name, p.name prof_name
-        FROM a004_visits v, a003_users u, a001_roles r, a002_professions p
-        WHERE v.user_id=u.id AND u.role_id=r.id AND u.profession_id=p.id
+        FROM a010_users_patients up, a004_visits v, a003_users u, a001_roles r, a002_professions p
+        WHERE v.user_id=up.id AND u.role_id=r.id AND u.profession_id=p.id
         ORDER BY v.id
         LIMIT ${req.query.pageSize} OFFSET ${(req.query.pageIndex) * req.query.pageSize}
         `,
@@ -62,7 +62,7 @@ router.get('/:id', [auth, visit_edit_perm], (req, res) => {
       u.id as user_id, u.first_name, u.last_name, u.email, u.password, u.mobile, u.birth_date, u.created_at,
       u.amka, u.afm, r.name role_name, p.name prof_name
       FROM a004_visits v, a003_users u, a001_roles r, a002_professions p
-      WHERE v.id=${req.params.id} AND v.user_id=u.id AND u.role_id=r.id AND u.profession_id=p.id
+      WHERE v.id=${req.params.id} AND v.up_id=u.id AND u.role_id=r.id AND u.profession_id=p.id
       ORDER BY v.id;
       `,
       (error, results) => {
@@ -80,7 +80,7 @@ router.get('/:id', [auth, visit_edit_perm], (req, res) => {
 router.post('/', [auth], (req, res) => {
   try {
     pool.query(
-      `INSERT INTO a004_visits (date, comment, start_time, end_time, user_id) VALUES ('${req.body.date}',
+      `INSERT INTO a004_visits (date, comment, start_time, end_time, up_id) VALUES ('${req.body.date}',
       '${req.body.comment}',
       '${req.body.start_time}',
       '${req.body.end_time}',

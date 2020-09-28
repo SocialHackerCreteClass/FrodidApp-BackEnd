@@ -17,5 +17,5 @@ exports.seed = async function (knex) {
     fakeVisits.push(createFakeVisit());
   }
 
-  await knex('a004_visits').insert(fakeVisits);
+  await knex('a011_visits').insert(fakeVisits);
 };
