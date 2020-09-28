@@ -6,7 +6,7 @@ const createFakeVisit = () => ({
   comment: faker.lorem.sentence(),
   start_time: `${moment(faker.date.recent()).format('HH:MM')}:00`,
   end_time: `${moment(faker.date.recent()).format('HH:MM')}:00`,
-  user_id: faker.random.number({ min: 1, max: 100 }),
+  up_id: faker.random.number({ min: 1, max: 100 }),
 });
 
 exports.seed = async function (knex) {

@@ -85,7 +85,7 @@ exports.up = function(knex, Promise){
   .createTable('a010_users_patients', table =>{
     table.increments('id');
     table.integer('patient_id').references('id').inTable('a009_patients');
-    table.integer('user_id').references('id').inTable('a003_users');
+    table.integer('up_id').references('id').inTable('a010_users_patients');
   })
 };
 

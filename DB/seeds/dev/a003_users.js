@@ -1,8 +1,8 @@
 const faker = require('faker');
 const moment = require('moment');
 
-console.log(new Date('October 15, 1996 05:35:32').getTime());
-console.log(new Date(moment(faker.date.past()).format('YYYY-MM-DD')).getTime());
+//console.log(new Date('October 15, 1996 05:35:32').getTime());
+//console.log(new Date(moment(faker.date.past()).format('YYYY-MM-DD')).getTime());
 
 const createFakeUsers = () => ({
   first_name: faker.name.firstName(),
